@@ -23,6 +23,8 @@ function pegarNomeJogador(event) {
     console.log(valorCampoNome)
     const nomeJogadoNaTabela = document.querySelector('#player-name');
     nomeJogadoNaTabela.innerHTML = valorCampoNome;
+    const form = document.querySelector('form');
+    form.classList.add('hidden');
 }
 const botaoConfirmaNome = document.querySelector('#confirma-nome');
 console.log(botaoConfirmaNome)
