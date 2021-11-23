@@ -32,6 +32,7 @@ function criarMatriz() {
     return res
 }
 
+const listaPalavras = document.getElementById("lista-palavras");
 //Sorteia 3 palavras e coloca elas na matriz
 function ColocarPalavrasNaMatriz() {
     matriz = criarMatriz()
@@ -47,6 +48,11 @@ function ColocarPalavrasNaMatriz() {
 
         }
         else {
+            const listItem = document.createElement("li");
+            listItem.innerText = palavraSorteada;
+            listItem.setAttribute("id", palavraSorteada);
+            listaPalavras.appendChild(listItem);
+
             palavrasSorteadas.push(palavraSorteada)
         }
     }
@@ -85,6 +91,7 @@ function ColocarPalavrasNaMatriz() {
                     achada: false
                 }
 
+                
                 let palavra = palavrasSorteadas[i].split('')
                 let count = 0
 
@@ -168,7 +175,12 @@ function verificarPalavra(linha, coluna1, coluna2) {
 
                     localPalavrasMatriz[i].achada = true
 
-                    if (!palavrasAchadas.includes(localPalavrasMatriz[i].palavra)) palavrasAchadas.push(localPalavrasMatriz[i].palavra);
+                    if (!palavrasAchadas.includes(localPalavrasMatriz[i].palavra)) {
+                        palavrasAchadas.push(localPalavrasMatriz[i].palavra);
+                        let currentWord = localPalavrasMatriz[i].palavra;
+                        const wordInList = document.getElementById(currentWord);
+                        wordInList.style.textDecoration = "line-through";
+                    }
 
                     selecaoCorreta()
 
@@ -290,7 +302,7 @@ function resetaJogo() {
     let parent = lines[0].parentNode;
     parent.innerHTML = ""
 
-
+    listaPalavras.innerHTML = "";
 
     localPalavrasMatriz = []
     palavrasAchadas = []
