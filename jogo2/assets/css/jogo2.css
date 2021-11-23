@@ -1,0 +1,45 @@
+.hidden {
+    display: none;
+}
+
+body {
+    background-image: url("../../assets/images/Background-Zumbi.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    height: 900px;
+}
+
+main {
+    height: 1000px;
+}
+
+td {
+    border: 2px rebeccapurple solid;
+    width: 20px;
+    height: 20px;
+}
+
+table {
+    background-color: #01988c;
+    width: 300px;
+}
+
+
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.game-display {
+    background-color: #01988c;
+    width: 300px;
+    height: 45rem;
+
+}
+
+.animacao-mao-player {}
+
+.animacao-mao-computer {}
