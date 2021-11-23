@@ -1,5 +1,5 @@
 //Palavras para achar
-let palavras = ['alface', 'feijão', 'arroz', 'carne', 'queijo', 'leite', 'suco', 'ovo']
+let palavras = ['alface', 'feijao', 'arroz', 'carne', 'queijo', 'leite', 'suco', 'ovo']
 //Letras para preencher o resto
 let letras = 'abcdefghijklmnopqrstuvwxyz'
 //Arr bidimensional das letras e palavras
@@ -36,15 +36,15 @@ function ColocarPalavrasNaMatriz() {
 
     let palavrasSorteadas = []
 
-    while(palavrasSorteadas.length < 3){
+    while (palavrasSorteadas.length < 3) {
 
         let palavraSorteada = sortearPalavra()
 
         //Verifica se a palavra ja foi sorteada
-        if(palavrasSorteadas.includes(palavraSorteada)){
-            
+        if (palavrasSorteadas.includes(palavraSorteada)) {
+
         }
-        else{
+        else {
             palavrasSorteadas.push(palavraSorteada)
         }
     }
@@ -52,6 +52,7 @@ function ColocarPalavrasNaMatriz() {
     //Coloca as 3 palavras na matriz
     for (let i = 0; i < 3; i++) {
         let possible = false
+
         while (possible === false) {
             //sorteia uma linha de 0 a 9
             let linha = Math.floor(Math.random() * 10)
@@ -69,11 +70,11 @@ function ColocarPalavrasNaMatriz() {
             for (let j = coluna; j < 10; j++) {
                 espacosParaColocarPalavra++
             }
-            
+
             //Verifica se tem todos os espacos vazios e se cabe a palavra dentro do espaco da coluna selecionada até o fim
             if (espacosVazios === 10 && espacosParaColocarPalavra >= palavrasSorteadas[i].length) {
                 possible = true
-                
+
                 //Registra todas as informações de onde a palavra esta
                 localPalavrasMatriz[i] = {
                     palavra: palavrasSorteadas[i],
@@ -85,7 +86,7 @@ function ColocarPalavrasNaMatriz() {
                 let palavra = palavrasSorteadas[i].split('')
                 let count = 0
 
-                for(let j = 0; j < palavra.length; j++){
+                for (let j = 0; j < palavra.length; j++) {
                     matriz[linha][coluna + j] = palavra[count].toUpperCase()
                     localPalavrasMatriz[i].colunas.push(coluna + j)
                     count++
@@ -98,21 +99,25 @@ function ColocarPalavrasNaMatriz() {
 ColocarPalavrasNaMatriz()
 
 //Pega a matriz e coloca as informações na tabela
-function preencherTabela(){
+function preencherTabela() {
     let table = document.querySelector('.tabela')
 
     for (let i = 0; i < 10; i++) {
         let tr = document.createElement('tr')
+        tr.setAttribute('linha', i)
 
         for (let j = 0; j < 10; j++) {
             let td = document.createElement('td')
-            if(matriz[i][j] === 0){
-                td.innerText = sortearLetra().toLowerCase()
+
+            if (matriz[i][j] === 0) {
+                td.innerText = sortearLetra().toUpperCase()
             }
-            else{
+            else {
                 td.innerText = matriz[i][j]
             }
-            
+
+            td.setAttribute('coluna', j)
+
             tr.appendChild(td)
             table.appendChild(tr)
         }
@@ -121,9 +126,82 @@ function preencherTabela(){
 }
 preencherTabela()
 
-function teste(e) {
-    console.log(e.target)
+//Verifica se a seleção é uma das palavras
+function verificarPalavra(linha, coluna1, coluna2) {
+    linha = parseInt(document.getElementsByTagName('tr')[parseInt(linha)].getAttribute('linha'))
+    let min = Math.min(parseInt(coluna1), parseInt(coluna2))
+    let max = Math.max(parseInt(coluna1), parseInt(coluna2))
+
+    //Preenche o array com todas as colunas do ponto 1 ao 2
+    let colunas = []
+    for (let i = min; i <= max; i++) {
+        colunas.push(i)
+    }
+
+    //Percorrer array do local das palavras e verificar se achou alguma delas  
+    for (let i = 0; i < localPalavrasMatriz.length; i++) {
+
+        //Verifica se o numero de colunas escolhidas tem o mesmo tamanho da palavra(se elas não tem o mesmo tamanho, não é a palavra)
+        if(colunas.length === localPalavrasMatriz[i].colunas.length){
+
+            //Verifica se a seleção e a palavra estão na mesma linha
+            if (localPalavrasMatriz[i].linha === linha) {
+
+                //Verificar se as posições das colunas são as mesmas da palavra i
+                let iguais = false
+                for(let j = 0; j < colunas.length; j++){
+                    //Verificar se são as mesmas colunas
+                    if(localPalavrasMatriz[i].colunas.includes(colunas[j])){
+                        iguais = true
+                    }
+                    else{
+                        iguais = false
+                        break
+                    }
+                }
+                //Se todas as posições forem iguais
+                if(iguais === true){
+                    localPalavrasMatriz[i].achada = true
+                }
+
+            }
+
+        }
+    }
+}
+
+//Armazena os campos selecionados
+let escolha1 = {}
+let escolha2 = {}
+function camposEscolhidos(event) {
+    if (event.target.tagName === 'TD') {
+        let linha = event.target.parentNode.getAttribute('linha')
+        let coluna = event.target.getAttribute('coluna')
+
+        if (escolha1.linha === undefined) {
+            escolha1 = {
+                linha: linha,
+                coluna: coluna
+            }
+        }
+        else if (escolha2.linha === undefined) {
+            escolha2 = {
+                linha: linha,
+                coluna: coluna
+            }
+        }
+
+        if (escolha1.linha !== undefined && escolha2.linha !== undefined) {
+            if (escolha1.linha === escolha2.linha) {
+                verificarPalavra(linha, escolha1.coluna, escolha2.coluna)
+
+            }
+            escolha1 = {}
+            escolha2 = {}
+        }
+    }
+
 }
 
 let clickDown = document.querySelector('.tabela')
-clickDown.addEventListener('mousedown', teste)
+clickDown.addEventListener('click', camposEscolhidos)
