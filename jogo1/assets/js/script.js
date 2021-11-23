@@ -279,6 +279,9 @@ function inciarJogo() {
     preencherTabela()
 }
 
+const resetButton = document.getElementById("reset-button");
+resetButton.addEventListener('click', resetaJogo)
+
 function resetaJogo() {
 
     limpaSelecionadosReset()
