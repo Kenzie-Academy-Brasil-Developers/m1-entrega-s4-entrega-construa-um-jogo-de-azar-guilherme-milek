@@ -1,5 +1,5 @@
 const sectionGameDisplay = document.querySelector('.game-display');
-console.log(sectionGameDisplay)
+//console.log(sectionGameDisplay)
 function criarElementosParaPegarNomeJogador() {
     const form = document.createElement('form');
     const inputText = document.createElement('input');
@@ -32,6 +32,9 @@ const botaoConfirmaNome = document.querySelector('#confirma-nome');
 botaoConfirmaNome.addEventListener('click', pegarNomeJogador);
 
 function criaElementosPedraPapelTesoura() {
+    const sectionDasImagens = document.createElement('section');
+    sectionDasImagens.id = 'secao-imagens';
+    sectionDasImagens.classList.remove('hidden');
     const imagemPedra = document.createElement('img');
     imagemPedra.id = 'pedra';
     imagemPedra.src = "./assets/images/pedra.png";
@@ -49,9 +52,10 @@ function criaElementosPedraPapelTesoura() {
     imagemTesoura.alt = 'Símbolo de tesoura com a mão';
     imagemTesoura.width = 50;
 
-    sectionGameDisplay.appendChild(imagemPedra);
-    sectionGameDisplay.appendChild(imagemPapel);
-    sectionGameDisplay.appendChild(imagemTesoura);
+    sectionGameDisplay.appendChild(sectionDasImagens);
+    sectionDasImagens.appendChild(imagemPedra);
+    sectionDasImagens.appendChild(imagemPapel);
+    sectionDasImagens.appendChild(imagemTesoura);
 
     const imgPedra = document.querySelector('#pedra');
     imgPedra.addEventListener('click', dezJogadas);
@@ -68,82 +72,132 @@ function sorteiaEscolhaComputador() {
     const arrayEscolhaComputador = [imgPedra,imgPapel,imgTesoura];
     const sorteiaEscolhaComputador = Math.floor(Math.random() * 3);
     let escolhaComputador = arrayEscolhaComputador[sorteiaEscolhaComputador];
-    return escolhaComputador.id;
+    return escolhaComputador;
+}
+
+function criaImagensNaTabela(ganhador, rodada, imgSrcPlayer, imgSrcComputer) {
+    let campoJogadorTabela = document.querySelector(`#player-rodada${rodada}`);
+    let campoComputerTabela = document.querySelector(`#computer-rodada${rodada}`);
+    /* console.log(ganhador);
+    console.log(campoJogadorTabela);
+    console.log(campoComputerTabela); */
+    
+    const imgTabelaPlayer = document.createElement('img');
+    const imgTabelaComputer = document.createElement('img');
+    campoJogadorTabela.appendChild(imgTabelaPlayer);
+    campoComputerTabela.appendChild(imgTabelaComputer);
+    imgTabelaPlayer.src = imgSrcPlayer;
+    imgTabelaPlayer.width = 25;
+    imgTabelaComputer.src = imgSrcComputer;
+    imgTabelaComputer.width = 25;
+    if(ganhador === 'jogador') {
+        campoJogadorTabela.style.border = "1px solid black";
+        campoJogadorTabela.style.backgroundColor = "#333";
+    } else if(ganhador === 'computador') {
+        campoComputerTabela.style.border = "1px solid black";
+        campoComputerTabela.style.backgroundColor = "#333";
+    } 
+}
+
+function resetGame() {
+    vitoriasJogador = 0;
+    vitoriasComputador = 0;
+    counterRodadas = 0;
+    const sectionDasImagens = document.querySelector('#secao-imagens');
+    sectionDasImagens.remove();
+    const form = document.querySelector('form');
+    //form.innerHTML = "";
+    form.classList.remove('hidden');
+    const tdsTable = document.querySelectorAll('td');
+    for(let i = 0; i < tdsTable.length; i++) {
+        if(i !== 6) {
+            tdsTable[i].innerHTML = "";
+            tdsTable[i].style.border = "2px rebeccapurple solid";
+            tdsTable[i].style.backgroundColor = "#01988c";
+        }
+    }
+    //criaElementosPedraPapelTesoura();
 }
 
 let vitoriasJogador = 0;
 let vitoriasComputador = 0;
-let counterRodadas = 1;
+let counterRodadas = 0;
 function verificaVitoria() {
-    if(counterRodadas === 6) {
+    if(counterRodadas === 5) {
         if(vitoriasJogador > vitoriasComputador) {
             alert(`PLACAR GERAL: JOGADOR VENCEU!\nJogador: ${vitoriasJogador}\nComputador: ${vitoriasComputador}`);
+            resetGame();
         } else if(vitoriasComputador > vitoriasJogador) {
             alert(`PLACAR GERAL: COMPUTADOR VENCEU!\nJogador: ${vitoriasJogador}\nComputador: ${vitoriasComputador}`);
+            resetGame();
         } else {
             alert(`PLACAR GERAL: EMPATE!\nJogador: ${vitoriasJogador}\nComputador: ${vitoriasComputador}`);
+            resetGame();
         }
         counterRodadas = 0;
         vitoriasJogador = 0;
         vitoriasComputador = 0;
-        console.log("counterRodadas"+counterRodadas )
+        /* console.log("counterRodadas"+counterRodadas )
         console.log("vitoriasJogador"+vitoriasJogador)
-        console.log("vitoriasComputador"+vitoriasComputador)
+        console.log("vitoriasComputador"+vitoriasComputador) */
     }
-}
-
-function criaImagensNaTabela() {
-    
 }
 
 function dezJogadas(event) {
     const imagemClicada = event.target;
-    
+    /* const imgPedra = document.querySelector('#pedra');
+    const imgPapel = document.querySelector('#papel');
+    const imgTesoura = document.querySelector('#tesoura'); */
+    let ganhador = "";
     let escolhaComputador = sorteiaEscolhaComputador();
-    console.log(imagemClicada.id)
+    /* console.log(imagemClicada.id)
     console.log(escolhaComputador)
-    console.log(counterRodadas)
+    console.log(counterRodadas) */
     if(imagemClicada.id === 'pedra') {
-        if(imagemClicada.id === 'pedra' && escolhaComputador === 'tesoura') {
-            alert(`Você ganhou! Computador selecionou ${escolhaComputador.toUpperCase()}.`);
+        if(imagemClicada.id === 'pedra' && escolhaComputador.id === 'tesoura') {
+            alert(`Você ganhou! Computador selecionou ${escolhaComputador.id.toUpperCase()}.`);
             vitoriasJogador++;
-            counterRodadas++;
-       } else if(imagemClicada.id === 'pedra' && escolhaComputador === 'papel') {
-            alert(`Você perdeu! Computador selecionou ${escolhaComputador.toUpperCase()}.`);
+            ganhador = 'jogador';
+       } else if(imagemClicada.id === 'pedra' && escolhaComputador.id === 'papel') {
+            alert(`Você perdeu! Computador selecionou ${escolhaComputador.id.toUpperCase()}.`);
             vitoriasComputador++;
-            counterRodadas++;
+            ganhador = 'computador';
        } else {
-            alert(`Empate! Computador selecionou ${escolhaComputador.toUpperCase()}.`);
-            counterRodadas++;
+            alert(`Empate! Computador selecionou ${escolhaComputador.id.toUpperCase()}.`);
+            ganhador = 'empate';
        } 
     } else if(imagemClicada.id === 'papel') {
-        if(imagemClicada.id === 'papel' && escolhaComputador === 'pedra') {
-            alert(`Você ganhou! Computador selecionou ${escolhaComputador.toUpperCase()}.`);
+        if(imagemClicada.id === 'papel' && escolhaComputador.id === 'pedra') {
+            alert(`Você ganhou! Computador selecionou ${escolhaComputador.id.toUpperCase()}.`);
             vitoriasJogador++;
-            counterRodadas++;
-        } else if(imagemClicada.id === 'papel' && escolhaComputador === 'tesoura') {
-            alert(`Você perdeu! Computador selecionou ${escolhaComputador.toUpperCase()}.`);
+            ganhador = 'jogador';
+        } else if(imagemClicada.id === 'papel' && escolhaComputador.id === 'tesoura') {
+            alert(`Você perdeu! Computador selecionou ${escolhaComputador.id.toUpperCase()}.`);
             vitoriasComputador++;
-            counterRodadas++;
+            ganhador = 'computador';
         } else {
-            alert(`Empate! Computador selecionou ${escolhaComputador.toUpperCase()}.`);
-            counterRodadas++;
+            alert(`Empate! Computador selecionou ${escolhaComputador.id.toUpperCase()}.`);
+            ganhador = 'empate';
         } 
     } else {
-        if(imagemClicada.id === 'tesoura' && escolhaComputador === 'papel') {
-            alert(`Você ganhou! Computador selecionou ${escolhaComputador.toUpperCase()}.`);
+        if(imagemClicada.id === 'tesoura' && escolhaComputador.id === 'papel') {
+            alert(`Você ganhou! Computador selecionou ${escolhaComputador.id.toUpperCase()}.`);
             vitoriasJogador++;
-            counterRodadas++;
-        } else if(imagemClicada.id === 'tesoura' && escolhaComputador === 'pedra') {
-            alert(`Você perdeu! Computador selecionou ${escolhaComputador.toUpperCase()}.`);
+            ganhador = 'jogador';
+        } else if(imagemClicada.id === 'tesoura' && escolhaComputador.id === 'pedra') {
+            alert(`Você perdeu! Computador selecionou ${escolhaComputador.id.toUpperCase()}.`);
             vitoriasComputador++;
-            counterRodadas++;
+            ganhador = 'computador';
         } else {
-            alert(`Empate! Computador selecionou ${escolhaComputador.toUpperCase()}.`);
-            counterRodadas++;
+            alert(`Empate! Computador selecionou ${escolhaComputador.id.toUpperCase()}.`);
+            ganhador = 'empate';
         } 
     }
+    counterRodadas++;
+    criaImagensNaTabela(ganhador, counterRodadas, imagemClicada.src, escolhaComputador.src);
     verificaVitoria();
+    /* console.log("AntesVitoria")
     console.log("jogador"+vitoriasJogador);
     console.log("computador"+vitoriasComputador);
+    console.log(imagemClicada.src); */
 }
