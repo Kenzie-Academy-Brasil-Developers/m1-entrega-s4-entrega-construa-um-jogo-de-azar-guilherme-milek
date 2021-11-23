@@ -1,30 +1,11 @@
-.hidden {
-    display: none;
-}
-
 body {
-    background-image: url("../../assets/images/Background-Zumbi.jpg");
+    background-image: url("../images/Background-Zumbi.jpg");
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
     height: 900px;
+    font-family: inter;
 }
-
-main {
-    height: 1000px;
-}
-
-td {
-    border: 2px rebeccapurple solid;
-    width: 20px;
-    height: 20px;
-}
-
-table {
-    background-color: #01988c;
-    width: 300px;
-}
-
 
 .container {
     display: flex;
@@ -34,12 +15,208 @@ table {
 }
 
 .game-display {
-    background-color: #01988c;
+    background-color: #8e5ebc;
     width: 300px;
-    height: 45rem;
+    height: 450px;
+    border-radius: 10px 10px 0 0;
+    margin-top: 10px;
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    border: 5px #663399 solid;
+}
+
+td {
+    border: 2px #50fa7b solid;
+    width: 20px;
+    height: 20px;
+    background-color: #663399;
+    border-radius: 5px;
+}
+
+#campo-nome {
+    background-color: #03a161;
+    box-shadow: #03a161;
+    border: 1px solid #bd93f9;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border-radius: 4px;
+    box-sizing: border-box;
 
 }
 
-.animacao-mao-player {}
+#confirma-nome {}
 
-.animacao-mao-computer {}
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.hidden {
+    width: 100px;
+}
+
+#scoreTable {
+    background-color: #8e5ebc;
+    width: 300px;
+    font-size: 15px;
+}
+
+#homeButton {
+    transition: all 0.4s;
+    background-color: #04d481;
+    padding: 7px 7px 7px 7px;
+    border-radius: 5px;
+    margin-top: 10px;
+    text-decoration: none;
+    color: #663399;
+    font-weight: 700;
+}
+
+#pedra {}
+
+#papel {}
+
+#tesoura {}
+
+/* DESKTOP */
+@media only screen and (min-width: 900px) {
+    body {
+        background-image: url("../../assets/images/Background-Zumbi.jpg");
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
+        height: 480px;
+        font-family: inter;
+    }
+
+    main {
+        height: 480px;
+    }
+
+    .game-display {
+        background-color: #443c66;
+        width: 600px;
+        height: 300px;
+        border-radius: 10px 10px 10px 10px;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        box
+    }
+
+    #papel {
+        width: 120px;
+    }
+
+    #pedra {
+        width: 120px;
+    }
+
+    #tesoura {
+        width: 120px;
+        rotate:
+    }
+
+    /* #tesoura {
+        transform: rotate(55deg);
+    } */
+
+    td {
+        border: 2px #663399 solid;
+        width: 20px;
+        height: 20px;
+        border-radius: 5px;
+        background-color: #443c66;
+    }
+
+    #campo-nome {
+        background-color: #04d481;
+        box-shadow: #03a161;
+        border: 2px solid #663399;
+        padding: 12px 35px;
+        margin: 8px 0;
+        display: inline-block;
+        border-radius: 4px;
+        box-sizing: border-box;
+        font-size: 15px
+    }
+
+    #scoreTable {
+        background-color: #663399;
+        width: 550px;
+        height: 100px;
+        border-radius: 5px;
+    }
+
+    #player-name {
+        color: #ff79c6;
+        padding-left: 5px;
+        font-weight: 600;
+        font-size: 1.3rem;
+    }
+
+    #computer {
+        color: #ff79c6;
+        padding-left: 5px;
+        font-weight: 600;
+        font-size: 1.3rem;
+    }
+
+    #homeButton {
+        transition: all 0.4s;
+        background-color: #50fa7b;
+        padding: 7px 7px 7px 7px;
+        border-radius: 5px;
+        margin-top: 10px;
+        text-decoration: none;
+        color: #663399;
+        font-weight: 700;
+    }
+
+    #homeButton:hover {
+        box-shadow: -4px -3px #03a161;
+        text-decoration: underline;
+    }
+
+    .container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+    }
+
+    form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        color: #663399;
+        font-weight: bold;
+    }
+
+
+
+    #campo-nome: {}
+
+    #confirma-nome {
+        transition: all 0.4s;
+        background-color: #50fa7b;
+        padding: 7px 7px 7px 7px;
+        border-radius: 5px;
+        margin-top: 10px;
+        text-decoration: none;
+        color: #663399;
+        font-weight: 700;
+    }
+
+    .hidden {
+        display: none;
+    }
+
+    .animacao-mao-player {}
+
+    .animacao-mao-computer {}
+}

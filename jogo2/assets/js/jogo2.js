@@ -39,18 +39,15 @@ function criaElementosPedraPapelTesoura() {
     imagemPedra.id = 'pedra';
     imagemPedra.src = "./assets/images/pedra.png";
     imagemPedra.alt = 'Símbolo de pedra com a mão';
-    imagemPedra.width = 50;
     const imagemPapel = document.createElement('img');
     imagemPapel.id = 'papel';
     imagemPapel.src = "./assets/images/papel.png";
     imagemPapel.alt = 'Símbolo de papel com a mão';
-    imagemPapel.width = 50;
 
     const imagemTesoura = document.createElement('img');
     imagemTesoura.id = 'tesoura';
     imagemTesoura.src = "./assets/images/tesoura.png";
     imagemTesoura.alt = 'Símbolo de tesoura com a mão';
-    imagemTesoura.width = 50;
 
     sectionGameDisplay.appendChild(sectionDasImagens);
     sectionDasImagens.appendChild(imagemPedra);
