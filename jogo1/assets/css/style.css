@@ -1,9 +1,44 @@
-.tabela{
+body{
+    /* background-image: url('../img/tumblr_1e279795b8b09b8929f3a2f0ee81a199_b5557fc8_1280.gif');
+    background-position: top;
+    background-repeat: no-repeat;
+    background-size: auto 120vh;
+    object-fit: cover; */
+    background-color: #ECECEC;
+    
+    color: #563232;
+}
+
+.container{
+    height: 100vh;
+    
+}
+
+main{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+h1{
+    text-align: center;
+}
+
+.palavras-para-achar__titutlo{
+    text-align: center;
+}
+
+.container-tabela{
+    border: 2px solid #d4f0fc;
+    border-radius: 10px;
     margin: 0 auto;
+    background-color: #fff;
+}
+.tabela{
+
 }
 td{
-    padding: 5px;
-    border: 1px solid #000;
+    padding: 8px;
 }
 td:hover{
     background-color: #ccc;
