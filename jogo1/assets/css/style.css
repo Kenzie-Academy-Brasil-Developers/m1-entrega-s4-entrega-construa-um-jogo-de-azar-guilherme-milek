@@ -39,8 +39,24 @@ h1{
 }
 td{
     padding: 8px;
+    border: 1px solid #000;
+    background-color: white;
+    transition: background-color 0.25s;
 }
 td:hover{
     background-color: #ccc;
     cursor: pointer;
 }
+
+/* == Classes para JS === */
+
+
+.letter-box--selected {
+    background-color: red;
+    transition: background-color 0.25s;
+}
+
+.letter-box--correct {
+    background-color: green;
+}
+/* ====================== */

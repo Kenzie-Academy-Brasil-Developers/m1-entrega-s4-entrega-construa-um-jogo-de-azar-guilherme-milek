@@ -5,6 +5,8 @@ let letras = 'abcdefghijklmnopqrstuvwxyz'
 //Arr bidimensional das letras e palavras
 let matriz = criarMatriz()
 let localPalavrasMatriz = []
+let palavrasAchadas = [];
+let caixaLetraSelecionada = [];
 
 //Sortear uma letra
 function sortearLetra() {
@@ -117,6 +119,7 @@ function preencherTabela() {
             }
 
             td.setAttribute('coluna', j)
+            td.setAttribute('id', `${i}-${j}`)
 
             tr.appendChild(td)
             table.appendChild(tr)
@@ -142,32 +145,41 @@ function verificarPalavra(linha, coluna1, coluna2) {
     for (let i = 0; i < localPalavrasMatriz.length; i++) {
 
         //Verifica se o numero de colunas escolhidas tem o mesmo tamanho da palavra(se elas não tem o mesmo tamanho, não é a palavra)
-        if(colunas.length === localPalavrasMatriz[i].colunas.length){
+        if (colunas.length === localPalavrasMatriz[i].colunas.length) {
 
             //Verifica se a seleção e a palavra estão na mesma linha
             if (localPalavrasMatriz[i].linha === linha) {
 
                 //Verificar se as posições das colunas são as mesmas da palavra i
                 let iguais = false
-                for(let j = 0; j < colunas.length; j++){
+                for (let j = 0; j < colunas.length; j++) {
                     //Verificar se são as mesmas colunas
-                    if(localPalavrasMatriz[i].colunas.includes(colunas[j])){
+                    if (localPalavrasMatriz[i].colunas.includes(colunas[j])) {
                         iguais = true
                     }
-                    else{
+                    else {
                         iguais = false
                         break
                     }
                 }
+
                 //Se todas as posições forem iguais
-                if(iguais === true){
+                if (iguais === true) {
+
                     localPalavrasMatriz[i].achada = true
+
+                    if (!palavrasAchadas.includes(localPalavrasMatriz[i].palavra)) palavrasAchadas.push(localPalavrasMatriz[i].palavra);
+
+                    selecaoCorreta()
+
+                    // Chama a função de verificar se ganhou o jogo
+                    verificaVitoria()
+                    return true
                 }
-
             }
-
         }
     }
+    return false
 }
 
 //Armazena os campos selecionados
@@ -175,6 +187,7 @@ let escolha1 = {}
 let escolha2 = {}
 function camposEscolhidos(event) {
     if (event.target.tagName === 'TD') {
+
         let linha = event.target.parentNode.getAttribute('linha')
         let coluna = event.target.getAttribute('coluna')
 
@@ -183,25 +196,102 @@ function camposEscolhidos(event) {
                 linha: linha,
                 coluna: coluna
             }
-        }
-        else if (escolha2.linha === undefined) {
+        } else if (escolha2.linha === undefined) {
             escolha2 = {
                 linha: linha,
                 coluna: coluna
             }
         }
 
-        if (escolha1.linha !== undefined && escolha2.linha !== undefined) {
-            if (escolha1.linha === escolha2.linha) {
-                verificarPalavra(linha, escolha1.coluna, escolha2.coluna)
 
+
+        if (escolha1.linha !== undefined && escolha2.linha !== undefined) {
+            selecionaCampos(escolha1.linha, escolha1.coluna, escolha2.linha, escolha2.coluna);
+
+            if (escolha1.linha === escolha2.linha) {
+                if (!verificarPalavra(linha, escolha1.coluna, escolha2.coluna)) {
+                    clickDown.removeEventListener('click', camposEscolhidos)
+                    setTimeout(() => {
+                        limpaSelecao()
+                        clickDown.addEventListener('click', camposEscolhidos)
+                    }, 250);
+                }
             }
+
             escolha1 = {}
             escolha2 = {}
         }
-    }
 
+
+    }
+    caixaLetraSelecionada = document.querySelectorAll(".letter-box--selected");
 }
 
 let clickDown = document.querySelector('.tabela')
 clickDown.addEventListener('click', camposEscolhidos)
+
+let selection = [];
+
+function selecionaCampos(linhaInicio, colunaInicio, linhaFim, colunaFim) {
+    if (linhaInicio === linhaFim) {
+        let max = Math.max(colunaInicio, colunaFim)
+        let min = Math.min(colunaInicio, colunaFim)
+        for (let inicio = min; inicio <= max; inicio++) {
+            let currentBoxID = `${linhaInicio}-${inicio}`
+
+            selection.push(currentBoxID)
+            document.getElementById(currentBoxID).classList.add("letter-box--selected")
+        }
+    }
+}
+
+function selecaoCorreta() {
+    for (let box in selection) {
+        let currentBoxID = document.getElementById(selection[box])
+        currentBoxID.classList.add("letter-box--correct")
+        currentBoxID.classList.remove("letter-box--selected")
+    }
+}
+
+function limpaSelecao() {
+    for (let box in selection) {
+        document.getElementById(selection[box]).classList.remove("letter-box--selected")
+    }
+    selection = []
+}
+
+function limpaSelecionadosReset() {
+    for (let box = 0; box < caixaLetraSelecionada.length; box++) {
+        caixaLetraSelecionada[box].classList.remove("letter-box--selected")
+    }
+}
+
+function verificaVitoria() {
+    if (palavrasAchadas.length === 3) {
+        alert("PARABÉNS! Você achou todas as palavras!");
+        return resetaJogo()
+    }
+}
+
+function inciarJogo() {
+    matriz = criarMatriz()
+    ColocarPalavrasNaMatriz()
+    preencherTabela()
+}
+
+function resetaJogo() {
+
+    limpaSelecionadosReset()
+
+    let lines = document.querySelectorAll("tr");
+    let parent = lines[0].parentNode;
+    parent.innerHTML = ""
+
+
+
+    localPalavrasMatriz = []
+    palavrasAchadas = []
+    selection = []
+
+    inciarJogo()
+}
