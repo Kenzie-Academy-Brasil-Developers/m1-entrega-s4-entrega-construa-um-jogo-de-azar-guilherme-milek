@@ -5,6 +5,8 @@ let letras = 'abcdefghijklmnopqrstuvwxyz'
 //Arr bidimensional das letras e palavras
 let matriz = criarMatriz()
 let localPalavrasMatriz = []
+let palavrasAchadas = [];
+let caixaLetraSelecionada = [];
 
 //Sortear uma letra
 function sortearLetra() {
@@ -117,6 +119,7 @@ function preencherTabela() {
             }
 
             td.setAttribute('coluna', j)
+            td.setAttribute('id', `${i}-${j}`)
 
             tr.appendChild(td)
             table.appendChild(tr)
@@ -142,7 +145,7 @@ function verificarPalavra(linha, coluna1, coluna2) {
     for (let i = 0; i < localPalavrasMatriz.length; i++) {
 
         //Verifica se o numero de colunas escolhidas tem o mesmo tamanho da palavra(se elas não tem o mesmo tamanho, não é a palavra)
-        if(colunas.length === localPalavrasMatriz[i].colunas.length){
+        if(colunas.length === localPalavrasMatriz[i].colunas.length) {
 
             //Verifica se a seleção e a palavra estão na mesma linha
             if (localPalavrasMatriz[i].linha === linha) {
@@ -159,13 +162,20 @@ function verificarPalavra(linha, coluna1, coluna2) {
                         break
                     }
                 }
+
                 //Se todas as posições forem iguais
-                if(iguais === true){
+                if(iguais === true) {
+
                     localPalavrasMatriz[i].achada = true
+
+                    if (!palavrasAchadas.includes(localPalavrasMatriz[i].palavra)) palavrasAchadas.push(localPalavrasMatriz[i].palavra);
+                    
+                    selecaoCorreta()
+
+                    // Chama a função de verificar se ganhou o jogo
+                    verificaVitoria()
                 }
-
             }
-
         }
     }
 }
@@ -175,6 +185,7 @@ let escolha1 = {}
 let escolha2 = {}
 function camposEscolhidos(event) {
     if (event.target.tagName === 'TD') {
+        
         let linha = event.target.parentNode.getAttribute('linha')
         let coluna = event.target.getAttribute('coluna')
 
@@ -183,25 +194,98 @@ function camposEscolhidos(event) {
                 linha: linha,
                 coluna: coluna
             }
-        }
-        else if (escolha2.linha === undefined) {
+        } else if (escolha2.linha === undefined) {
             escolha2 = {
                 linha: linha,
                 coluna: coluna
             }
         }
 
+        // Chama a função que estiliza a seleção
+        selecionaCampos(escolha1.linha, escolha1.coluna, escolha2.linha, escolha2.coluna);
+
         if (escolha1.linha !== undefined && escolha2.linha !== undefined) {
+
             if (escolha1.linha === escolha2.linha) {
                 verificarPalavra(linha, escolha1.coluna, escolha2.coluna)
-
+            } else {
+                setTimeout(() => {limpaSelecao()}, 100);
             }
             escolha1 = {}
             escolha2 = {}
+        } else {
+            setTimeout(() => {limpaSelecao()}, 100);
         }
     }
-
+    caixaLetraSelecionada = document.querySelectorAll(".letter-box--selected");
 }
 
 let clickDown = document.querySelector('.tabela')
 clickDown.addEventListener('click', camposEscolhidos)
+
+let selection = [];
+
+function selecionaCampos(linhaInicio, colunaInicio, linhaFim, colunaFim) {
+    console.log(".")
+    if (linhaInicio === linhaFim) {
+        for (let inicio = colunaInicio; inicio <= colunaFim; inicio++) {
+            let currentBox = `${linhaInicio}-${inicio}`
+
+            selection.push(currentBox)
+            document.getElementById(currentBox).classList.add("letter-box--selected")
+            document.getElementById(currentBox).style.backgroundColor = "black"
+        }
+    }
+}
+
+function selecaoCorreta() {
+    for (let box in selection) {
+        let currentBox = document.getElementById(selection[box])
+        currentBox.classList.add("letter-box--correct")
+        currentBox.classList.remove("letter-box--selected")
+    }
+}
+
+function limpaSelecao() {
+    for (let box in selection) {
+        document.getElementById(selection[box]).classList.remove("letter-box--selected")
+        document.getElementById(selection[box]).style.backgroundColor = "white"
+    }
+    selection = []
+}
+
+function limpaSelecionados() {
+    for (let box = 0; box < caixaLetraSelecionada.length; box++) {
+        caixaLetraSelecionada[box].classList.remove("letter-box--selected")
+    }
+}
+
+function verificaVitoria() {
+    if (palavrasAchadas.length === 3) {
+        alert("PARABÉNS! Você achou todas as palavras!");
+        return resetaJogo()
+    }
+}
+
+function inciarJogo() {
+    matriz = criarMatriz()
+    ColocarPalavrasNaMatriz()
+    preencherTabela()
+}
+
+function resetaJogo() {
+    
+    limpaSelecionados()
+
+    let lines = document.querySelectorAll("tr");
+
+    for (let linha in lines) {
+        lines[linha].innerHTML = "";
+    }
+
+    localPalavrasMatriz = []
+    palavrasAchadas = []
+    selection = []
+
+    inciarJogo()
+}

@@ -4,6 +4,8 @@
 td{
     padding: 5px;
     border: 1px solid #000;
+    background-color: white;
+    transition: background-color 0.25s;
 }
 td:hover{
     background-color: #ccc;
@@ -12,4 +14,17 @@ td:hover{
 
 /* == Classes para JS === */
 
+
+.letter-box--selected {
+    background-color: gray;
+    transition: background-color 0.25s;
+}
+
+.letter-box--correct {
+    background-color: green;
+}
+
+.letter-box--wrong {
+    background-color: red;
+}
 /* ====================== */
