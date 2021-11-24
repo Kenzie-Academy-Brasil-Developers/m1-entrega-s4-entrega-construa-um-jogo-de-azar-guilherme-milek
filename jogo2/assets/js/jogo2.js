@@ -134,14 +134,12 @@ function removeClasses(imagemClicadaParaAnimacao,escolhaComputador,imgEscolhaSob
     }
 }
 
+const tempoEspera = 3000;
 function animacaoDasEscolhas(imagemClicada, escolhaComputador) {
     const imgPedra = document.querySelector('#pedra');
     const imgPapel = document.querySelector('#papel');
     const imgTesoura = document.querySelector('#tesoura');
 
-
-
-    const tempoEspera = 3000;
     //console.log(escolhaComputador.id)
     const imagemClicadaParaAnimacao = imagemClicada;
 
@@ -216,7 +214,6 @@ function animacaoDasEscolhas(imagemClicada, escolhaComputador) {
             }
     }
     
-    
 }
 
 let vitoriasJogador = 0;
@@ -260,10 +257,10 @@ function dezJogadas(event) {
 }
 
 function proximaPartida(Player, PC) {
-    timerStart();
     counterRodadas++;
     criaImagensNaTabela(ganhador, counterRodadas, Player.src, PC.src);
     animacaoDasEscolhas(Player, PC);
+    setTimeout(() => {timerStart()}, tempoEspera);
     verificaVitoria();
     /* console.log("AntesVitoria")
     console.log("jogador"+vitoriasJogador);
@@ -312,6 +309,7 @@ function verificaJogada(escolhaPlayer, escolhaPC) {
             ganhador = 'empate';
         } 
     }
+    timerStop();
 }
 
 const timer = document.getElementById("tempo-restante");
@@ -327,6 +325,7 @@ function timerStart() {
         timer.innerText = sec;
 
         if (sec === 0) {
+            timerStop()
             escolhaPlayer = sorteiaEscolhaComputador();
             escolhaPC = sorteiaEscolhaComputador();
 
