@@ -138,9 +138,6 @@ function animacaoDasEscolhas(imagemClicada, escolhaComputador) {
     const imgPedra = document.querySelector('#pedra');
     const imgPapel = document.querySelector('#papel');
     const imgTesoura = document.querySelector('#tesoura');
-
-
-
     const tempoEspera = 3000;
     //console.log(escolhaComputador.id)
     const imagemClicadaParaAnimacao = imagemClicada;
