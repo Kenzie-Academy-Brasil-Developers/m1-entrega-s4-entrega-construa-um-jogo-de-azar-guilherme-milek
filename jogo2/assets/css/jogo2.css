@@ -1,3 +1,19 @@
+.animacao {
+    position: relative;
+    animation-name: animacaoJogador;
+    animation-duration: 5s;
+}
+
+@keyframes animacaoJogador {
+    0%   {left:-100px; top:0px;}
+    25%  {left: 0px; top:0px;}
+}
+
+@keyframes animacaoComputador {
+    0%   {left:-100px; top:0px;}
+    25%  {left: 0px; top:0px;}
+}
+
 body {
     background-image: url("../images/Background-Zumbi.jpg");
     background-repeat: no-repeat;

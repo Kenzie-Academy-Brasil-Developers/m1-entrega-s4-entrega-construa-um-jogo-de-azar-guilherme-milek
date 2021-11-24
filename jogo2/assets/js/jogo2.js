@@ -111,7 +111,27 @@ function resetGame() {
             tdsTable[i].classList.remove('winner');
         }
     }
-    //criaElementosPedraPapelTesoura();
+}
+
+function removeClassAnimacao(imagemClicadaParaAnimacao) {
+    imagemClicadaParaAnimacao.classList.remove('animacao');
+    //console.log("Aqui")
+}
+
+function animacaoDasEscolhas(imagemClicada, escolhaComputador) {
+    console.log(escolhaComputador.id)
+    const imagemClicadaParaAnimacao = imagemClicada;
+    if(imagemClicadaParaAnimacao.id === 'pedra') {
+        console.log('Fui clicado');
+        imagemClicadaParaAnimacao.classList.add('animacao');
+        
+    } else if(imagemClicadaParaAnimacao.id === 'papel') {
+        imagemClicadaParaAnimacao.classList.add('animacao');
+    } else {
+        imagemClicadaParaAnimacao.classList.add('animacao');
+    }
+    setTimeout(() => {removeClassAnimacao(imagemClicadaParaAnimacao)},1500);
+    
 }
 
 let vitoriasJogador = 0;
@@ -190,6 +210,7 @@ function dezJogadas(event) {
     }
     counterRodadas++;
     criaImagensNaTabela(ganhador, counterRodadas, imagemClicada.src, escolhaComputador.src);
+    animacaoDasEscolhas(imagemClicada, escolhaComputador);
     verificaVitoria();
     /* console.log("AntesVitoria")
     console.log("jogador"+vitoriasJogador);
