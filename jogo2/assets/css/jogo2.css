@@ -1,17 +1,15 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;600;800;900&display=swap");
+
 body {
     background-image: url("../images/Background-Zumbi.jpg");
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
     height: 100vh;
-    font-family: inter;
+    font-family: "Inter", sans-serif;
     display: flex;
     justify-content: center;
     align-items: center;
-}
-
-aside {
-    color: white;
 }
 
 .container {
@@ -22,17 +20,24 @@ aside {
 }
 
 .game-display {
-    background-color: #8e5ebc;
+    background-color: rgb(68, 60, 102, 0.7);
     width: 300px;
-    height: 450px;
-    border-radius: 10px 10px 0 0;
-    margin-top: 10px;
+    height: 200px;
+    border-radius: 10px 10px 10px 10px;
+    margin-top: -200px;
+    margin-bottom: 10px;
     display: flex;
     flex-direction: row;
     align-content: center;
     justify-content: center;
     align-items: center;
-    border: 5px #663399 solid;
+    border: 5px rgb(102, 51, 153, 0.6) solid;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 #papel {
@@ -45,15 +50,33 @@ aside {
 
 #tesoura {
     width: 50px;
-    /* rotate: */
+}
+
+#scoreTable {
+    width: 300px;
+    font-size: 15px;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+}
+
+tr {
+    display: flex;
 }
 
 td {
-    border: 2px #50fa7b solid;
-    width: 20px;
-    height: 20px;
-    background-color: #663399;
+    border: 2px #663399 solid;
+    width: 35px;
+    height: 50px;
+    min-height: 50px;
+    max-width: 35px;
+    background-color: rgb(68, 60, 102, 0.7);
     border-radius: 5px;
+    text-align: center;
+    line-height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 td img {
@@ -63,40 +86,112 @@ td img {
 }
 
 #campo-nome {
-    background-color: #03a161;
+    background-color: #663399;
+    border: 2px solid #bd93f9;
+    border-radius: 4px;
     box-shadow: #03a161;
-    border: 1px solid #bd93f9;
-    padding: 12px 20px;
+    box-sizing: border-box;
+    color: #f8f8f2;
+    padding: 12px 35px;
     margin: 8px 0;
     display: inline-block;
+    font-size: 13px;
+}
+
+#campo-nome:focus {
+    background-color: #663399;
+    border: 2px solid #bd93f9;
+    outline: none;
     border-radius: 4px;
+    box-shadow: #03a161;
     box-sizing: border-box;
-
+    color: #f8f8f2;
+    padding: 12px 35px;
+    margin: 8px 0;
+    display: inline-block;
+    font-size: 13px;
 }
 
-#confirma-nome {}
-
-form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+#campo-nome::placeholder {
+    color: #f8f8f2;
 }
 
-#scoreTable {
-    background-color: #8e5ebc;
-    width: 300px;
-    font-size: 15px;
-}
-
-#homeButton {
-    transition: all 0.4s;
-    background-color: #04d481;
+#confirma-nome {
+    background-color: #50fa7b;
+    border-style: none;
+    border-radius: 3px;
     padding: 7px 7px 7px 7px;
+    font-weight: 700;
+    color: #663399;
+}
+
+#confirma-nome:hover {
+    box-shadow: -4px -3px #04d481;
+    transition: all 0.4s;
+    text-decoration: underline;
+    font-weight: 700;
+    color: #663399;
+}
+
+#player-name {
+    color: #f1fa8c;
+    padding-left: 5px;
+    font-weight: 600;
+    font-size: 1rem;
+    width: 110px;
+    max-width: none;
+}
+
+#computer {
+    color: #f1fa8c;
+    padding-left: 5px;
+    font-weight: 600;
+    font-size: 1rem;
+    width: 110px;
+    max-width: none;
+}
+
+#buttons {
+    display: flex;
+}
+
+#buttons button {
+    transition: all 0.4s;
+    background-color: #50fa7b;
+    padding: 7px 10px 7px 10px;
     border-radius: 5px;
     margin-top: 10px;
     text-decoration: none;
     color: #663399;
     font-weight: 700;
+    border-style: none;
+    margin-right: 15px;
+}
+
+#buttons button:hover {
+    box-shadow: -4px -3px #04d481;
+    text-decoration: underline;
+}
+
+#buttons a {
+    transition: all 0.4s;
+    background-color: #50fa7b;
+    padding: 7px 7px 7px 7px;
+    border-radius: 5px;
+    margin-top: 10px;
+    margin-left: 15px;
+    text-decoration: none;
+    color: #663399;
+    font-weight: 600;
+}
+
+#buttons a:hover {
+    box-shadow: -4px -3px #04d481;
+    text-decoration: underline;
+}
+
+#howToPlay {
+    color: red;
 }
 
 .hidden {
@@ -104,8 +199,13 @@ form {
 }
 
 .winner {
-    background-color: #333;
-    border: 2px solid black;
+    box-sizing: border-box;
+    border: 3px #50fa7b solid;
+    width: 35px;
+    height: 54px;
+    min-width: 39px;
+    min-height: 50px;
+    max-width: 35px;
 }
 
 /* DESKTOP */
@@ -116,7 +216,6 @@ form {
         background-size: cover;
         background-position: bottom;
         height: 100vh;
-        font-family: inter;
     }
 
     main {
@@ -124,12 +223,13 @@ form {
     }
 
     .game-display {
-        background-color: #443c66;
+        background-color: rgb(68, 60, 102, 0.7);
         width: 600px;
         height: 300px;
         border-radius: 10px 10px 10px 10px;
         margin-top: 10px;
         margin-bottom: 10px;
+        border: 5px rgb(102, 51, 153, 0.6) solid;
     }
 
     #papel {
@@ -142,52 +242,56 @@ form {
 
     #tesoura {
         width: 120px;
-        /* rotate: */
     }
 
     /* #tesoura {
         transform: rotate(55deg);
     } */
 
-    td {
-        border: 2px #663399 solid;
-        width: 20px;
-        height: 20px;
-        border-radius: 5px;
-        background-color: #443c66;
-    }
-
     #campo-nome {
-        background-color: #04d481;
+        background-color: #50fa7b;
         box-shadow: #03a161;
-        border: 2px solid #663399;
+        border: 2px solid #ff5555;
         padding: 12px 35px;
         margin: 8px 0;
         display: inline-block;
         border-radius: 4px;
         box-sizing: border-box;
-        font-size: 15px
+        font-size: 15px;
     }
 
     #scoreTable {
-        background-color: #663399;
+        display: flex;
         width: 550px;
+        min-width: 550px;
         height: 100px;
         border-radius: 5px;
+        margin-bottom: 20px;
+    }
+
+    td {
+        border: 3px rgb(102, 51, 153, 0.7) solid;
+        width: 60px;
+        min-width: 60px;
+        height: 30px;
+        border-radius: 5px;
+        background-color: rgb(68, 60, 102, 0.8);
     }
 
     #player-name {
-        color: #ff79c6;
+        color: #f1fa8c;
         padding-left: 5px;
         font-weight: 600;
         font-size: 1.3rem;
+        width: 160px;
     }
 
     #computer {
-        color: #ff79c6;
+        color: #f1fa8c;
         padding-left: 5px;
         font-weight: 600;
         font-size: 1.3rem;
+        width: 160px;
     }
 
     #homeButton {
@@ -221,9 +325,36 @@ form {
         font-weight: bold;
     }
 
+    #campo-nome {
+        background-color: #663399;
+        border: 2px solid #bd93f9;
+        border-radius: 4px;
+        box-shadow: #03a161;
+        box-sizing: border-box;
+        color: #f8f8f2;
+        padding: 12px 35px;
+        margin: 8px 0;
+        display: inline-block;
+        font-size: 13px;
+    }
 
+    #campo-nome:focus {
+        background-color: #663399;
+        border: 2px solid #bd93f9;
+        outline: none;
+        border-radius: 4px;
+        box-shadow: #03a161;
+        box-sizing: border-box;
+        color: #f8f8f2;
+        padding: 12px 35px;
+        margin: 8px 0;
+        display: inline-block;
+        font-size: 13px;
+    }
 
-    #campo-nome {}
+    #campo-nome::placeholder {
+        color: #f8f8f2;
+    }
 
     #confirma-nome {
         transition: all 0.4s;
@@ -236,9 +367,15 @@ form {
         font-weight: 700;
     }
 
-    .animacao-mao-player {}
+    .winner {
+        border: 4px #50fa7b solid;
+        box-sizing: border-box;
+        border-radius: 3px;
 
-    .animacao-mao-computer {}
+        min-width: 66px;
+        min-height: 56px;
+        max-width: 35px;
+    }
 }
 
 /*
