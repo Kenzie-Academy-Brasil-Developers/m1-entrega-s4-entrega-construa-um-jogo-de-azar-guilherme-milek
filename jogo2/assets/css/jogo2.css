@@ -1,17 +1,29 @@
-.animacao {
+.animacaoJogador {
     position: relative;
     animation-name: animacaoJogador;
     animation-duration: 5s;
+    transform: rotate(15deg);
+}
+
+.animacaoComputador {
+    position: relative;
+    animation-name: animacaoComputador;
+    animation-duration: 5s;
+    transform: rotate(-20deg);
 }
 
 @keyframes animacaoJogador {
     0%   {left:-100px; top:0px;}
     25%  {left: 0px; top:0px;}
+    30%  {left: -20px; top:0px;}
+    32%  {left: 0px; top:0px;}
 }
 
 @keyframes animacaoComputador {
-    0%   {left:-100px; top:0px;}
-    25%  {left: 0px; top:0px;}
+    0%   {right: -100px; top:0px;}
+    25%  {right: 0px; top:0px;}
+    30%  {right: -20px; top:0px;}
+    32%  {right: 0px; top:0px;}
 }
 
 body {
