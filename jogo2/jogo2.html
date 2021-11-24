@@ -6,45 +6,68 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="./assets/css/reset.css">
     <link rel="stylesheet" href="./assets/css/jogo2.css">
 </head>
 
 <body>
-
+    <!-- <audio preload autoplay loop>
+        <source src="./assets/song/y2mate.com - Michael Myers Theme Song.mp3" type="audio/mpeg">
+      Your browser does not support the audio element.
+    </audio> -->
+   
     <main>
         <div class="container">
             <section class="game-display">
             </section>
-            <table>
+            <table id="scoreTable">
                 <tr>
-                    <td id="player-name"></td>
-                    <td id="player-jogada1"></td>
-                    <td id="player-jogada2"></td>
-                    <td id="player-jogada3"></td>
-                    <td id="player-jogada4"></td>
-                    <td id="player-jogada5"></td>
-                    <td id="player-jogada6"></td>
-                    <td id="player-jogada7"></td>
-                    <td id="player-jogada8"></td>
-                    <td id="player-jogada9"></td>
-                    <td id="player-jogada10"></td>
+                    <td id="player-name">Jogador</td>
+                    <td id="player-rodada1"></td>
+                    <td id="player-rodada2"></td>
+                    <td id="player-rodada3"></td>
+                    <td id="player-rodada4"></td>
+                    <td id="player-rodada5"></td>
                 </tr>
                 <tr>
                     <td id="computer">Computer</td>
-                    <td id="computer-jogada1"></td>
-                    <td id="computer-jogada2"></td>
-                    <td id="computer-jogada3"></td>
-                    <td id="computer-jogada4"></td>
-                    <td id="computer-jogada5"></td>
-                    <td id="computer-jogada6"></td>
-                    <td id="computer-jogada7"></td>
-                    <td id="computer-jogada8"></td>
-                    <td id="computer-jogada9"></td>
-                    <td id="computer-jogada10"></td>
+                    <td id="computer-rodada1"></td>
+                    <td id="computer-rodada2"></td>
+                    <td id="computer-rodada3"></td>
+                    <td id="computer-rodada4"></td>
+                    <td id="computer-rodada5"></td>
                 </tr>
             </table>
-            <a href="../index.html">Página inicial</a>
+            <a href="../index.html" id="homeButton">Página inicial</a>
         </div>
+        <aside>
+            <ul>
+                <li>
+                   Escolha entre pedra, papel ou tesoura.
+                </li>
+                <li>
+                    O computador fará uma escolha aleatória.
+                </li>
+                <li>
+                    Você receberá uma mensagem de quem foi o vencedor e poderá revisá-la no placar.
+                </li>
+                <ul>
+                    <span>
+                        Regra principal
+                    </span>
+
+                    <li>
+                        Pedra vence tesoura.
+                    </li>
+                    <li>
+                        Papel vence pedra.
+                    </li>
+                    <li>
+                        Tesoura vence papel.
+                    </li>
+                </ul>
+            </ul>
+        </aside>
     </main>
     <script src="assets/js/jogo2.js"></script>
 </body>
