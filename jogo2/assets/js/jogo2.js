@@ -312,11 +312,11 @@ function verificaJogada(escolhaPlayer, escolhaPC) {
     timerStop();
 }
 
-const timer = document.getElementById("tempo-restante");
 let cronometro = "",
     startTime = 5;
 
 function timerStart() {
+
     timerStop();
     timer.innerText = startTime;
     let sec = startTime;
@@ -337,4 +337,42 @@ function timerStart() {
 
 function timerStop() {
     clearInterval(cronometro);
+}
+
+function criarTimer() {
+    const timer = document.createElement("section");
+    timer.classList.add = "tempo-restante";
+
+}
+
+const botaoInstrucoes = document.getElementById("gameRules");
+botaoInstrucoes.addEventListener("click", criaInstrucoes)
+
+const instrucoes = "Escolha entre pedra, papel ou tesoura. O computador fará uma escolha aleatória. Você receberá uma mensagem de quem foi o vencedor e poderá revisá-la no placar. Regra principal Papel vence pedra. Tesoura vence papel."
+function criaInstrucoes() {
+    const blocker = document.createElement("div");
+    blocker.classList.add("blocker");
+
+    const section = document.createElement("section");
+    section.classList.add("instrucoes");
+    section.id = "painelInstrucoes";
+
+    const p = document.createElement("p");
+    section.appendChild(p)
+
+    p.innerText = instrucoes;
+
+    const button = document.createElement("button");
+    button.id = "closeRules";
+
+    section.appendChild(button);
+
+    
+    button.innerText = "Fechar";
+    button.addEventListener("click", () => {
+        blocker.remove();
+    })
+
+    blocker.appendChild(section);
+    document.body.appendChild(blocker);
 }

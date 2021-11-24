@@ -62,6 +62,36 @@ body {
     border: 5px rgb(102, 51, 153, 0.6) solid;
 }
 
+.blocker {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.4);
+    position: fixed;
+    z-index: 1;
+    width: 100vw;
+    height: 100vh;
+}
+
+.instrucoes {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    position: fixed;
+    z-index: 2;
+    background-color: rgb(68, 60, 102);
+    color: white;
+    width: 500px;
+    padding: 25px 0;
+    border-radius: 10px 10px 10px 10px;
+    border: 5px rgb(102, 51, 153, 0.6) solid;
+}
+
+.instrucoes p {
+    width: 400px;
+}
+
 form {
     display: flex;
     flex-direction: column;
@@ -322,7 +352,7 @@ td img {
         width: 160px;
     }
 
-    #homeButton {
+    #homeButton, #closeRules {
         transition: all 0.4s;
         background-color: #50fa7b;
         padding: 7px 7px 7px 7px;
@@ -333,7 +363,7 @@ td img {
         font-weight: 700;
     }
 
-    #homeButton:hover {
+    #homeButton:hover, #closeRules:hover {
         box-shadow: -4px -3px #03a161;
         text-decoration: underline;
     }
@@ -403,6 +433,29 @@ td img {
         min-width: 66px;
         min-height: 56px;
         max-width: 35px;
+    }
+
+    .blocker {
+        background-color: rgba(0, 0, 0, 0.4);
+        position: fixed;
+        z-index: 1;
+        width: 100vw;
+        height: 100vh;
+    }
+    
+    .instrucoes {
+        position: fixed;
+        z-index: 2;
+        background-color: rgb(68, 60, 102);
+        color: white;
+        width: 500px;
+        padding: 25px 0;
+        border-radius: 10px 10px 10px 10px;
+        border: 5px rgb(102, 51, 153, 0.6) solid;
+    }
+    
+    .instrucoes p {
+        width: 400px;
     }
 }
 
