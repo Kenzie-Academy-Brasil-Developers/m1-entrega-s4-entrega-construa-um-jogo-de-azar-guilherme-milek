@@ -1,5 +1,5 @@
 //Palavras para achar
-let palavras = ['alface', 'feijao', 'arroz', 'carne', 'queijo', 'leite', 'suco', 'ovo']
+let palavras = ['bulbasaur', 'Caterpie', 'Squirtle', 'Nidoran', 'Nidorino', 'Zubat', 'Oddish', 'Mankey', 'Alakazam', 'Machop', 'Slowpoke', 'Gengar', 'Exeggutor', 'Ditto', 'Snorlax', 'Dragonite', 'Mewtwo', 'Pikachu', 'Rattata', 'Psyduck']
 //Letras para preencher o resto
 let letras = 'abcdefghijklmnopqrstuvwxyz'
 //Arr bidimensional das letras e palavras
@@ -7,6 +7,18 @@ let matriz = criarMatriz()
 let localPalavrasMatriz = []
 let palavrasAchadas = [];
 let caixaLetraSelecionada = [];
+
+function colocarNome(event){
+    const divNome = document.querySelector('.inserir-nome')
+    const nome = document.getElementById('nome')
+    
+    divNome.classList.add('hidden')
+
+    inciarJogo()
+}
+
+const btn = document.getElementById('btn-nome')
+btn.addEventListener('click', colocarNome)
 
 //Sortear uma letra
 function sortearLetra() {
@@ -105,8 +117,6 @@ function ColocarPalavrasNaMatriz() {
     }
 }
 
-ColocarPalavrasNaMatriz()
-
 //Pega a matriz e coloca as informações na tabela
 function preencherTabela() {
     let table = document.querySelector('.tabela')
@@ -134,7 +144,7 @@ function preencherTabela() {
 
     }
 }
-preencherTabela()
+
 
 //Verifica se a seleção é uma das palavras
 function verificarPalavra(linha, coluna1, coluna2) {
@@ -182,10 +192,16 @@ function verificarPalavra(linha, coluna1, coluna2) {
                         wordInList.style.textDecoration = "line-through";
                     }
 
-                    selecaoCorreta()
+                    if(selecaoCorreta()){
+                        setTimeout(() => {
+                            verificaVitoria()
+                          }, 250);
+                        
+                    }
+                    
 
                     // Chama a função de verificar se ganhou o jogo
-                    verificaVitoria()
+                    
                     return true
                 }
             }
@@ -263,6 +279,8 @@ function selecaoCorreta() {
         currentBoxID.classList.add("letter-box--correct")
         currentBoxID.classList.remove("letter-box--selected")
     }
+    return true
+    
 }
 
 function limpaSelecao() {
@@ -281,7 +299,7 @@ function limpaSelecionadosReset() {
 function verificaVitoria() {
     if (palavrasAchadas.length === 3) {
         alert("PARABÉNS! Você achou todas as palavras!");
-        return resetaJogo()
+        resetaJogo()
     }
 }
 

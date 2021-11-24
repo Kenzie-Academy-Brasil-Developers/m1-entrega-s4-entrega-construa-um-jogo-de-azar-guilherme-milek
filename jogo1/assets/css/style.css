@@ -5,12 +5,28 @@ body{
     background-size: auto 120vh;
     object-fit: cover; */
     background-color: #ECECEC;
+    height: 100vh;
     
     color: #563232;
 }
 
+
+#nome{
+    padding: 10px;
+    border: 2px solid #3B4CCA;
+    border-radius: 5px;
+}
+#btn-nome{
+    color: #fff;
+    margin-top: 10px;
+    padding: 10px 15px;
+    background-color: #FFDE00;
+    border: 2px solid #3B4CCA;
+    border-radius: 5px;
+}
+
 .container{
-    height: 100vh;
+
     
 }
 
@@ -34,29 +50,48 @@ h1{
     margin: 0 auto;
     background-color: #fff;
 }
-.tabela{
-}
 
+.container-tabela{
+    min-width: 305px;
+    max-width: 305px;
+    height: 300px;
+}
+.inserir-nome{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    height: 100%;
+}
+.tabela{
+    margin: auto;
+    width: 100%;
+}
 td{
-    padding: 8px;
-    border: 1px solid #000;
+    padding: 7px;
+
     background-color: white;
     transition: background-color 0.25s;
+    text-align: center;
 }
 td:hover{
     background-color: #ccc;
     cursor: pointer;
+}
+.hidden{
+    display: none;
 }
 
 /* == Classes para JS === */
 
 
 .letter-box--selected {
-    background-color: red;
+    background-color: rgb(255, 0, 0);
     transition: background-color 0.25s;
 }
 
 .letter-box--correct {
-    background-color: green;
+    background-color: rgb(0, 170, 0);
 }
 /* ====================== */
