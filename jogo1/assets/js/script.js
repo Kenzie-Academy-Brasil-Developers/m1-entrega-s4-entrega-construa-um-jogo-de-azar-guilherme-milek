@@ -1,5 +1,5 @@
 //Palavras para achar
-let palavras = ['bulbasaur', 'Caterpie', 'Squirtle', 'Nidoran', 'Nidorino', 'Zubat', 'Oddish', 'Mankey', 'Alakazam', 'Machop', 'Slowpoke', 'Gengar', 'Exeggutor', 'Ditto', 'Snorlax', 'Dragonite', 'Mewtwo', 'Pikachu', 'Rattata', 'Psyduck']
+let palavras = ['Bulbasaur', 'Caterpie', 'Squirtle', 'Nidoran', 'Nidorino', 'Zubat', 'Oddish', 'Mankey', 'Alakazam', 'Machop', 'Slowpoke', 'Gengar', 'Exeggutor', 'Ditto', 'Snorlax', 'Dragonite', 'Mewtwo', 'Pikachu', 'Rattata', 'Psyduck']
 //Letras para preencher o resto
 let letras = 'abcdefghijklmnopqrstuvwxyz'
 //Arr bidimensional das letras e palavras
@@ -8,13 +8,17 @@ let localPalavrasMatriz = []
 let palavrasAchadas = [];
 let caixaLetraSelecionada = [];
 
-function colocarNome(event){
+function colocarNome(event) {
     const divNome = document.querySelector('.inserir-nome')
-    const nome = document.getElementById('nome')
-    
-    divNome.classList.add('hidden')
+    const nome = document.getElementById('nome').value
+    const cronometro = document.querySelector('.tempo-limite')
+    const palavrasParaAchar = document.querySelector('.palavras-para-achar')
 
-    inciarJogo()
+    divNome.classList.add('hidden')
+    cronometro.classList.remove('hidden')
+    palavrasParaAchar.classList.remove('hidden')
+
+    iniciarJogo()
 }
 
 const btn = document.getElementById('btn-nome')
@@ -103,7 +107,7 @@ function ColocarPalavrasNaMatriz() {
                     achada: false
                 }
 
-                
+
                 let palavra = palavrasSorteadas[i].split('')
                 let count = 0
 
@@ -133,6 +137,7 @@ function preencherTabela() {
             }
             else {
                 td.innerText = matriz[i][j]
+                td.classList.add("local-palavra")
             }
 
             td.setAttribute('coluna', j)
@@ -185,6 +190,8 @@ function verificarPalavra(linha, coluna1, coluna2) {
 
                     localPalavrasMatriz[i].achada = true
 
+                    // Valida se a palavra foi achada, marcando-a na lista como riscada
+                    // Além de incrementar no "contador" de vitória
                     if (!palavrasAchadas.includes(localPalavrasMatriz[i].palavra)) {
                         palavrasAchadas.push(localPalavrasMatriz[i].palavra);
                         let currentWord = localPalavrasMatriz[i].palavra;
@@ -192,16 +199,16 @@ function verificarPalavra(linha, coluna1, coluna2) {
                         wordInList.style.textDecoration = "line-through";
                     }
 
-                    if(selecaoCorreta()){
+                    if (selecaoCorreta()) {
                         setTimeout(() => {
                             verificaVitoria()
-                          }, 250);
-                        
+                        }, 250);
+
                     }
-                    
+
 
                     // Chama a função de verificar se ganhou o jogo
-                    
+
                     return true
                 }
             }
@@ -231,8 +238,7 @@ function camposEscolhidos(event) {
             }
         }
 
-
-
+        // Verifica se o jogador selecionou campos válidos, validando a palavra e vitória em seguida
         if (escolha1.linha !== undefined && escolha2.linha !== undefined) {
             selecionaCampos(escolha1.linha, escolha1.coluna, escolha2.linha, escolha2.coluna);
 
@@ -252,14 +258,13 @@ function camposEscolhidos(event) {
 
 
     }
-    caixaLetraSelecionada = document.querySelectorAll(".letter-box--selected");
+    caixaLetraSelecionada = document.querySelectorAll(".letras--selecionadas");
 }
 
-let clickDown = document.querySelector('.tabela')
-clickDown.addEventListener('click', camposEscolhidos)
-
+// Salva a última seleção feita pelo jogador
 let selection = [];
 
+// FUnção que aplica uma classe para as caixas selecionadas pelo jogador
 function selecionaCampos(linhaInicio, colunaInicio, linhaFim, colunaFim) {
     if (linhaInicio === linhaFim) {
         let max = Math.max(colunaInicio, colunaFim)
@@ -268,54 +273,72 @@ function selecionaCampos(linhaInicio, colunaInicio, linhaFim, colunaFim) {
             let currentBoxID = `${linhaInicio}-${inicio}`
 
             selection.push(currentBoxID)
-            document.getElementById(currentBoxID).classList.add("letter-box--selected")
+            document.getElementById(currentBoxID).classList.add("letras--selecionadas")
         }
     }
 }
 
+// Função que marca e mantém marcada as palavras corretas já encontradas
 function selecaoCorreta() {
-    for (let box in selection) {
-        let currentBoxID = document.getElementById(selection[box])
-        currentBoxID.classList.add("letter-box--correct")
-        currentBoxID.classList.remove("letter-box--selected")
+    for (let index in selection) {
+        let currentBoxID = document.getElementById(selection[index])
+        currentBoxID.classList.add("palavra--encontrada")
+        currentBoxID.classList.remove("letras--selecionadas")
+        currentBoxID.classList.remove("local-palavra")
     }
     return true
-    
+
 }
 
+// Função que limpa a seleção de palavras (NÃO CORRETAS!)
 function limpaSelecao() {
     for (let box in selection) {
-        document.getElementById(selection[box]).classList.remove("letter-box--selected")
+        document.getElementById(selection[box]).classList.remove("letras--selecionadas")
     }
     selection = []
 }
 
-function limpaSelecionadosReset() {
-    for (let box = 0; box < caixaLetraSelecionada.length; box++) {
-        caixaLetraSelecionada[box].classList.remove("letter-box--selected")
-    }
-}
-
+// Função que verifica se o jogador achou todas as 3 palavras
 function verificaVitoria() {
     if (palavrasAchadas.length === 3) {
         alert("PARABÉNS! Você achou todas as palavras!");
-        resetaJogo()
+        clickDown.removeEventListener('click', camposEscolhidos)
+        timerStop()
     }
 }
 
-function inciarJogo() {
+// Função que faz o jogador perder o jogo (POR FALTA DE TEMPO)
+function perdeJogo() {
+    let palavrasNaoAchadas = document.querySelectorAll(".local-palavra")
+    clickDown.removeEventListener('click', camposEscolhidos)
+
+    for (let index = 0; index < palavrasNaoAchadas.length; index++) {
+        palavrasNaoAchadas[index].classList.remove("local-palavra");
+        palavrasNaoAchadas[index].classList.add("palavra--nao-encontrada");
+    }
+
+    setTimeout(() => {
+        alert("AH NÃO! Você não achou todas as palavras a tempo :(")
+    }, 250)
+
+}
+
+
+// Função que inicializa todas as funções que criam todo o jogo
+function iniciarJogo() {
     matriz = criarMatriz()
     ColocarPalavrasNaMatriz()
     preencherTabela()
+    clickDown.addEventListener('click', camposEscolhidos)
+    timerStart()
 }
 
+// Botão que, ao ser pressionado, inicia a função que reseta o jogo
 const resetButton = document.getElementById("reset-button");
 resetButton.addEventListener('click', resetaJogo)
 
+// Função que reseta variáveis, tabuleiro, palavras, ...
 function resetaJogo() {
-
-    limpaSelecionadosReset()
-
     let lines = document.querySelectorAll("tr");
     let parent = lines[0].parentNode;
     parent.innerHTML = ""
@@ -326,5 +349,48 @@ function resetaJogo() {
     palavrasAchadas = []
     selection = []
 
-    inciarJogo()
+
+
+    iniciarJogo()
+
+    timerStart()
+}
+
+let clickDown = document.querySelector('.tabela')
+
+// = EXTRAS ========= //
+
+
+const espacoTimer = document.getElementById("tempo-limite__timer")
+espacoTimer.innerText = "01:00"
+let cronometro = ''
+
+function timerStart() {
+    timerStop(cronometro)
+    espacoTimer.innerText = "01:00"
+
+    let min = 1,
+        sec = 0;
+    cronometro = setInterval(() => {
+        if (sec === 0) {
+            min--
+            sec = 59
+        } else {
+            sec--
+        }
+
+        let verificador =  `${min}`
+
+        if (sec === 00 && min === 00) {
+            timerStop()
+            perdeJogo()
+        }
+
+        espacoTimer.innerText = `${(min < 10) ? "0" + min.toString() : min}:${(sec < 10) ? "0" + sec.toString() : sec}`
+    }, 1000);
+
+}
+
+function timerStop() {
+    clearInterval(cronometro)
 }
