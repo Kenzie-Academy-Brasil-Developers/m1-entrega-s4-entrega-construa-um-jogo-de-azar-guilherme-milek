@@ -121,8 +121,15 @@ function removeClasses(imagemClicadaParaAnimacao,escolhaComputador,imgEscolhaSob
     console.log(imgEscolhaSobrante1)
     console.log(imgEscolhaSobrante2)
     console.log(imgDuplicada)
-    imagemClicadaParaAnimacao.classList.remove('animacaoJogador');
-    escolhaComputador.classList.remove('animacaoComputador');
+    console.log(imagemClicadaParaAnimacao.classList)
+    if(imagemClicadaParaAnimacao.classList[0] === 'animacaoJogador') {
+        imagemClicadaParaAnimacao.classList.remove('animacaoJogador');
+        escolhaComputador.classList.remove('animacaoComputador');
+    } else {
+        imagemClicadaParaAnimacao.classList.remove('animacaoCorrigeBugJogador');
+        escolhaComputador.classList.remove('animacaoCorrigeBugComputador');
+    }
+
     imgEscolhaSobrante1.classList.remove('hidden');
 
     if(imgEscolhaSobrante2 !== undefined) {
@@ -139,7 +146,6 @@ function animacaoDasEscolhas(imagemClicada, escolhaComputador) {
     const imgPedra = document.querySelector('#pedra');
     const imgPapel = document.querySelector('#papel');
     const imgTesoura = document.querySelector('#tesoura');
-
     //console.log(escolhaComputador.id)
     const imagemClicadaParaAnimacao = imagemClicada;
 
@@ -158,11 +164,9 @@ function animacaoDasEscolhas(imagemClicada, escolhaComputador) {
             const sectionDasImagens = document.querySelector('.game-display');
             const imgDuplicada = document.createElement('img');
             imgDuplicada.id = "pedra";
-
             sectionDasImagens.appendChild(imgDuplicada);
             imgDuplicada.src = imagemClicadaParaAnimacao.src;
             imgDuplicada.classList.add('animacaoComputador');
-
             imagemClicadaParaAnimacao.classList.add('animacaoJogador');
             imgTesoura.classList.add('hidden');
             imgPapel.classList.add('hidden');
@@ -170,8 +174,10 @@ function animacaoDasEscolhas(imagemClicada, escolhaComputador) {
         }
     } else if(imagemClicadaParaAnimacao.id === 'papel') {
         if(escolhaComputador.id === 'pedra') {
-            imagemClicadaParaAnimacao.classList.add('animacaoJogador');
-            escolhaComputador.classList.add('animacaoComputador');
+            imagemClicadaParaAnimacao.classList.add('animacaoCorrigeBugJogador');
+            /* imagemClicadaParaAnimacao.style.position = 'relative';
+            imagemClicadaParaAnimacao.style.left = '-20px'; */
+            escolhaComputador.classList.add('animacaoCorrigeBugComputador');
             imgTesoura.classList.add('hidden');
             setTimeout(() => {removeClasses(imagemClicadaParaAnimacao,escolhaComputador,imgTesoura)},tempoEspera);
         } else if(escolhaComputador.id === 'tesoura') {
@@ -185,6 +191,7 @@ function animacaoDasEscolhas(imagemClicada, escolhaComputador) {
             sectionDasImagens.appendChild(imgDuplicada);
             imgDuplicada.src = imagemClicadaParaAnimacao.src;
             imgDuplicada.classList.add('animacaoComputador');
+            imgDuplicada.id = 'papel';
             imagemClicadaParaAnimacao.classList.add('animacaoJogador');
             imgTesoura.classList.add('hidden');
             imgPedra.classList.add('hidden');
@@ -192,13 +199,13 @@ function animacaoDasEscolhas(imagemClicada, escolhaComputador) {
         }
     } else {
         if(escolhaComputador.id === 'pedra') {
-            imagemClicadaParaAnimacao.classList.add('animacaoJogador');
-            escolhaComputador.classList.add('animacaoComputador');
+            imagemClicadaParaAnimacao.classList.add('animacaoCorrigeBugJogador');
+            escolhaComputador.classList.add('animacaoCorrigeBugComputador');
             imgPapel.classList.add('hidden');
             setTimeout(() => {removeClasses(imagemClicadaParaAnimacao,escolhaComputador,imgPapel)},tempoEspera);
         } else if(escolhaComputador.id === 'papel') {
-            imagemClicadaParaAnimacao.classList.add('animacaoJogador');
-            escolhaComputador.classList.add('animacaoComputador');
+            imagemClicadaParaAnimacao.classList.add('animacaoCorrigeBugJogador');
+            escolhaComputador.classList.add('animacaoCorrigeBugComputador');
             imgPedra.classList.add('hidden');
             setTimeout(() => {removeClasses(imagemClicadaParaAnimacao,escolhaComputador,imgPedra)},tempoEspera);
         } else {
@@ -207,6 +214,7 @@ function animacaoDasEscolhas(imagemClicada, escolhaComputador) {
             sectionDasImagens.appendChild(imgDuplicada);
             imgDuplicada.src = imagemClicadaParaAnimacao.src;
             imgDuplicada.classList.add('animacaoComputador');
+            imgDuplicada.id = 'tesoura';
             imagemClicadaParaAnimacao.classList.add('animacaoJogador');
             imgPapel.classList.add('hidden');
             imgPedra.classList.add('hidden');
