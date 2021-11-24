@@ -4,7 +4,7 @@ function criarElementosParaPegarNomeJogador() {
     const form = document.createElement('form');
     const inputText = document.createElement('input');
     inputText.id = 'campo-nome';
-    inputText.placeholder = 'Digite o seu primeiro nome aqui';
+    inputText.placeholder = 'Digite o seu primeiro nome:';
     const button = document.createElement('button');
     button.innerHTML = 'Comfirmar';
     button.id = 'confirma-nome';
@@ -84,15 +84,11 @@ function criaImagensNaTabela(ganhador, rodada, imgSrcPlayer, imgSrcComputer) {
     campoJogadorTabela.appendChild(imgTabelaPlayer);
     campoComputerTabela.appendChild(imgTabelaComputer);
     imgTabelaPlayer.src = imgSrcPlayer;
-    imgTabelaPlayer.width = 25;
     imgTabelaComputer.src = imgSrcComputer;
-    imgTabelaComputer.width = 25;
     if(ganhador === 'jogador') {
-        campoJogadorTabela.style.border = "1px solid black";
-        campoJogadorTabela.style.backgroundColor = "#333";
+        campoJogadorTabela.classList.add('winner');
     } else if(ganhador === 'computador') {
-        campoComputerTabela.style.border = "1px solid black";
-        campoComputerTabela.style.backgroundColor = "#333";
+        campoComputerTabela.classList.add('winner');
     } 
 }
 
@@ -107,10 +103,12 @@ function resetGame() {
     form.classList.remove('hidden');
     const tdsTable = document.querySelectorAll('td');
     for(let i = 0; i < tdsTable.length; i++) {
-        if(i !== 6) {
+
+        if(i === 0) {
+            tdsTable[i].innerText = 'Jogador';
+        } else if(i !== 6) {
             tdsTable[i].innerHTML = "";
-            tdsTable[i].style.border = "2px rebeccapurple solid";
-            tdsTable[i].style.backgroundColor = "#01988c";
+            tdsTable[i].classList.remove('winner');
         }
     }
     //criaElementosPedraPapelTesoura();

@@ -3,8 +3,15 @@ body {
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
-    height: 900px;
+    height: 100vh;
     font-family: inter;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+aside {
+    color: white;
 }
 
 .container {
@@ -28,12 +35,31 @@ body {
     border: 5px #663399 solid;
 }
 
+#papel {
+    width: 50px;
+}
+
+#pedra {
+    width: 50px;
+}
+
+#tesoura {
+    width: 50px;
+    /* rotate: */
+}
+
 td {
     border: 2px #50fa7b solid;
     width: 20px;
     height: 20px;
     background-color: #663399;
     border-radius: 5px;
+}
+
+td img {
+    display: block;
+    margin: auto;
+    width: 25px;
 }
 
 #campo-nome {
@@ -56,10 +82,6 @@ form {
     align-items: center;
 }
 
-.hidden {
-    width: 100px;
-}
-
 #scoreTable {
     background-color: #8e5ebc;
     width: 300px;
@@ -77,11 +99,14 @@ form {
     font-weight: 700;
 }
 
-#pedra {}
+.hidden {
+    display: none;
+}
 
-#papel {}
-
-#tesoura {}
+.winner {
+    background-color: #333;
+    border: 2px solid black;
+}
 
 /* DESKTOP */
 @media only screen and (min-width: 900px) {
@@ -89,8 +114,8 @@ form {
         background-image: url("../../assets/images/Background-Zumbi.jpg");
         background-repeat: no-repeat;
         background-size: cover;
-        background-position: center;
-        height: 480px;
+        background-position: bottom;
+        height: 100vh;
         font-family: inter;
     }
 
@@ -105,7 +130,6 @@ form {
         border-radius: 10px 10px 10px 10px;
         margin-top: 10px;
         margin-bottom: 10px;
-        box
     }
 
     #papel {
@@ -118,7 +142,7 @@ form {
 
     #tesoura {
         width: 120px;
-        rotate:
+        /* rotate: */
     }
 
     /* #tesoura {
@@ -199,7 +223,7 @@ form {
 
 
 
-    #campo-nome: {}
+    #campo-nome {}
 
     #confirma-nome {
         transition: all 0.4s;
@@ -212,11 +236,24 @@ form {
         font-weight: 700;
     }
 
-    .hidden {
-        display: none;
-    }
-
     .animacao-mao-player {}
 
     .animacao-mao-computer {}
 }
+
+/*
+div {
+  width: 100px;
+  height: 100px;
+  background-color: red;
+  position: relative;
+  animation-name: example;
+  animation-duration: 10s;
+}
+
+@keyframes example {
+  0%   {background-color:red; left:-100px; top:0px;}
+  25%  {background-color:yellow; left:200px; top:0px;}
+  50%  {background-color:blue;}
+}
+*/
