@@ -2,12 +2,12 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <link rel="stylesheet" href="./assets/css/reset.css">
-    <link rel="stylesheet" href="./assets/css/jogo2.css">
+    <link rel="stylesheet" href="./assets/css/reset.css" />
+    <link rel="stylesheet" href="./assets/css/jogo2.css" />
 </head>
 
 <body>
@@ -15,7 +15,7 @@
         <source src="./assets/song/y2mate.com - Michael Myers Theme Song.mp3" type="audio/mpeg">
       Your browser does not support the audio element.
     </audio> -->
-   
+
     <main>
         <div class="container">
             <section class="container__timer">
@@ -34,7 +34,7 @@
                     <td id="player-rodada5"></td>
                 </tr>
                 <tr>
-                    <td id="computer">Computer</td>
+                    <td id="computer">Computador</td>
                     <td id="computer-rodada1"></td>
                     <td id="computer-rodada2"></td>
                     <td id="computer-rodada3"></td>
@@ -42,36 +42,17 @@
                     <td id="computer-rodada5"></td>
                 </tr>
             </table>
-            <a href="../index.html" id="homeButton">Página inicial</a>
+            <div id="buttons">
+                <button id="gameRules">Regras do jogo</button>
+                <a href="../index.html" id="homeButton">Página inicial</a>
+            </div>
         </div>
-        <aside>
-            <ul>
-                <li>
-                   Escolha entre pedra, papel ou tesoura.
-                </li>
-                <li>
-                    O computador fará uma escolha aleatória.
-                </li>
-                <li>
-                    Você receberá uma mensagem de quem foi o vencedor e poderá revisá-la no placar.
-                </li>
-                <ul>
-                    <span>
-                        Regra principal
-                    </span>
-
-                    <li>
-                        Pedra vence tesoura.
-                    </li>
-                    <li>
-                        Papel vence pedra.
-                    </li>
-                    <li>
-                        Tesoura vence papel.
-                    </li>
-                </ul>
-            </ul>
-        </aside>
+        <div id="howToPlay">
+            Escolha entre pedra, papel ou tesoura. O computador fará uma escolha
+            aleatória. Você receberá uma mensagem de quem foi o vencedor e poderá
+            revisá-la no placar. Regra principal Papel vence pedra. Tesoura vence
+            papel.
+        </div>
     </main>
     <script src="assets/js/jogo2.js"></script>
 </body>
