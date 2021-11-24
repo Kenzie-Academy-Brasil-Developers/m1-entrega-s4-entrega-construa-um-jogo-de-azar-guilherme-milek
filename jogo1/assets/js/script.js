@@ -175,6 +175,8 @@ function verificarPalavra(linha, coluna1, coluna2) {
 
                     localPalavrasMatriz[i].achada = true
 
+                    // Valida se a palavra foi achada, marcando-a na lista como riscada
+                    // Além de incrementar no "contador" de vitória
                     if (!palavrasAchadas.includes(localPalavrasMatriz[i].palavra)) {
                         palavrasAchadas.push(localPalavrasMatriz[i].palavra);
                         let currentWord = localPalavrasMatriz[i].palavra;
@@ -215,8 +217,7 @@ function camposEscolhidos(event) {
             }
         }
 
-
-
+        // Verifica se o jogador selecionou campos válidos, validando a palavra e vitória em seguida
         if (escolha1.linha !== undefined && escolha2.linha !== undefined) {
             selecionaCampos(escolha1.linha, escolha1.coluna, escolha2.linha, escolha2.coluna);
 
@@ -242,8 +243,10 @@ function camposEscolhidos(event) {
 let clickDown = document.querySelector('.tabela')
 clickDown.addEventListener('click', camposEscolhidos)
 
+// Salva a última seleção feita pelo jogador
 let selection = [];
 
+// FUnção que aplica uma classe para as caixas selecionadas pelo jogador
 function selecionaCampos(linhaInicio, colunaInicio, linhaFim, colunaFim) {
     if (linhaInicio === linhaFim) {
         let max = Math.max(colunaInicio, colunaFim)
@@ -257,6 +260,7 @@ function selecionaCampos(linhaInicio, colunaInicio, linhaFim, colunaFim) {
     }
 }
 
+// Função que marca e mantém marcada as palavras corretas já encontradas
 function selecaoCorreta() {
     for (let box in selection) {
         let currentBoxID = document.getElementById(selection[box])
@@ -265,6 +269,7 @@ function selecaoCorreta() {
     }
 }
 
+// Função que limpa a seleção de palavras (NÃO CORRETAS!)
 function limpaSelecao() {
     for (let box in selection) {
         document.getElementById(selection[box]).classList.remove("letter-box--selected")
@@ -272,12 +277,7 @@ function limpaSelecao() {
     selection = []
 }
 
-function limpaSelecionadosReset() {
-    for (let box = 0; box < caixaLetraSelecionada.length; box++) {
-        caixaLetraSelecionada[box].classList.remove("letter-box--selected")
-    }
-}
-
+// Função que verifica se o jogador achou todas as 3 palavras
 function verificaVitoria() {
     if (palavrasAchadas.length === 3) {
         alert("PARABÉNS! Você achou todas as palavras!");
@@ -285,19 +285,19 @@ function verificaVitoria() {
     }
 }
 
+// Função que inicializa todas as funções que criam todo o jogo
 function inciarJogo() {
     matriz = criarMatriz()
     ColocarPalavrasNaMatriz()
     preencherTabela()
 }
 
+// Botão que, ao ser pressionado, inicia a função que reseta o jogo
 const resetButton = document.getElementById("reset-button");
 resetButton.addEventListener('click', resetaJogo)
 
+// Função que reseta variáveis, tabuleiro, palavras, ...
 function resetaJogo() {
-
-    limpaSelecionadosReset()
-
     let lines = document.querySelectorAll("tr");
     let parent = lines[0].parentNode;
     parent.innerHTML = ""
@@ -310,3 +310,5 @@ function resetaJogo() {
 
     inciarJogo()
 }
+
+// = EXTRAS ========= //
