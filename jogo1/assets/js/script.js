@@ -104,7 +104,6 @@ function ColocarPalavrasNaMatriz() {
         }
     }
 }
-
 ColocarPalavrasNaMatriz()
 
 //Pega a matriz e coloca as informações na tabela
@@ -123,6 +122,7 @@ function preencherTabela() {
             }
             else {
                 td.innerText = matriz[i][j]
+                td.classList.add("local-palavra")
             }
 
             td.setAttribute('coluna', j)
@@ -237,7 +237,7 @@ function camposEscolhidos(event) {
 
 
     }
-    caixaLetraSelecionada = document.querySelectorAll(".letter-box--selected");
+    caixaLetraSelecionada = document.querySelectorAll(".letras--selecionadas");
 }
 
 let clickDown = document.querySelector('.tabela')
@@ -255,17 +255,18 @@ function selecionaCampos(linhaInicio, colunaInicio, linhaFim, colunaFim) {
             let currentBoxID = `${linhaInicio}-${inicio}`
 
             selection.push(currentBoxID)
-            document.getElementById(currentBoxID).classList.add("letter-box--selected")
+            document.getElementById(currentBoxID).classList.add("letras--selecionadas")
         }
     }
 }
 
 // Função que marca e mantém marcada as palavras corretas já encontradas
 function selecaoCorreta() {
-    for (let box in selection) {
-        let currentBoxID = document.getElementById(selection[box])
-        currentBoxID.classList.add("letter-box--correct")
-        currentBoxID.classList.remove("letter-box--selected")
+    for (let index in selection) {
+        let currentBoxID = document.getElementById(selection[index])
+        currentBoxID.classList.add("palavra--encontrada")
+        currentBoxID.classList.remove("letras--selecionadas")
+        currentBoxID.classList.remove("local-palavra")
     }
 }
 
@@ -283,6 +284,20 @@ function verificaVitoria() {
         alert("PARABÉNS! Você achou todas as palavras!");
         return resetaJogo()
     }
+}
+
+// Função que faz o jogador perder o jogo (POR FALTA DE TEMPO)
+function perdeJogo() {
+
+    let palavrasNaoAchadas = document.querySelectorAll(".local-palavra")
+
+    for (let index = 0; index < palavrasNaoAchadas.length; index++) {
+        palavrasNaoAchadas[index].classList.remove("local-palavra");
+        palavrasNaoAchadas[index].classList.add("palavra--nao-encontrada");
+    }
+    
+    alert("AH NÃO! Você não achou todas as palavras a tempo :(");
+    resetaJogo()
 }
 
 // Função que inicializa todas as funções que criam todo o jogo
@@ -308,7 +323,31 @@ function resetaJogo() {
     palavrasAchadas = []
     selection = []
 
+    min = 1,
+    sec = 0;
+
     inciarJogo()
 }
 
 // = EXTRAS ========= //
+
+const espacoTimer = document.getElementById("tempo-limite__timer")
+espacoTimer.innerText = "01:00"
+
+let min = 1,
+    sec = 0;
+
+setInterval(() => {
+    if (sec === 0) {
+        min--
+        sec = 59
+    } else {
+        sec--
+    } 
+    
+    if (sec === 00 && min === 00) {
+        perdeJogo()
+    }
+
+    espacoTimer.innerText = `${(min < 10) ? "0" + min.toString() : min}:${(sec < 10) ? "0" + sec.toString() : sec}`
+}, 1000);

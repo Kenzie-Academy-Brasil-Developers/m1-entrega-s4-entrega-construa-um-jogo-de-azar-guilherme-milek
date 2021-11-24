@@ -50,13 +50,12 @@ td:hover{
 
 /* == Classes para JS === */
 
-
-.letter-box--selected {
+.letras--selecionadas, .palavra--nao-encontrada {
     background-color: red;
     transition: background-color 0.25s;
 }
 
-.letter-box--correct {
+.palavra--encontrada {
     background-color: green;
 }
 /* ====================== */
