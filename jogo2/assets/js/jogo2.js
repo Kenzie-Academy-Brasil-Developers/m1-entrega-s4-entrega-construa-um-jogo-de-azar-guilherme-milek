@@ -4,6 +4,7 @@ function criarElementosParaPegarNomeJogador() {
     const form = document.createElement('form');
     const inputText = document.createElement('input');
     inputText.id = 'campo-nome';
+    inputText.autocomplete = 'off';
     inputText.placeholder = 'Digite o seu primeiro nome:';
     const button = document.createElement('button');
     button.innerHTML = 'Comfirmar';
