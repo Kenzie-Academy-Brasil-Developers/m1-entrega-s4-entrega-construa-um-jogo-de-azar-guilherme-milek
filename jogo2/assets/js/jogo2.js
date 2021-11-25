@@ -210,9 +210,11 @@ function verificaVitoria() {
                 resetGame();
             }, tempoEspera+3000);
         }
-        counterRodadas = 0;
-        vitoriasJogador = 0;
-        vitoriasComputador = 0;
+        setTimeout(() => {
+            counterRodadas = 0;
+            vitoriasJogador = 0;
+            vitoriasComputador = 0;
+        }, tempoEspera+3000);
     } else {
         setTimeout(() => {
             timerStart();
@@ -396,7 +398,7 @@ function criarPopUpVitoriaDerrota(textToShow) {
     const divAlert = document.createElement('div');
     divAlert.classList.add('popUp');
     const span = document.createElement('span');
-    span.innerHTML = textToShow;
+    span.innerText = textToShow;
     span.id = 'alert-text';
     body.prepend(section);
     divAlert.appendChild(span);
