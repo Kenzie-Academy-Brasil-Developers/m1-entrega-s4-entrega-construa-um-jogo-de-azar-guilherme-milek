@@ -329,7 +329,7 @@ function criaInstrucoes() {
     blocker.classList.add("blocker");
 
     const section = document.createElement("section");
-    section.classList.add("instrucoes");
+    section.classList.add("con");
     section.id = "painelInstrucoes";
 
     const p = document.createElement("p");
@@ -350,4 +350,26 @@ function criaInstrucoes() {
 
     blocker.appendChild(section);
     document.body.appendChild(blocker);
+}
+
+function criaPopUpVitoriaDerrota() {
+    const blocker = document.createElement("div");
+    blocker.classList.add("blocker");
+
+    const section = document.createElement("section");
+    section.classList.add("instrucoes");
+    section.id = "painelInstrucoes";
+
+    const p = document.createElement("p");
+    section.appendChild(p)
+
+    p.innerText = instrucoes;
+
+    const button = document.createElement("button");
+    button.id = "closeRules";
+
+    section.appendChild(button);
+
+    
+    button.innerText = "Fechar";
 }
