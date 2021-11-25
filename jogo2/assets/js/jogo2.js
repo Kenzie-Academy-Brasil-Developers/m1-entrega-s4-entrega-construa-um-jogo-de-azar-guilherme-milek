@@ -210,9 +210,11 @@ function verificaVitoria() {
                 resetGame();
             }, tempoEspera+3000);
         }
-        counterRodadas = 0;
-        vitoriasJogador = 0;
-        vitoriasComputador = 0;
+        setTimeout(() => {
+            counterRodadas = 0;
+            vitoriasJogador = 0;
+            vitoriasComputador = 0;
+        }, tempoEspera+3000);
     } else {
         setTimeout(() => {
             timerStart();
@@ -356,7 +358,7 @@ function criaInstrucoes() {
     blocker.classList.add("blocker");
 
     const section = document.createElement("section");
-    section.classList.add("con");
+    section.classList.add("instrucoes");
     section.id = "painelInstrucoes";
 
     const p = document.createElement("p");
@@ -380,7 +382,8 @@ function criaInstrucoes() {
 }
 
 function fecharPopUp() {
-    const section = document.querySelector('#container--alert');
+    const section = document.querySelector('.blocker');
+    console.log(section)
     section.remove();
 }
 
@@ -391,11 +394,13 @@ function criarPopUpVitoriaDerrota(textToShow) {
     }, 3000);
     const body = document.querySelector('body');
     const section = document.createElement('section');
-    section.id = 'container--alert';
+    section.classList.add('blocker');
     const divAlert = document.createElement('div');
+    divAlert.classList.add('popUp');
     const span = document.createElement('span');
-    span.innerHTML = textToShow;
+    span.innerText = textToShow;
+    span.id = 'alert-text';
+    body.prepend(section);
     divAlert.appendChild(span);
     section.appendChild(divAlert);
-    body.appendChild(section);
 }
