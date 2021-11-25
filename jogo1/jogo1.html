@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+        @font-face {
+            font-family: Pokemon_Solid;
+            src: url("assets/fonts/Pokemon_Solid.ttf");
+        }
+    </style>
+    <link rel="stylesheet" href="assets/css/reset.css" />
+    <link rel="stylesheet" href="assets/css/style.css" />
+    <title>Caça Palavras</title>
+</head>
+
+<body>
+    <div class="fundo-preto">
+        <div class="container">
+            <header>
+                <a href="../index.html" class="link-voltar"><img src="assets/img/back.png"
+                    alt="Voltar para a página inicial" srcset="" /></a>
+                <h1>Caça Palavras</h1>
+            </header>
+            <main>
+                <div class="jogo">
+                    <section class="tempo-limite hidden">
+                        <p id="jogadorNome"></p>
+                       <h3 id="tempo-limite__timer"></h3>     
+                    </section>
+                    <div class="container-tabela">
+                        <table class="tabela">
+                            <div class="inserir-nome">
+                                <input type="text" placeholder="Coloque seu nome" id="nome" />
+                                <input type="button" value="Confirmar" id="btn-nome" />
+                            </div>
+                        </table>
+                    </div>
+                    <div id="placar" class="hidden">
+                        <p id="vitorias">Vitórias:</p>
+                        <p id="vitoriaPlacar">0</p>
+                        <p id="derrotas">Derrotas:</p>
+                        <p id="derrotasPlacar">0</p>
+                    </div>
+                </div>
+
+                <section class="palavras-para-achar hidden">
+                    <div class="container-reset-button">
+                        <button id="reset-button">Reiniciar partida</button>
+                    </div>
+                    <h2 class="palavras-para-achar__titulo">Palavras para achar</h2>
+                    <ul id="lista-palavras"></ul>                   
+                </section>
+
+                <section class="regras">
+                    <h2 class="regras__titulo">Regras do jogo</h2>
+                    <ul class="regras__lista">
+                        <li class="lista__item">
+                            1) Você deve clicar em um elemento, e depois no proximo para
+                            verificar a palavra.
+                        </li>
+                        <li class="lista__item">
+                            2) Apenas dois elementos na mesma linha.
+                        </li>
+                        <li class="lista__item">
+                            3) Para ganhar você deve achar todas as palavras.
+                        </li>
+                        <li class="lista__item">4) Se o tempo acabar, você perde!</li>
+                    </ul>
+                </section>
+            </main>
+        </div>
+    </div>
+    <footer></footer>
+
+    <script src="assets/js/script.js"></script>
+    <audio autoplay loop id="myaudio">
+        <source src="assets/audio/y2mate.com - Pokémon Red  Blue Music Opening Theme.mp3">
+    </audio>
+</body>
+
+</html>
