@@ -8,7 +8,7 @@ function criarElementosParaPegarNomeJogador() {
     inputText.autocomplete = 'off';
     inputText.placeholder = 'Digite o seu primeiro nome:';
     const button = document.createElement('button');
-    button.innerHTML = 'Comfirmar';
+    button.innerHTML = 'Confirmar';
     button.id = 'confirma-nome';
     button.type = 'button';
     sectionGameDisplay.appendChild(form);
@@ -28,6 +28,7 @@ function pegarNomeJogador() {
     }
     const form = document.querySelector('form');
     form.classList.add('hidden');
+    tocaSom("./assets/sfx/ak--close.wav");
     criarTimer();
     timerStart();
     criaElementosPedraPapelTesoura();
@@ -85,13 +86,19 @@ function criaImagensNaTabela(ganhador, rodada, imgSrcPlayer, imgSrcComputer) {
 
     campoJogadorTabela.appendChild(imgTabelaPlayer);
     campoComputerTabela.appendChild(imgTabelaComputer);
+
     imgTabelaPlayer.src = imgSrcPlayer;
     imgTabelaComputer.src = imgSrcComputer;
 
     if (ganhador === 'jogador') {
         campoJogadorTabela.classList.add('winner');
+        tocaSom("./assets/sfx/human-yeah.wav");
+        
     } else if (ganhador === 'computador') {
         campoComputerTabela.classList.add('winner');
+        tocaSom("./assets/sfx/zombie.wav");
+    } else {
+        tocaSom("./assets/sfx/ricochet.wav");
     }
 }
 
@@ -132,15 +139,27 @@ let imgPedra = document.querySelector('#pedra'),
 let allPossibilities = [];
 
 function animacaoDasEscolhas(imagemClicada, escolhaComputador) {
-    imgPedra = document.querySelector('#pedra'),
-        imgPapel = document.querySelector('#papel'),
-        imgTesoura = document.querySelector('#tesoura'),
-        allPossibilities = [imgPedra, imgPapel, imgTesoura];
+    imgPedra = document.querySelector('#pedra');
+    imgPapel = document.querySelector('#papel');
+    imgTesoura = document.querySelector('#tesoura');
+    allPossibilities = [imgPedra, imgPapel, imgTesoura];
 
     const imgPedraCopy = imgPedra,
-        imgPapelCopy = imgPapel,
-        imgTesouraCopy = imgTesoura,
-        allPossibilitiesCopies = [imgPedraCopy, imgPapelCopy, imgTesouraCopy];
+          imgPapelCopy = imgPapel,
+          imgTesouraCopy = imgTesoura,
+          allPossibilitiesCopies = [imgPedraCopy, imgPapelCopy, imgTesouraCopy];
+
+    const imagemPedraZ = document.createElement('img');
+          imagemPedraZ.id = 'pedra';
+          imagemPedraZ.src = "./assets/images/pedra.png";
+          
+    const imagemPapelZ = document.createElement('img');
+          imagemPapelZ.id = 'papel';
+          imagemPapelZ.src = "./assets/images/papel.png";
+      
+    const imagemTesouraZ = document.createElement('img');
+          imagemTesouraZ.id = 'tesoura';
+          imagemTesouraZ.src = "./assets/images/tesoura.png";
 
     for (let item in allPossibilities) {
         if (allPossibilities[item].id === imagemClicada.id) {
@@ -160,11 +179,16 @@ function animacaoDasEscolhas(imagemClicada, escolhaComputador) {
         }
     }
 
+    imgPedra.removeEventListener("click", jogadas);
+    imgPapel.removeEventListener("click", jogadas);
+    imgTesoura.removeEventListener("click", jogadas);
+
     const match = `${imagemClicada.id}-${escolhaComputador.id}`;
 
     if (match === `${imgPedra.id}-${imgPedra.id}` ||
         match === `${imgPapel.id}-${imgPapel.id}` ||
         match === `${imgTesoura.id}-${imgTesoura.id}`) {
+        
         imgDuplicada.id = "tempImg";
         imgDuplicada.id = imagemClicada.id;
         imgDuplicada.src = imagemClicada.src;
@@ -197,16 +221,19 @@ function verificaVitoria() {
         if (vitoriasJogador > vitoriasComputador) {
             setTimeout(() => {
                 criarPopUpVitoriaDerrota(`PLACAR GERAL: JOGADOR VENCEU!\nJogador: ${vitoriasJogador}\nComputador: ${vitoriasComputador}`);
+                tocaSom("./assets/sfx/player-win.wav");
                 resetGame();
             }, tempoEspera+3000);
         } else if (vitoriasComputador > vitoriasJogador) {
             setTimeout(() => {
                 criarPopUpVitoriaDerrota(`PLACAR GERAL: COMPUTADOR VENCEU!\nJogador: ${vitoriasJogador}\nComputador: ${vitoriasComputador}`);
+                tocaSom("./assets/sfx/player-lost.wav");
                 resetGame();
             }, tempoEspera+3000);
         } else {
             setTimeout(() => {
                 criarPopUpVitoriaDerrota(`PLACAR GERAL: EMPATE!\nJogador: ${vitoriasJogador}\nComputador: ${vitoriasComputador}`);
+                tocaSom("./assets/sfx/player-lost.wav");
                 resetGame();
             }, tempoEspera+3000);
         }
@@ -227,6 +254,7 @@ let escolhaJogador;
 
 function jogadas(event) {
     const imagemClicada = event.target;
+    tocaSom("./assets/sfx/gunshot.wav")
     let ganhador = "";
     let escolhaComputador = sorteiaEscolhaComputador();
     verificaJogada(imagemClicada.id, escolhaComputador.id);
@@ -354,6 +382,8 @@ botaoInstrucoes.addEventListener("click", criaInstrucoes)
 const instrucoes = "Escolha entre pedra, papel ou tesoura. \nO computador fará uma escolha aleatória.\nVocê receberá uma mensagem de quem foi o vencedor e poderá revisá-la no placar.\nRegra principal:\nPapel vence pedra.\nTesoura vence papel.\nPedra vence tesoura."
 
 function criaInstrucoes() {
+    tocaSom("./assets/sfx/ak.wav");
+
     const blocker = document.createElement("div");
     blocker.classList.add("blocker");
 
@@ -371,9 +401,9 @@ function criaInstrucoes() {
 
     section.appendChild(button);
 
-
     button.innerText = "Fechar";
     button.addEventListener("click", () => {
+        tocaSom("./assets/sfx/ak--close.wav");
         blocker.remove();
     })
 
@@ -383,7 +413,6 @@ function criaInstrucoes() {
 
 function fecharPopUp() {
     const section = document.querySelector('.blocker');
-    console.log(section)
     section.remove();
 }
 
@@ -403,4 +432,16 @@ function criarPopUpVitoriaDerrota(textToShow) {
     body.prepend(section);
     divAlert.appendChild(span);
     section.appendChild(divAlert);
+}
+
+function tocaSom(relativePath) {
+    const audio = new Audio(relativePath);
+    audio.play();
+}
+
+document.getElementById("homeButton").addEventListener("click", voltaHome)
+
+function voltaHome() {
+    tocaSom("./assets/sfx/ak.wav");
+    document.location.href = "..";
 }
