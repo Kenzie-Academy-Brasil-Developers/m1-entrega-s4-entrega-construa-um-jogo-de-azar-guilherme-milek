@@ -19,6 +19,7 @@ let matrizVerticalTeste = [
 let localPalavrasMatriz = []
 let localPalavrasMatrizHorizontal = []
 let localPalavrasMatrizVertical = []
+let localPalavrasMatrizDiagonal = []
 let palavrasAchadas = [];
 let caixaLetraSelecionada = [];
 
@@ -368,10 +369,10 @@ function ColocarPalavraNaMatrizDiagonal() {
                 }
 
                 //Registra todas as informações de onde a palavra esta
-                localPalavrasMatrizVertical.push({
+                localPalavrasMatrizDiagonal.push({
                     palavra: palavraSorteada,
                     linhas: registroLinha,
-                    coluna: registroColuna,
+                    colunas: registroColuna,
                     posicao: 'diagonal',
                     achada: false
                 })
@@ -495,7 +496,7 @@ function verificarPalavraHorizontal(linha, coluna1, coluna2) {
     return false
 }
 
-//Verifica se a seleção é uma das palavra na horizontal
+//Verifica se a seleção é uma das palavra na vertical
 function verificarPalavraVertical(coluna, linha1, linha2) {
     coluna = parseInt(document.getElementsByTagName('td')[parseInt(coluna)].getAttribute('coluna'))
     let min = Math.min(parseInt(linha1), parseInt(linha2))
@@ -562,6 +563,97 @@ function verificarPalavraVertical(coluna, linha1, linha2) {
     return false
 }
 
+//Verifica se a seleção é uma das palavra na diagonal
+function verificarPalavraDiagonal(escolha1, escolha2) {
+
+    //Valores vem como string, e converte para
+    escolha1.linha = parseInt(escolha1.linha)
+    escolha2.linha = parseInt(escolha2.linha)
+    escolha1.coluna = parseInt(escolha1.coluna)
+    escolha2.coluna = parseInt(escolha2.coluna)
+
+    //Preenche o array com todas as colunas e linhas do ponto 1 ao 2
+    let j = 0
+    let colunas = []
+    let linhas = []
+
+    for (let i = escolha1.linha; i < 10; i++) {
+
+        linhas.push(i)
+        colunas.push(escolha1.coluna + j)
+
+        //Da um break quando chega no segundo ponto
+        if (escolha1.linha + j === escolha2.linha && escolha1.coluna + j === escolha2.coluna) {
+            break
+        }
+        j++
+    }
+
+    //Percorrer array do local das letras e verificar se achou alguma delas  
+    for (let i = 0; i < localPalavrasMatrizDiagonal.length; i++) {
+
+        //Verifica se o numero de colunas escolhidas tem o mesmo tamanho da palavra(se elas não tem o mesmo tamanho, não é a palavra)
+        if (linhas.length === localPalavrasMatrizDiagonal[i].linhas.length) {
+
+            //Verificar se as posições das linhas e colunas são as mesmas da palavra i
+            let iguais = false
+
+            //Verificar se são as mesmas colunas
+            for (let p = 0; p < localPalavrasMatrizDiagonal[i].colunas.length; p++) {
+                if (localPalavrasMatrizDiagonal[i].colunas.includes(colunas[p])) {
+                    iguais = true
+                } else {
+                    iguais = false
+                    break
+                }
+
+            }
+
+            //Verificar se são as mesmas linhas
+            for (let p = 0; p < localPalavrasMatrizDiagonal[i].linhas.length; p++) {
+                if (localPalavrasMatrizDiagonal[i].linhas.includes(linhas[p])) {
+                    iguais = true
+                } else {
+                    iguais = false
+                    break
+                }
+
+            }
+
+            //Se todas as posições forem iguais
+            if (iguais === true) {
+
+                localPalavrasMatrizDiagonal[i].achada = true
+
+                // Valida se a palavra foi achada, marcando-a na lista como riscada
+                // Além de incrementar no "contador" de vitória
+                if (!palavrasAchadas.includes(localPalavrasMatrizDiagonal[i].palavra)) {
+                    //Atualiza a lista de palavras achadas
+                    palavrasAchadas.push(localPalavrasMatrizDiagonal[i].palavra);
+                    let currentWord = localPalavrasMatrizDiagonal[i].palavra;
+                    const wordInList = document.getElementById(currentWord);
+                    wordInList.style.textDecoration = "line-through";
+                }
+
+                if (selecaoCorreta()) {
+                    setTimeout(() => {
+                        verificaVitoria()
+                    }, 250);
+
+                }
+
+
+                // Chama a função de verificar se ganhou o jogo
+
+                return true
+            }
+
+        }
+    }
+    return false
+}
+
+
 //Armazena os campos selecionados
 let escolha1 = {}
 let escolha2 = {}
@@ -585,8 +677,9 @@ function camposEscolhidos(event) {
 
         // Verifica se o jogador selecionou campos válidos, validando a palavra e vitória em seguida
         if (escolha1.linha !== undefined && escolha2.linha !== undefined) {
-            selecionaCampos(escolha1.linha, escolha1.coluna, escolha2.linha, escolha2.coluna);
+            selecionaCampos(escolha1.linha, escolha1.coluna, escolha2.linha, escolha2.coluna, validarDiagonal(escolha1, escolha2));
 
+            //Verifica se ta na horizontal
             if (escolha1.linha === escolha2.linha) {
                 if (!verificarPalavraHorizontal(linha, escolha1.coluna, escolha2.coluna)) {
                     clickDown.removeEventListener('click', camposEscolhidos)
@@ -595,8 +688,18 @@ function camposEscolhidos(event) {
                         clickDown.addEventListener('click', camposEscolhidos)
                     }, 250);
                 }
-            } else {
+                //Verifica se ta na vertical
+            } else if (escolha1.coluna === escolha2.coluna) {
                 if (!verificarPalavraVertical(coluna, escolha1.linha, escolha2.linha)) {
+                    clickDown.removeEventListener('click', camposEscolhidos)
+                    setTimeout(() => {
+                        limpaSelecao()
+                        clickDown.addEventListener('click', camposEscolhidos)
+                    }, 250);
+                }
+            }
+            else if (validarDiagonal(escolha1, escolha2)) {
+                if (!verificarPalavraDiagonal(escolha1, escolha2)) {
                     clickDown.removeEventListener('click', camposEscolhidos)
                     setTimeout(() => {
                         limpaSelecao()
@@ -613,11 +716,42 @@ function camposEscolhidos(event) {
     caixaLetraSelecionada = document.querySelectorAll(".letras--selecionadas");
 }
 
+//Verificar se as duas escolhas estão na diagonal
+function validarDiagonal(escolha1, escolha2) {
+
+    //Valores vem como string, e converte para
+    escolha1.linha = parseInt(escolha1.linha)
+    escolha2.linha = parseInt(escolha2.linha)
+    escolha1.coluna = parseInt(escolha1.coluna)
+    escolha2.coluna = parseInt(escolha2.coluna)
+
+    let j = 0
+    for (let i = escolha1.linha; i < 10; i++) {
+        if (escolha1.linha + j < 10) {
+            if (escolha1.coluna + j < 10) {
+
+                //Verifica se a seleção é uma diagonal
+                if (escolha1.linha + j === escolha2.linha && escolha1.coluna + j === escolha2.coluna) {
+                    return true
+                }
+
+                j++
+            }
+            else {
+                return false
+            }
+        }
+        else {
+            return false
+        }
+    }
+}
+
 // Salva a última seleção feita pelo jogador
 let selection = [];
 
 // FUnção que aplica uma classe para as caixas selecionadas pelo jogador
-function selecionaCampos(linhaInicio, colunaInicio, linhaFim, colunaFim) {
+function selecionaCampos(linhaInicio, colunaInicio, linhaFim, colunaFim, diagonal) {
     if (linhaInicio === linhaFim) {
         let max = Math.max(colunaInicio, colunaFim)
         let min = Math.min(colunaInicio, colunaFim)
@@ -637,6 +771,18 @@ function selecionaCampos(linhaInicio, colunaInicio, linhaFim, colunaFim) {
 
             selection.push(currentBoxID)
             document.getElementById(currentBoxID).classList.add("letras--selecionadas")
+        }
+    }
+    else if(diagonal){
+        let j = 0
+        for(let i = linhaInicio; i < linhaFim; i++){
+
+            let currentBoxID = `${parseInt(linhaInicio) + j}-${parseInt(colunaInicio) + j}`
+
+            selection.push(currentBoxID)
+    
+            document.getElementById(currentBoxID).classList.add("letras--selecionadas")
+            j++
         }
     }
 }
@@ -716,10 +862,12 @@ function resetaJogo() {
     localPalavrasMatriz = []
     localPalavrasMatrizHorizontal = []
     localPalavrasMatrizVertical = []
+    localPalavrasMatrizDiagonal = []
     palavrasAchadas = []
     selection = []
 
-
+    escolha1 = {}
+    escolha2 = {}
 
     iniciarJogo()
 
@@ -757,7 +905,7 @@ function timerStart() {
         }
 
         espacoTimer.innerText = `${(min < 10) ? "0" + min.toString() : min}:${(sec < 10) ? "0" + sec.toString() : sec}`
-    }, 10);
+    }, 1000);
 
 }
 
