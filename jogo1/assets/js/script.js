@@ -641,7 +641,7 @@ espacoTimer.innerText = "01:00"
 let cronometro = ''
 
 function timerStart() {
-    timerStop(cronometro)
+    timerStop()
     espacoTimer.innerText = "01:00"
 
     let min = 1,
