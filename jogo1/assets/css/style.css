@@ -1,0 +1,306 @@
+:root {
+    --azul: #3b4cca;
+    --amarelo: #ffdd00;
+}
+
+html {
+    font-family: Arial;
+}
+
+body {
+    background-image: url("../img/wp8155258.png");
+    background-position: top;
+    background-repeat: repeat;
+    background-size: auto 150vh;
+    object-fit: cover;
+    background-color: #ececec;
+    min-height: 100vh;
+    color: #fff;
+    transition: background 1s;
+}
+
+.fundo-preto {
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+.container {
+    min-height: 100vh;
+    height: 100%;
+    padding: 0 10px;
+    width: 300px;
+    margin: auto;
+}
+
+header{
+    display: flex;
+    flex-direction: column;
+}
+
+#nome {
+    padding: 10px;
+    border: 2px solid var(--azul);
+    border-radius: 5px;
+}
+
+#btn-nome {
+    color: #fff;
+    margin-top: 10px;
+    padding: 10px 15px;
+    background-color: var(--azul);
+    border: 2px solid var(--azul);
+    border-radius: 5px;
+}
+
+main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+h1 {
+    text-align: center;
+    font-size: 32px;
+    font-family: "Pokemon_Solid";
+    padding: 0 0 20px 0;
+    color: var(--amarelo);
+    text-shadow: -2px 2px 0 var(--azul), 2px 2px 0 var(--azul),
+        2px -2px 0 var(--azul), -2px -2px 0 var(--azul);
+}
+
+#vitorias {
+    margin-right: 5px;
+}
+
+#derrotas {
+    margin-left: 25px;
+    margin-right: 5px;
+}
+
+.jogo{
+    width: 300px;
+    max-width: 300px;
+}
+
+.palavras-para-achar{
+    margin: 10px 0;
+}
+.palavras-para-achar__titulo {
+    text-align: center;
+    font-family: "Pokemon_Solid";
+    font-size: 20px;
+    padding: 10px;
+    color: var(--amarelo);
+    text-shadow: -2px 2px 0 var(--azul), 2px 2px 0 var(--azul),
+        2px -2px 0 var(--azul), -2px -2px 0 var(--azul);
+}
+
+#lista-palavras {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+#lista-palavras li {
+    padding: 10px;
+}
+
+.regras {
+    background-color: #3b4ccaa2;
+    box-sizing: border-box;
+    margin: 10px 0;
+    padding: 0 10%;
+    border: 2px solid var(--amarelo);
+    border-radius: 10px;
+}
+
+.regras__titulo {
+    text-align: center;
+    font-family: "Pokemon_Solid";
+    font-size: 20px;
+    padding: 20px;
+    color: var(--azul);
+    text-shadow: -2px 2px 0 var(--amarelo), 2px 2px 0 var(--amarelo),
+        2px -2px 0 var(--amarelo), -2px -2px 0 var(--amarelo);
+}
+
+.regras__lista .lista__item {
+    padding: 10px 0;
+}
+
+.container-tabela {
+    box-sizing: border-box;
+    min-width: 300px;
+    max-width: 300px;
+    width: 100%;
+    min-height: 300px;
+    background-color: var(--amarelo);
+    border: 2px solid var(--azul);
+}
+
+#placar{
+    display: flex;
+    justify-content: center;
+
+    background-color: var(--azul);
+    border-radius: 0 0 10px 10px;
+    color: var(--amarelo);
+    font-family: 'Pokemon_Solid';
+
+    padding: 10px 0;
+    max-width: 300px;
+    min-width: 300px;
+    margin: 0 0 10px 0;
+}
+
+.inserir-nome {
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 300px;
+}
+
+.tabela {
+    margin: auto;
+    width: 100%;
+    font-family: Arial;
+}
+
+td {
+    padding: 7px;
+    transition: background-color 0.25s;
+    text-align: center;
+    color: var(--azul);
+}
+
+td:hover {
+    background-color: #ccc;
+    cursor: pointer;
+}
+
+.hidden {
+    display: none !important; 
+}
+
+footer {}
+
+.link-voltar img {
+    height: 30px;
+    filter: invert(1);
+}
+
+.container-reset-button{
+    padding: 0 0 10px 0;
+}
+#reset-button {
+    display: block;
+    padding: 10px;
+    margin: auto;
+    background-color: var(--azul);
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+}
+
+/* == Classes para JS === */
+
+.letras--selecionadas,
+.palavra--nao-encontrada {
+    background-color: rgb(255, 19, 19);
+    transition: background-color 0.25s;
+}
+
+.palavra--encontrada {
+    background-color: rgb(0, 232, 0);
+    font-weight: bold;
+    transition: background-color 0.25s;
+}
+
+.tempo-limite {
+    display: flex;
+    justify-content: space-evenly;
+    width: 100%;
+    padding: 10px 0;
+    background-color: var(--azul);
+    border-radius: 10px 10px 0 0;
+    color: var(--amarelo);
+    font-family: 'Pokemon_Solid';
+}
+
+.blocker {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    z-index: 1;
+    background-color: rgba(0,0,0,0.9);
+    top: -0vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.alerta--vitoria-derrota {
+    color: #FFF;
+    width: 300px;
+    height: 100px;
+    background-color: #3b4ccaff;
+    text-align: center;
+    border: 2px solid var(--amarelo);
+    box-shadow: 1px 1px 5px #000;
+    border-radius: 10px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#deleta-popup {
+    align-self: flex-start;
+    width: 25px;
+    height: 25px;
+    color: #3b4ccaff;
+    margin: 3px;
+    border: none;
+    border-radius: 35%;
+    font-weight: bold;
+    font-size: 16px;
+    background-color: #FD0;
+    box-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+}
+
+.divButton {
+    height: 100%;
+}
+
+.span--alert {
+    padding: 0 20px;
+    text-align: center;
+    max-width: 90%;
+    max-height: 50px;
+    line-height: 20px;
+}
+#jogadorNome {
+    padding-left: 5px;
+}
+
+#tempo-limite__timer {
+    margin-left: 3px;
+}
+
+/* Breakpoints */
+
+@media (min-width: 600px){
+    .container{
+        width: 580px;
+    }
+}
+
+@media (min-width: 900px){
+    
+}
+
+@media (min-width: 1200px){
+    
+}
