@@ -19,6 +19,7 @@ function colocarNome(event) {
     palavrasParaAchar.classList.remove('hidden')
 
     iniciarJogo()
+    playerName()
 }
 
 const btn = document.getElementById('btn-nome')
@@ -302,6 +303,7 @@ function verificaVitoria() {
         alert("PARABÉNS! Você achou todas as palavras!");
         clickDown.removeEventListener('click', camposEscolhidos)
         timerStop()
+        addVitoria()
     }
 }
 
@@ -318,7 +320,7 @@ function perdeJogo() {
     setTimeout(() => {
         alert("AH NÃO! Você não achou todas as palavras a tempo :(")
     }, 250)
-
+    addDerrota()
 }
 
 
@@ -391,4 +393,27 @@ function timerStart() {
 
 function timerStop() {
     clearInterval(cronometro)
+}
+
+let placarV = 0
+
+function addVitoria() {
+    const vitoriasPlacar = document.getElementById('vitoriaPlacar');
+    placarV++
+    vitoriasPlacar.innerText = placarV
+}
+
+let placarD = 0
+
+function addDerrota() {
+    const derrotasPlacar = document.getElementById('derrotasPlacar');
+    placarD++
+    derrotasPlacar.innerText = placarD
+}
+
+
+function playerName() {
+    const nome = document.getElementById('nome').value
+    const playerName = document.getElementById('jogadorNome')
+    playerName.innerText = "Jogador: " + nome
 }
