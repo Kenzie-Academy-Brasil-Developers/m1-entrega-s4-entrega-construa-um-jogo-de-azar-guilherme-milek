@@ -1,21 +1,31 @@
+//https://youtu.be/CIF-r7F2clc
+//--------------
+//
+// "sai"
+// "pukémon"
+// "pukémon p**a"
+// "eu vou mata"
+// "eu vou mata pq essa p**a não é de deus não"
+// "pukémon é um negocio do d**bo"
+// "PIKOMON"
+// "eu vou lhe pegar pikomon..."
+// "vou lhe acha"
+// "eu vou lhe acha"
+// "eu vou lhe acha pikomon"
+// "pq eu não sou qualquer um não"
+// "eu sou nal"
+// "eu sou nal do canal"
+// "EU SOU NAL DO CANAL"
+// "EU VOU LHE PEGA PIKOMON"
+//
+//--------------
+
 //Palavras para achar
 let palavras = ['Bulbasaur', 'Caterpie', 'Squirtle', 'Nidoran', 'Nidorino', 'Zubat', 'Oddish', 'Mankey', 'Alakazam', 'Machop', 'Slowpoke', 'Gengar', 'Exeggutor', 'Ditto', 'Snorlax', 'Dragonite', 'Mewtwo', 'Pikachu', 'Rattata', 'Psyduck']
 //Letras para preencher o resto
 let letras = 'abcdefghijklmnopqrstuvwxyz'
 //Arr bidimensional das letras e palavras
 let matriz = criarMatriz()
-let matrizVerticalTeste = [
-    [0, 'B', 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 'U', 0, 0, 0, 0, 'N', 0, 0, 0],
-    [0, 'L', 0, 0, 0, 0, 'I', 0, 0, 0],
-    [0, 'B', 0, 0, 0, 0, 'D', 0, 0, 0],
-    [0, 'A', 0, 0, 0, 0, 'O', 0, 0, 0],
-    [0, 'S', 0, 0, 0, 0, 'R', 0, 0, 0],
-    [0, 'A', 0, 0, 0, 0, 'I', 0, 0, 0],
-    [0, 'U', 0, 0, 0, 0, 'N', 0, 0, 0],
-    [0, 'R', 0, 0, 0, 0, 'O', 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-]
 let localPalavrasMatriz = []
 let localPalavrasMatrizHorizontal = []
 let localPalavrasMatrizVertical = []
