@@ -76,10 +76,21 @@ function ColocarPalavrasNaMatriz() {
     palavrasSorteadas = []
     for (let i = 0; i < 3; i++) {
 
-        if (Math.floor(Math.random() * 2) === 0) {
-            ColocarPalavraNaMatrizHorizontal()
-        } else {
-            ColocarPalavraNaMatrizVertical()
+        let sorteio = Math.floor(Math.random() * 3)
+        if (sorteio === 0) {
+            if (ColocarPalavraNaMatrizHorizontal() === false) {
+                i--
+            }
+
+        } else if (sorteio === 1) {
+            if (ColocarPalavraNaMatrizVertical() === false) {
+                i--
+            }
+        }
+        else {
+            if (ColocarPalavraNaMatrizDiagonal() === false) {
+                i--
+            }
         }
     }
 
@@ -90,7 +101,8 @@ let palavrasSorteadas = []
 //Sorteia uma palavra na horizontal e coloca na matriz
 function ColocarPalavraNaMatrizHorizontal() {
     let possible = false
-    while (possible === false) {
+    let tentativasPalavras = 0
+    while (possible === false && tentativasPalavras < 10) {
         let palavraSorteada = ''
         let jaFoiSorteada = false
 
@@ -110,26 +122,14 @@ function ColocarPalavraNaMatrizHorizontal() {
         }
         while (jaFoiSorteada)
 
-        let tentativas = 0
+        let tentativasEncaixar = 0
 
-        while (possible === false && tentativas < 10) {
-            tentativas++
+        while (possible === false && tentativasEncaixar < 10) {
+            tentativasEncaixar++
             //sorteia uma linha de 0 a 9
             let linha = Math.floor(Math.random() * 10)
             //sorteia uma coluna de 0 a 9
             let coluna = Math.floor(Math.random() * 10)
-
-            //Registra espaços vazios e letras na linha selecionada
-            let letraNoMeio = []
-            let espacosVazios = 0
-            for (let i = 0; i < 10; i++) {
-
-                if (typeof (matriz[linha][i]) === 'string') {
-                    letraNoMeio.push(matriz[linha][i])
-                } else {
-                    espacosVazios++
-                }
-            }
 
             //Verifica quantos espaços vazios tem para colocar a palavra da coluna sorteada até o fim
             let espacosParaColocarPalavra = 0
@@ -181,17 +181,21 @@ function ColocarPalavraNaMatrizHorizontal() {
 
                 palavrasSorteadas.push(palavraSorteada)
 
+                return true
+
             } else {
                 possible = false
             }
         }
     }
+    return false
 }
 
 //Sorteia uma palavra na vertical e coloca na matriz
 function ColocarPalavraNaMatrizVertical() {
     let possible = false
-    while (possible === false) {
+    let tentativasPalavras = 0
+    while (possible === false && tentativasPalavras < 10) {
         let palavraSorteada = ''
         let jaFoiSorteada = false
 
@@ -213,26 +217,14 @@ function ColocarPalavraNaMatrizVertical() {
         //Sai quando sorteia uma palavra que não foi sorteada
         while (jaFoiSorteada)
 
-        let tentativas = 0
+        let tentativasEncaixar = 0
 
-        while (possible === false && tentativas < 10) {
-            tentativas++
+        while (possible === false && tentativasEncaixar < 10) {
+            tentativasEncaixar++
             //sorteia uma linha de 0 a 9
             let linha = Math.floor(Math.random() * 10)
             //sorteia uma coluna de 0 a 9
             let coluna = Math.floor(Math.random() * 10)
-
-            //Registra espaços vazios e letras na linha vertical selecionada
-            let letraNoMeio = []
-            let espacosVazios = 0
-            for (let i = 0; i < 10; i++) {
-
-                if (typeof (matriz[i][coluna]) === 'string') {
-                    letraNoMeio.push(matriz[i][coluna])
-                } else {
-                    espacosVazios++
-                }
-            }
 
             //Verifica quantos espaços vazios tem para colocar a palavra da coluna sorteada até o fim na
             let espacosParaColocarPalavra = 0
@@ -283,11 +275,124 @@ function ColocarPalavraNaMatrizVertical() {
 
                 palavrasSorteadas.push(palavraSorteada)
 
+                return true
+
             } else {
                 possible = false
             }
         }
     }
+    return false
+}
+
+//Sorteia uma palavra na diagonal e coloca na matriz
+function ColocarPalavraNaMatrizDiagonal() {
+    let possible = false
+    let tentativasPalavras = 0
+    while (possible === false && tentativasPalavras < 10) {
+        let palavraSorteada = ''
+        let jaFoiSorteada = false
+
+        //Fica no while até sortear uma palavra que ainda não foi sorteada
+        do {
+            palavraSorteada = sortearPalavra()
+            //Fala se ja foi sorteada
+            for (let i = 0; i < palavrasSorteadas.length; i++) {
+
+                if (palavrasSorteadas[i].includes(palavraSorteada)) {
+                    jaFoiSorteada = true
+                    break
+                } else {
+                    jaFoiSorteada = false
+                }
+            }
+
+        }
+        //Sai quando sorteia uma palavra que não foi sorteada
+        while (jaFoiSorteada)
+
+        let tentativasEncaixar = 0
+
+        //Tenta colocar na matriz 10x, se não consegui em nenhuma, volta e sorteia outra palavra
+        while (possible === false && tentativasEncaixar < 10) {
+
+            tentativasEncaixar++
+            //sorteia uma linha de 0 a 9
+            let linha = Math.floor(Math.random() * 10)
+            //sorteia uma coluna de 0 a 9
+            let coluna = Math.floor(Math.random() * 10)
+
+            //Verifica quantos espaços vazios tem para colocar a palavra da coluna sorteada até o fim na diagonal
+            let espacosParaColocarPalavra = 0
+            let j = 0
+            for (let i = linha; i < 10; i++) {
+
+                if (linha + j < 10) {
+                    if (coluna + j < 10) {
+                        //Se o espaço for vazio ou for a mesma letra na palavra
+                        if (matriz[linha + j][coluna + j] === 0 || matriz[linha + j][coluna + j].toUpperCase() === palavraSorteada.substr(j, 1).toUpperCase()) {
+                            espacosParaColocarPalavra++
+                            possible = true
+                        } else {
+                            possible = false
+                            break
+                        }
+
+                        j++
+                    }
+                    else {
+                        break
+                    }
+                }
+                else {
+                    break
+                }
+
+            }
+
+            //Verifica se tem espaço suficiente e se é possivel colocar ali
+            if (espacosParaColocarPalavra >= palavraSorteada.length && possible === true) {
+                let palavra = palavraSorteada.split('')
+                let count = 0
+                let registroLinha = []
+                let registroColuna = []
+                //Coloca a palavra na matriz
+                for (let j = 0; j < palavra.length; j++) {
+
+                    matriz[linha + j][coluna + j] = palavra[j].toUpperCase()
+
+                    //Armazena o local da palavra na variael
+                    registroLinha.push(linha + j)
+                    registroColuna.push(coluna + j)
+                    count++
+                }
+
+                //Registra todas as informações de onde a palavra esta
+                localPalavrasMatrizVertical.push({
+                    palavra: palavraSorteada,
+                    linhas: registroLinha,
+                    coluna: registroColuna,
+                    posicao: 'diagonal',
+                    achada: false
+                })
+
+                //Atualiza a lista das palavras para achar
+                const listItem = document.createElement("li");
+                listItem.innerText = palavraSorteada;
+                listItem.setAttribute("id", palavraSorteada);
+                listaPalavras.appendChild(listItem);
+
+                palavrasSorteadas.push(palavraSorteada)
+
+                return true
+
+            } else {
+                possible = false
+            }
+        }
+    }
+
+    return false
 }
 
 //Pega a matriz e coloca as informações na tabela
@@ -652,7 +757,7 @@ function timerStart() {
         }
 
         espacoTimer.innerText = `${(min < 10) ? "0" + min.toString() : min}:${(sec < 10) ? "0" + sec.toString() : sec}`
-    }, 1000);
+    }, 10);
 
 }
 
