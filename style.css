@@ -3,15 +3,24 @@
 body {
     background-image: url(./assets/img/Pacmangif.gif);
     height: 100vh;
+    width: 100vw;
+    
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    
+    font-family: "Inter", sans-serif;
+}
+
+.fundo-preto{
+    height: 100%;
+    width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    background-size: cover;
-    background-position: bottom;
-    background-repeat: no-repeat;
-    width: 320px;
-    font-family: "Inter", sans-serif;
+
+    background-color: rgba(0,0,0,0.9);
 }
 
 p {
@@ -38,7 +47,7 @@ p {
     justify-content: space-evenly;
     align-items: center;
     height: 100px;
-    width: 300px;
+
     text-decoration: none;
     font-family: "Jelly";
 }
@@ -47,26 +56,11 @@ p {
     text-decoration: none;
     color: yellow;
 }
+#jogos a:hover {
+    text-decoration: underline;
+}
 
 @media only screen and (min-width: 900px) {
-    body {
-        background-image: url(./assets/img/Pacmangif.gif);
-        background-color: #000000;
-        background-repeat: no-repeat;
-        background-position: bottom;
-        background-size: cover;
-        height: 100vh;
-        width: 100vw;
-        min-height: 100%;
-    }
-
-    #titulo {
-        align-items: flex-start;
-        text-align: center;
-        display: flex;
-        height: 100px;
-    }
-
     #titulo h1 {
         text-align: center;
         font-weight: bold;
@@ -74,12 +68,8 @@ p {
         font-size: 50px;
     }
     #jogos {
-        width: 500px;
         font-size: 25px;
     }
    
-    #jogos a:hover {
-        text-decoration: underline;
-
-    }
+    
 }

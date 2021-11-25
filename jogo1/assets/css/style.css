@@ -1,5 +1,21 @@
+.animacao {
+    animation: animacaoH1 ease-out 2s;
+}
+
+@keyframes animacaoH1 {
+    from {
+        transform: translateY(-100px);
+    }
+    to {
+        transform: translateY(0);
+    }
+}
+
+/* -------------------------------- */
+
 :root {
     --azul: #3b4cca;
+    --azul-escuro: #2b3792;
     --amarelo: #ffdd00;
 }
 
@@ -43,12 +59,22 @@ header{
 }
 
 #btn-nome {
+    font-weight: bold;
     color: #fff;
     margin-top: 10px;
     padding: 10px 15px;
     background-color: var(--azul);
     border: 2px solid var(--azul);
     border-radius: 5px;
+    transition: 0.5s;
+}
+
+#btn-nome:hover {
+    transform: scale(1.1);
+    cursor: pointer;
+    background-color: var(--azul-escuro);
+    transition: 0.5s;
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.25);
 }
 
 main {
@@ -176,15 +202,13 @@ td {
 }
 
 td:hover {
-    background-color: #ccc;
+    background-color: rgba(0, 0, 0, 0.25);
     cursor: pointer;
 }
 
 .hidden {
     display: none !important; 
 }
-
-footer {}
 
 .link-voltar img {
     height: 30px;
@@ -208,14 +232,24 @@ footer {}
 
 .letras--selecionadas,
 .palavra--nao-encontrada {
+    color: white;
+    font-weight: bold;
     background-color: rgb(255, 19, 19);
     transition: background-color 0.25s;
+}
+
+.palavra--nao-encontrada:hover {
+    background-color: rgb(187, 10, 10);
 }
 
 .palavra--encontrada {
     background-color: rgb(0, 232, 0);
     font-weight: bold;
     transition: background-color 0.25s;
+}
+
+.palavra--encontrada:hover {
+    background-color: rgb(0, 195, 0);
 }
 
 .tempo-limite {
