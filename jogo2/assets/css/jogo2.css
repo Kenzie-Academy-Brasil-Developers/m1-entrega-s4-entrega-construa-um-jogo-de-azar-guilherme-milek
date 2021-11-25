@@ -14,20 +14,6 @@
     transform: rotate(-20deg);
 }
 
-.animacaoCorrigeBugJogador {
-    position: relative;
-    animation-name: animacaoCorrigeBugJogador;
-    animation-duration: 5s;
-    transform: rotate(15deg);
-}
-
-.animacaoCorrigeBugComputador {
-    position: relative;
-    animation-name: animacaoCorrigeBugComputador;
-    animation-duration: 5s;
-    transform: rotate(-20deg);
-}
-
 @keyframes animacaoJogador {
     0%   {left:-100px; top:0px;}
     25%  {left: 0px; top:0px;}
@@ -39,20 +25,6 @@
     0%   {right: -100px; top:0px;}
     25%  {right: 0px; top:0px;}
     30%  {right: -20px; top:0px;}
-    32%  {right: 0px; top:0px;}
-}
-
-@keyframes animacaoCorrigeBugJogador {
-    0%   {left: -100px; top:0px;}
-    25%  {left: -50px; top:0px;}
-    30%  {left: -40px; top:0px;}
-    32%  {left: 0px; top:0px;}
-}
-
-@keyframes animacaoCorrigeBugComputador {
-    0%   {right: -100px; top:0px;}
-    25%  {right: -50px; top:0px;}
-    30%  {right: -40px; top:0px;}
     32%  {right: 0px; top:0px;}
 }
 
@@ -71,6 +43,7 @@ body {
 }
 
 .container {
+    height: fit-content;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -82,7 +55,6 @@ body {
     width: 300px;
     height: 200px;
     border-radius: 10px 10px 10px 10px;
-    margin-top: -200px;
     margin-bottom: 10px;
     display: flex;
     flex-direction: row;
@@ -322,14 +294,17 @@ td img {
 
     #papel {
         width: 120px;
+        height: auto;
     }
 
     #pedra {
         width: 120px;
+        height: auto;
     }
 
     #tesoura {
         width: 120px;
+        height: auto;
     }
 
     /* #tesoura {
@@ -488,20 +463,3 @@ td img {
         width: 400px;
     }
 }
-
-/*
-div {
-  width: 100px;
-  height: 100px;
-  background-color: red;
-  position: relative;
-  animation-name: example;
-  animation-duration: 10s;
-}
-
-@keyframes example {
-  0%   {background-color:red; left:-100px; top:0px;}
-  25%  {background-color:yellow; left:200px; top:0px;}
-  50%  {background-color:blue;}
-}
-*/

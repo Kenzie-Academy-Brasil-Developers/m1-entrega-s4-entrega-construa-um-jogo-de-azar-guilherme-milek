@@ -1,5 +1,6 @@
 const sectionGameDisplay = document.querySelector('.game-display');
-//console.log(sectionGameDisplay)
+let sectionDasImagens;
+      
 function criarElementosParaPegarNomeJogador() {
     const form = document.createElement('form');
     const inputText = document.createElement('input');
@@ -27,14 +28,15 @@ function pegarNomeJogador() {
     }
     const form = document.querySelector('form');
     form.classList.add('hidden');
+    criarTimer();
+    timerStart();
     criaElementosPedraPapelTesoura();
-    timerStart()
 }
 const botaoConfirmaNome = document.querySelector('#confirma-nome');
 botaoConfirmaNome.addEventListener('click', pegarNomeJogador);
 
 function criaElementosPedraPapelTesoura() {
-    const sectionDasImagens = document.createElement('section');
+    sectionDasImagens = document.createElement('section');
     sectionDasImagens.id = 'secao-imagens';
     sectionDasImagens.classList.remove('hidden');
     const imagemPedra = document.createElement('img');
@@ -57,11 +59,11 @@ function criaElementosPedraPapelTesoura() {
     sectionDasImagens.appendChild(imagemTesoura);
 
     const imgPedra = document.querySelector('#pedra');
-    imgPedra.addEventListener('click', dezJogadas);
+    imgPedra.addEventListener('click', jogadas);
     const imgPapel = document.querySelector('#papel');
-    imgPapel.addEventListener('click', dezJogadas);
+    imgPapel.addEventListener('click', jogadas);
     const imgTesoura = document.querySelector('#tesoura');
-    imgTesoura.addEventListener('click', dezJogadas);
+    imgTesoura.addEventListener('click', jogadas);
 }
 
 function sorteiaEscolhaComputador() {
@@ -77,9 +79,6 @@ function sorteiaEscolhaComputador() {
 function criaImagensNaTabela(ganhador, rodada, imgSrcPlayer, imgSrcComputer) {
     let campoJogadorTabela = document.querySelector(`#player-rodada${rodada}`);
     let campoComputerTabela = document.querySelector(`#computer-rodada${rodada}`);
-    /* console.log(ganhador);
-    console.log(campoJogadorTabela);
-    console.log(campoComputerTabela); */
     const imgTabelaPlayer = document.createElement('img');
     const imgTabelaComputer = document.createElement('img');
     campoJogadorTabela.appendChild(imgTabelaPlayer);
@@ -97,14 +96,12 @@ function resetGame() {
     vitoriasJogador = 0;
     vitoriasComputador = 0;
     counterRodadas = 0;
-    const sectionDasImagens = document.querySelector('#secao-imagens');
-    sectionDasImagens.remove();
     const form = document.querySelector('form');
-    //form.innerHTML = "";
     form.classList.remove('hidden');
-    const tdsTable = document.querySelectorAll('td');
-    for(let i = 0; i < tdsTable.length; i++) {
 
+    const tdsTable = document.querySelectorAll('td');
+
+    for (let i = 0; i < tdsTable.length; i++) {
         if(i === 0) {
             tdsTable[i].innerText = 'Jogador';
         } else if(i !== 6) {
@@ -112,168 +109,126 @@ function resetGame() {
             tdsTable[i].classList.remove('winner');
         }
     }
-    timerStop()
-}
-
-function removeClasses(imagemClicadaParaAnimacao,escolhaComputador,imgEscolhaSobrante1,imgEscolhaSobrante2,imgDuplicada) {
-    console.log(imagemClicadaParaAnimacao)
-    console.log(escolhaComputador)
-    console.log(imgEscolhaSobrante1)
-    console.log(imgEscolhaSobrante2)
-    console.log(imgDuplicada)
-    console.log(imagemClicadaParaAnimacao.classList)
-    if(imagemClicadaParaAnimacao.classList[0] === 'animacaoJogador') {
-        imagemClicadaParaAnimacao.classList.remove('animacaoJogador');
-        escolhaComputador.classList.remove('animacaoComputador');
-    } else {
-        imagemClicadaParaAnimacao.classList.remove('animacaoCorrigeBugJogador');
-        escolhaComputador.classList.remove('animacaoCorrigeBugComputador');
-    }
-
-    imgEscolhaSobrante1.classList.remove('hidden');
-
-    if(imgEscolhaSobrante2 !== undefined) {
-        imgEscolhaSobrante2.classList.remove('hidden');
-    }
-
-    if(imgDuplicada !== undefined) {
-        imgDuplicada.remove();
-    }
 }
 
 const tempoEspera = 3000;
-function animacaoDasEscolhas(imagemClicada, escolhaComputador) {
-    const imgPedra = document.querySelector('#pedra');
-    const imgPapel = document.querySelector('#papel');
-    const imgTesoura = document.querySelector('#tesoura');
-    //console.log(escolhaComputador.id)
-    const imagemClicadaParaAnimacao = imagemClicada;
 
-    if(imagemClicadaParaAnimacao.id === 'pedra') {
-        if(escolhaComputador.id === 'tesoura') {
-            imagemClicadaParaAnimacao.classList.add('animacaoJogador');
-            escolhaComputador.classList.add('animacaoComputador');
-            imgPapel.classList.add('hidden');
-            setTimeout(() => {removeClasses(imagemClicadaParaAnimacao,escolhaComputador,imgPapel)},tempoEspera);
-        } else if(escolhaComputador.id === 'papel') {
-            imagemClicadaParaAnimacao.classList.add('animacaoJogador');
-            escolhaComputador.classList.add('animacaoComputador');
-            imgTesoura.classList.add('hidden');
-            setTimeout(() => {removeClasses(imagemClicadaParaAnimacao,escolhaComputador,imgTesoura)},tempoEspera);
-        } else {
-            const sectionDasImagens = document.querySelector('.game-display');
-            const imgDuplicada = document.createElement('img');
-            imgDuplicada.id = "pedra";
-            sectionDasImagens.appendChild(imgDuplicada);
-            imgDuplicada.src = imagemClicadaParaAnimacao.src;
-            imgDuplicada.classList.add('animacaoComputador');
-            imagemClicadaParaAnimacao.classList.add('animacaoJogador');
-            imgTesoura.classList.add('hidden');
-            imgPapel.classList.add('hidden');
-            setTimeout(() => {removeClasses(imagemClicadaParaAnimacao,escolhaComputador,imgTesoura,imgPapel,imgDuplicada)},tempoEspera);
+const imgDuplicada = document.createElement('img');
+
+let imgPedra = document.querySelector('#pedra'),
+    imgPapel = document.querySelector('#papel'),
+    imgTesoura = document.querySelector('#tesoura');
+
+let allPossibilities = [];
+
+function animacaoDasEscolhas(imagemClicada, escolhaComputador) {
+
+    imgPedra = document.querySelector('#pedra'), 
+    imgPapel = document.querySelector('#papel'),
+    imgTesoura = document.querySelector('#tesoura'),
+    allPossibilities = [imgPedra, imgPapel, imgTesoura];
+
+    const imgPedraCopy = imgPedra,
+          imgPapelCopy = imgPapel,
+          imgTesouraCopy = imgTesoura,
+          allPossibilitiesCopies = [imgPedraCopy, imgPapelCopy, imgTesouraCopy];
+
+    for (let item in allPossibilities) {
+        if (allPossibilities[item].id === imagemClicada.id) {
+            allPossibilities[item].classList.add("escolhida");
         }
-    } else if(imagemClicadaParaAnimacao.id === 'papel') {
-        if(escolhaComputador.id === 'pedra') {
-            imagemClicadaParaAnimacao.classList.add('animacaoCorrigeBugJogador');
-            /* imagemClicadaParaAnimacao.style.position = 'relative';
-            imagemClicadaParaAnimacao.style.left = '-20px'; */
-            escolhaComputador.classList.add('animacaoCorrigeBugComputador');
-            imgTesoura.classList.add('hidden');
-            setTimeout(() => {removeClasses(imagemClicadaParaAnimacao,escolhaComputador,imgTesoura)},tempoEspera);
-        } else if(escolhaComputador.id === 'tesoura') {
-            imagemClicadaParaAnimacao.classList.add('animacaoJogador');
-            escolhaComputador.classList.add('animacaoComputador');
-            imgPedra.classList.add('hidden');
-            setTimeout(() => {removeClasses(imagemClicadaParaAnimacao,escolhaComputador,imgPedra)},tempoEspera);
-        } else {
-            const sectionDasImagens = document.querySelector('.game-display');
-            const imgDuplicada = document.createElement('img');
-            sectionDasImagens.appendChild(imgDuplicada);
-            imgDuplicada.src = imagemClicadaParaAnimacao.src;
-            imgDuplicada.classList.add('animacaoComputador');
-            imgDuplicada.id = 'papel';
-            imagemClicadaParaAnimacao.classList.add('animacaoJogador');
-            imgTesoura.classList.add('hidden');
-            imgPedra.classList.add('hidden');
-            setTimeout(() => {removeClasses(imagemClicadaParaAnimacao,escolhaComputador,imgTesoura,imgPedra,imgDuplicada)},tempoEspera);
-        }
-    } else {
-        if(escolhaComputador.id === 'pedra') {
-            imagemClicadaParaAnimacao.classList.add('animacaoCorrigeBugJogador');
-            escolhaComputador.classList.add('animacaoCorrigeBugComputador');
-            imgPapel.classList.add('hidden');
-            setTimeout(() => {removeClasses(imagemClicadaParaAnimacao,escolhaComputador,imgPapel)},tempoEspera);
-        } else if(escolhaComputador.id === 'papel') {
-            imagemClicadaParaAnimacao.classList.add('animacaoCorrigeBugJogador');
-            escolhaComputador.classList.add('animacaoCorrigeBugComputador');
-            imgPedra.classList.add('hidden');
-            setTimeout(() => {removeClasses(imagemClicadaParaAnimacao,escolhaComputador,imgPedra)},tempoEspera);
-        } else {
-            const sectionDasImagens = document.querySelector('.game-display');
-            const imgDuplicada = document.createElement('img');
-            sectionDasImagens.appendChild(imgDuplicada);
-            imgDuplicada.src = imagemClicadaParaAnimacao.src;
-            imgDuplicada.classList.add('animacaoComputador');
-            imgDuplicada.id = 'tesoura';
-            imagemClicadaParaAnimacao.classList.add('animacaoJogador');
-            imgPapel.classList.add('hidden');
-            imgPedra.classList.add('hidden');
-            setTimeout(() => {removeClasses(imagemClicadaParaAnimacao,escolhaComputador,imgPapel,imgPedra,imgDuplicada)},tempoEspera);
+        
+        else if (allPossibilities[item].id === escolhaComputador.id) {
+            allPossibilities[item].remove();
+
+            for (let item in allPossibilitiesCopies) {
+                if (allPossibilitiesCopies[item].id === escolhaComputador.id) {
+                    sectionDasImagens.appendChild(allPossibilitiesCopies[item]);
+                }
             }
+
+            allPossibilities[item].classList.add("escolhida");
+        }
+        
+        else {
+            allPossibilities[item].classList.add("hidden");
+        }
     }
-    
+
+    const match = `${imagemClicada.id}-${escolhaComputador.id}`;
+
+    if (match === `${imgPedra.id}-${imgPedra.id}` ||
+        match === `${imgPapel.id}-${imgPapel.id}` ||
+        match === `${imgTesoura.id}-${imgTesoura.id}`) {
+            imgDuplicada.id = "tempImg";
+            imgDuplicada.id = imagemClicada.id;
+            imgDuplicada.src = imagemClicada.src;
+            imgDuplicada.classList.add('animacaoComputador');
+
+            imagemClicada.classList.add('animacaoJogador');
+
+            sectionDasImagens.appendChild(imgDuplicada);
+            
+            setTimeout(() => {
+                imgDuplicada.remove();
+                sectionDasImagens.remove();
+                criaElementosPedraPapelTesoura();
+            }, tempoEspera);
+    } else {
+        escolhaComputador.classList.add('animacaoComputador');
+        imagemClicada.classList.add('animacaoJogador');
+        setTimeout(() => {
+            imgDuplicada.remove();
+            sectionDasImagens.remove();
+            criaElementosPedraPapelTesoura();
+        }, tempoEspera);
+    }
 }
 
-let vitoriasJogador = 0;
-let vitoriasComputador = 0;
-let counterRodadas = 0;
+let vitoriasJogador = 0,
+    vitoriasComputador = 0,
+    counterRodadas = 0;
+
 function verificaVitoria() {
     if(counterRodadas === 5) {
-        if(vitoriasJogador > vitoriasComputador) {
-            alert(`PLACAR GERAL: JOGADOR VENCEU!\nJogador: ${vitoriasJogador}\nComputador: ${vitoriasComputador}`);
-            resetGame();
-        } else if(vitoriasComputador > vitoriasJogador) {
-            alert(`PLACAR GERAL: COMPUTADOR VENCEU!\nJogador: ${vitoriasJogador}\nComputador: ${vitoriasComputador}`);
-            resetGame();
-        } else {
-            alert(`PLACAR GERAL: EMPATE!\nJogador: ${vitoriasJogador}\nComputador: ${vitoriasComputador}`);
-            resetGame();
-        }
-        counterRodadas = 0;
-        vitoriasJogador = 0;
-        vitoriasComputador = 0;
-        /* console.log("counterRodadas"+counterRodadas )
-        console.log("vitoriasJogador"+vitoriasJogador)
-        console.log("vitoriasComputador"+vitoriasComputador) */
+        return true;
+    }
+    return false;
+}
+
+function encerraJogo() {
+    if(vitoriasJogador > vitoriasComputador) {
+        alert(`PLACAR GERAL: JOGADOR VENCEU!\nJogador: ${vitoriasJogador}\nComputador: ${vitoriasComputador}`);
+        resetGame();
+    } else if(vitoriasComputador > vitoriasJogador) {
+        alert(`PLACAR GERAL: COMPUTADOR VENCEU!\nJogador: ${vitoriasJogador}\nComputador: ${vitoriasComputador}`);
+        resetGame();
+    } else {
+        alert(`PLACAR GERAL: EMPATE!\nJogador: ${vitoriasJogador}\nComputador: ${vitoriasComputador}`);
+        resetGame();
     }
 }
 
 let escolhaJogador;
-function dezJogadas(event) {
+function jogadas(event) {
     const imagemClicada = event.target;
-    /* const imgPedra = document.querySelector('#pedra');
-    const imgPapel = document.querySelector('#papel');
-    const imgTesoura = document.querySelector('#tesoura'); */
-    let ganhador = "";
     let escolhaComputador = sorteiaEscolhaComputador();
-    /* console.log(imagemClicada.id)
-    console.log(escolhaComputador)
-    console.log(counterRodadas) */
 
-    verificaJogada(imagemClicada.id, escolhaComputador.id);
-    proximaPartida(imagemClicada, escolhaComputador);
+    if (!verificaVitoria()) {
+        verificaJogada(imagemClicada.id, escolhaComputador.id);
+        proximaPartida(imagemClicada, escolhaComputador);
+    } else {
+        encerraJogo();
+    }
 }
 
 function proximaPartida(Player, PC) {
     counterRodadas++;
     criaImagensNaTabela(ganhador, counterRodadas, Player.src, PC.src);
     animacaoDasEscolhas(Player, PC);
-    setTimeout(() => {timerStart()}, tempoEspera);
-    verificaVitoria();
-    /* console.log("AntesVitoria")
-    console.log("jogador"+vitoriasJogador);
-    console.log("computador"+vitoriasComputador);
-    console.log(imagemClicada.src); */
+    setTimeout(() => {
+        timerStart()
+    }, tempoEspera);
 }
 
 function verificaJogada(escolhaPlayer, escolhaPC) {
@@ -320,11 +275,29 @@ function verificaJogada(escolhaPlayer, escolhaPC) {
     timerStop();
 }
 
+function criarTimer() {
+    const timerSection = document.createElement("section"),
+          message = document.createElement("h2"),
+          container = document.getElementById("container");
+        
+    timerSection.classList.add = "container__timer";
+
+    timer = document.createElement("span");
+    timer.innerText = "5";
+    timer.id = "tempo-restante";
+
+    message.innerText = "Escolha aleatória em:";
+
+    timerSection.appendChild(message);
+    timerSection.appendChild(timer);
+
+    container.prepend(timerSection);
+}
+
 let cronometro = "",
     startTime = 5;
 
 function timerStart() {
-
     timerStop();
     timer.innerText = startTime;
     let sec = startTime;
@@ -345,12 +318,6 @@ function timerStart() {
 
 function timerStop() {
     clearInterval(cronometro);
-}
-
-function criarTimer() {
-    const timer = document.createElement("section");
-    timer.classList.add = "tempo-restante";
-
 }
 
 const botaoInstrucoes = document.getElementById("gameRules");
