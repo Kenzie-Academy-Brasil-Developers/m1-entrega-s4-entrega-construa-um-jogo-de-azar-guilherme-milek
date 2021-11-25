@@ -198,14 +198,21 @@ function verificaVitoria() {
 
 function encerraJogo() {
     if(vitoriasJogador > vitoriasComputador) {
-        alert(`PLACAR GERAL: JOGADOR VENCEU!\nJogador: ${vitoriasJogador}\nComputador: ${vitoriasComputador}`);
+        setTimeout(() => {
+            criarPopUpVitoriaDerrota(`PLACAR GERAL: JOGADOR VENCEU!\nJogador: ${vitoriasJogador}\nComputador: ${vitoriasComputador}`);
         resetGame();
+        }, tempoEspera);
+        
     } else if(vitoriasComputador > vitoriasJogador) {
-        alert(`PLACAR GERAL: COMPUTADOR VENCEU!\nJogador: ${vitoriasJogador}\nComputador: ${vitoriasComputador}`);
-        resetGame();
+        setTimeout(() => {
+            criarPopUpVitoriaDerrota(`PLACAR GERAL: COMPUTADOR VENCEU!\nJogador: ${vitoriasJogador}\nComputador: ${vitoriasComputador}`);
+            resetGame();
+        }, tempoEspera);
     } else {
-        alert(`PLACAR GERAL: EMPATE!\nJogador: ${vitoriasJogador}\nComputador: ${vitoriasComputador}`);
-        resetGame();
+        setTimeout(() => {
+            criarPopUpVitoriaDerrota(`PLACAR GERAL: EMPATE!\nJogador: ${vitoriasJogador}\nComputador: ${vitoriasComputador}`);
+            resetGame();
+        }, tempoEspera);
     }
 }
 
@@ -232,43 +239,44 @@ function proximaPartida(Player, PC) {
 }
 
 function verificaJogada(escolhaPlayer, escolhaPC) {
+    timerStop();////////
     if(escolhaPlayer === 'pedra') {
         if(escolhaPlayer === 'pedra' && escolhaPC === 'tesoura') {
-            alert(`Você ganhou! Computador selecionou ${escolhaPC.toUpperCase()}.`);
+            criarPopUpVitoriaDerrota(`Você ganhou! Computador selecionou ${escolhaPC.toUpperCase()}.`);
             vitoriasJogador++;
             ganhador = 'jogador';
        } else if(escolhaPlayer === 'pedra' && escolhaPC === 'papel') {
-            alert(`Você perdeu! Computador selecionou ${escolhaPC.toUpperCase()}.`);
+            criarPopUpVitoriaDerrota(`Você perdeu! Computador selecionou ${escolhaPC.toUpperCase()}.`);
             vitoriasComputador++;
             ganhador = 'computador';
        } else {
-            alert(`Empate! Computador selecionou ${escolhaPC.toUpperCase()}.`);
+            criarPopUpVitoriaDerrota(`Empate! Computador selecionou ${escolhaPC.toUpperCase()}.`);
             ganhador = 'empate';
        } 
     } else if(escolhaPlayer === 'papel') {
         if(escolhaPlayer === 'papel' && escolhaPC === 'pedra') {
-            alert(`Você ganhou! Computador selecionou ${escolhaPC.toUpperCase()}.`);
+            criarPopUpVitoriaDerrota(`Você ganhou! Computador selecionou ${escolhaPC.toUpperCase()}.`);
             vitoriasJogador++;
             ganhador = 'jogador';
         } else if(escolhaPlayer === 'papel' && escolhaPC === 'tesoura') {
-            alert(`Você perdeu! Computador selecionou ${escolhaPC.toUpperCase()}.`);
+            criarPopUpVitoriaDerrota(`Você perdeu! Computador selecionou ${escolhaPC.toUpperCase()}.`);
             vitoriasComputador++;
             ganhador = 'computador';
         } else {
-            alert(`Empate! Computador selecionou ${escolhaPC.toUpperCase()}.`);
+            criarPopUpVitoriaDerrota(`Empate! Computador selecionou ${escolhaPC.toUpperCase()}.`);
             ganhador = 'empate';
         } 
     } else {
         if(escolhaPlayer === 'tesoura' && escolhaPC === 'papel') {
-            alert(`Você ganhou! Computador selecionou ${escolhaPC.toUpperCase()}.`);
+            criarPopUpVitoriaDerrota(`Você ganhou! Computador selecionou ${escolhaPC.toUpperCase()}.`);
             vitoriasJogador++;
             ganhador = 'jogador';
         } else if(escolhaPlayer === 'tesoura' && escolhaPC === 'pedra') {
-            alert(`Você perdeu! Computador selecionou ${escolhaPC.toUpperCase()}.`);
+            criarPopUpVitoriaDerrota(`Você perdeu! Computador selecionou ${escolhaPC.toUpperCase()}.`);
             vitoriasComputador++;
             ganhador = 'computador';
         } else {
-            alert(`Empate! Computador selecionou ${escolhaPC.toUpperCase()}.`);
+            criarPopUpVitoriaDerrota(`Empate! Computador selecionou ${escolhaPC.toUpperCase()}.`);
             ganhador = 'empate';
         } 
     }
@@ -352,24 +360,31 @@ function criaInstrucoes() {
     document.body.appendChild(blocker);
 }
 
-function criaPopUpVitoriaDerrota() {
-    const blocker = document.createElement("div");
-    blocker.classList.add("blocker");
-
-    const section = document.createElement("section");
-    section.classList.add("instrucoes");
-    section.id = "painelInstrucoes";
-
-    const p = document.createElement("p");
-    section.appendChild(p)
-
-    p.innerText = instrucoes;
-
-    const button = document.createElement("button");
-    button.id = "closeRules";
-
-    section.appendChild(button);
-
-    
-    button.innerText = "Fechar";
+function fecharPopUp() {
+    //const clickedButton = event.target;
+    const section = document.querySelector('#container--alert');
+    console.log(section)
+   // if(clickedButton.tagName === "BUTTON") {
+        section.remove();
+    //}
 }
+
+function criarPopUpVitoriaDerrota(textToShow) {
+    timerStop();
+    setTimeout(() => {
+        fecharPopUp()
+    }, 3000);
+    const body = document.querySelector('body');
+    const section = document.createElement('section');
+    section.id = 'container--alert';
+    const divAlert = document.createElement('div');
+    /* const closeButton = document.createElement('button');
+    closeButton.innerHTML = 'x'; */
+    const span = document.createElement('span');
+    span.innerHTML = textToShow;
+    divAlert.appendChild(span);
+    //divAlert.appendChild(closeButton);
+    section.appendChild(divAlert);
+    body.appendChild(section);
+    //closeButton.addEventListener('click', fecharPopUp);
+} 
