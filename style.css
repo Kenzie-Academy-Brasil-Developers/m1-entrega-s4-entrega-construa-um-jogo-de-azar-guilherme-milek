@@ -1,22 +1,38 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;600;800;900&display=swap");
+
 body {
-    background-image: url(./assets/MainPageFrameRot.png);
+    background-image: url(./assets/img/Pacmangif.gif);
     height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    background-repeat: no-repeat;
     background-size: cover;
     background-position: bottom;
+    background-repeat: no-repeat;
+    width: 320px;
+    font-family: "Inter", sans-serif;
 }
 
-h1 {
+p {
+    font-family: "Minecraft";
+}
+
+#titulo {
+    display: flex;
+    align-items: center;
     text-align: center;
-    font-size: 50px;
+    font-family: "Minecraft";
 }
 
-div {
-    font-size: 25px;
+#titulo h1 {
+    text-align: center;
+    font-size: 30px;
+    color: magenta;
+}
+
+#jogos {
+    font-size: 15px;
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
@@ -24,18 +40,46 @@ div {
     height: 100px;
     width: 300px;
     text-decoration: none;
+    font-family: "Jelly";
+}
+
+#jogos a {
+    text-decoration: none;
     color: yellow;
 }
 
 @media only screen and (min-width: 900px) {
     body {
-        background-image: url(./assets/MainPageFrame.png);
+        background-image: url(./assets/img/Pacmangif.gif);
+        background-color: #000000;
         background-repeat: no-repeat;
-        background-size: cover;
         background-position: bottom;
+        background-size: cover;
         height: 100vh;
-        background-repeat: no-repeat;
-        background-size: cover;
-        background-position: bottom;
+        width: 100vw;
+        min-height: 100%;
+    }
+
+    #titulo {
+        align-items: flex-start;
+        text-align: center;
+        display: flex;
+        height: 100px;
+    }
+
+    #titulo h1 {
+        text-align: center;
+        font-weight: bold;
+        letter-spacing: 3px;
+        font-size: 50px;
+    }
+    #jogos {
+        width: 500px;
+        font-size: 25px;
+    }
+   
+    #jogos a:hover {
+        text-decoration: underline;
+
     }
 }
