@@ -380,12 +380,8 @@ function criaInstrucoes() {
 }
 
 function fecharPopUp() {
-    //const clickedButton = event.target;
     const section = document.querySelector('#container--alert');
-    console.log(section)
-    // if(clickedButton.tagName === "BUTTON") {
     section.remove();
-    //}
 }
 
 function criarPopUpVitoriaDerrota(textToShow) {
@@ -397,13 +393,9 @@ function criarPopUpVitoriaDerrota(textToShow) {
     const section = document.createElement('section');
     section.id = 'container--alert';
     const divAlert = document.createElement('div');
-    /* const closeButton = document.createElement('button');
-    closeButton.innerHTML = 'x'; */
     const span = document.createElement('span');
     span.innerHTML = textToShow;
     divAlert.appendChild(span);
-    //divAlert.appendChild(closeButton);
     section.appendChild(divAlert);
     body.appendChild(section);
-    //closeButton.addEventListener('click', fecharPopUp);
 }
