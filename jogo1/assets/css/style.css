@@ -217,6 +217,56 @@ footer {}
     display: flex;
 }
 
+.blocker {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    z-index: 1;
+    background-color: rgba(0,0,0,0.9);
+    top: -0vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.alerta--vitoria-derrota {
+    color: #FFF;
+    width: 400px;
+    height: 100px;
+    background-color: #3b4ccaff;
+    text-align: center;
+    box-shadow: 1px 1px 5px #FD0;
+    border-radius: 10px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#deleta-popup {
+    align-self: flex-start;
+    width: 25px;
+    height: 25px;
+    color: #3b4ccaff;
+    margin: 3px;
+    border-radius: 35%;
+    font-weight: bold;
+    font-size: 16px;
+    background-color: #FD0;
+    box-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+}
+
+.divButton {
+    height: 100%;
+}
+
+.span--alert {
+    padding: 0 20px;
+    text-align: center;
+    max-width: 90%;
+    max-height: 50px;
+    line-height: 20px;
+}
 #jogadorNome {
     padding-left: 5px;
 }

@@ -559,7 +559,7 @@ function limpaSelecao() {
 // Função que verifica se o jogador achou todas as 3 palavras
 function verificaVitoria() {
     if (palavrasAchadas.length === 3) {
-        alert("PARABÉNS! Você achou todas as palavras!");
+        popUp("PARABÉNS! Você achou todas as palavras!");
         clickDown.removeEventListener('click', camposEscolhidos)
         timerStop()
         addVitoria()
@@ -578,7 +578,7 @@ function perdeJogo() {
     }
 
     setTimeout(() => {
-        alert("AH NÃO! Você não achou todas as palavras a tempo :(")
+        popUp("OPA! Você não achou todas as palavras a tempo!")
     }, 250)
     addDerrota()
 }
@@ -657,6 +657,38 @@ function timerStop() {
     clearInterval(cronometro)
 }
 
+
+function deletarPopUp(event) {
+    const clickedButton = event.target;
+    const sectionOfAlert = document.querySelector('.blocker');
+    if(clickedButton.tagName === 'BUTTON') {
+        sectionOfAlert.remove();
+    }
+}
+
+function popUp(textToShow) {
+    const closeButton = document.createElement('button');
+    const sectionOfAlert = document.createElement('section');
+    closeButton.innerHTML = 'x';
+    closeButton.id = 'deleta-popup'
+    const divButton = document.createElement('div');
+    divButton.classList.add('divButton');
+    const span = document.createElement('span');
+    span.className = "span--alert";
+    sectionOfAlert.classList.add('blocker');
+    const divAlert = document.createElement('div');
+    divAlert.classList.add('alerta--vitoria-derrota');
+    
+
+    span.innerHTML = textToShow;
+    console.log(divAlert.innerText)
+    divButton.appendChild(closeButton);
+    sectionOfAlert.appendChild(divAlert);
+    divAlert.appendChild(span);
+    divAlert.appendChild(divButton);
+    document.body.appendChild(sectionOfAlert);
+    closeButton.addEventListener('click', deletarPopUp)
+}
 let placarV = 0
 
 function addVitoria() {
