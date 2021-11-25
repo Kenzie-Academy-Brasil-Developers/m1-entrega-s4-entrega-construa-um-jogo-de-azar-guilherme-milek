@@ -79,28 +79,22 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: rgba(0, 0, 0, 0.4);
+    background-color: rgba(0, 0, 0, 0.6);
     position: fixed;
     z-index: 1;
     width: 100vw;
     height: 100vh;
 }
 
-.instrucoes {
+.instrucoes, .popUp {
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
     position: fixed;
     z-index: 2;
-<<<<<<< HEAD
-    background-color: rgb(68, 60, 102);
     color: white;
-    width: 320px;
-=======
     background-color: rgb(68, 60, 102, 0.9);
-    width: 500px;
->>>>>>> 5a51d7146d91cdb2c931518dc4a02f8c8a3fc168
     padding: 25px 0;
     border-radius: 10px 10px 10px 10px;
     border: 5px rgb(102, 51, 153, 0.6) solid;
@@ -108,19 +102,25 @@ body {
     height: 250px;
 }
 
+.popUp{
+    height: 100px;
+    padding: 15px;
+}
+
+#alert-text {
+    line-height:25px;
+}
+
 .instrucoes p {
-<<<<<<< HEAD
     box-sizing: border-box;
     color: #04d481;
     width: 300px;
     padding: 20px;
     line-height: 25px;
     font-weight: bold;
-=======
     width: 300px;
     line-height: 20px;
     color: #f1fa8c;
->>>>>>> 5a51d7146d91cdb2c931518dc4a02f8c8a3fc168
 }
 
 form {

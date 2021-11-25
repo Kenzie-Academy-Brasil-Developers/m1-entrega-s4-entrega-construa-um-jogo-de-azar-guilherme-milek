@@ -356,7 +356,7 @@ function criaInstrucoes() {
     blocker.classList.add("blocker");
 
     const section = document.createElement("section");
-    section.classList.add("con");
+    section.classList.add("instrucoes");
     section.id = "painelInstrucoes";
 
     const p = document.createElement("p");
@@ -380,12 +380,9 @@ function criaInstrucoes() {
 }
 
 function fecharPopUp() {
-    //const clickedButton = event.target;
-    const section = document.querySelector('#container--alert');
+    const section = document.querySelector('.blocker');
     console.log(section)
-    // if(clickedButton.tagName === "BUTTON") {
     section.remove();
-    //}
 }
 
 function criarPopUpVitoriaDerrota(textToShow) {
@@ -395,15 +392,13 @@ function criarPopUpVitoriaDerrota(textToShow) {
     }, 3000);
     const body = document.querySelector('body');
     const section = document.createElement('section');
-    section.id = 'container--alert';
+    section.classList.add('blocker');
     const divAlert = document.createElement('div');
-    /* const closeButton = document.createElement('button');
-    closeButton.innerHTML = 'x'; */
+    divAlert.classList.add('popUp');
     const span = document.createElement('span');
     span.innerHTML = textToShow;
+    span.id = 'alert-text';
+    body.prepend(section);
     divAlert.appendChild(span);
-    //divAlert.appendChild(closeButton);
     section.appendChild(divAlert);
-    body.appendChild(section);
-    //closeButton.addEventListener('click', fecharPopUp);
 }
