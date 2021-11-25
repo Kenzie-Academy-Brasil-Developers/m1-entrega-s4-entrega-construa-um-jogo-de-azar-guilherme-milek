@@ -191,17 +191,24 @@ function animacaoDasEscolhas(imagemClicada, escolhaComputador) {
 let vitoriasJogador = 0,
     vitoriasComputador = 0,
     counterRodadas = 0;
+
 function verificaVitoria() {
-    if(counterRodadas === 5) {
-        if(vitoriasJogador > vitoriasComputador) {
-            alert(`PLACAR GERAL: JOGADOR VENCEU!\nJogador: ${vitoriasJogador}\nComputador: ${vitoriasComputador}`);
-            resetGame();
-        } else if(vitoriasComputador > vitoriasJogador) {
-            alert(`PLACAR GERAL: COMPUTADOR VENCEU!\nJogador: ${vitoriasJogador}\nComputador: ${vitoriasComputador}`);
-            resetGame();
+    if (counterRodadas === 5) {
+        if (vitoriasJogador > vitoriasComputador) {
+            setTimeout(() => {
+                criarPopUpVitoriaDerrota(`PLACAR GERAL: JOGADOR VENCEU!\nJogador: ${vitoriasJogador}\nComputador: ${vitoriasComputador}`);
+                resetGame();
+            }, tempoEspera+3000);
+        } else if (vitoriasComputador > vitoriasJogador) {
+            setTimeout(() => {
+                criarPopUpVitoriaDerrota(`PLACAR GERAL: COMPUTADOR VENCEU!\nJogador: ${vitoriasJogador}\nComputador: ${vitoriasComputador}`);
+                resetGame();
+            }, tempoEspera+3000);
         } else {
-            alert(`PLACAR GERAL: EMPATE!\nJogador: ${vitoriasJogador}\nComputador: ${vitoriasComputador}`);
-            resetGame();
+            setTimeout(() => {
+                criarPopUpVitoriaDerrota(`PLACAR GERAL: EMPATE!\nJogador: ${vitoriasJogador}\nComputador: ${vitoriasComputador}`);
+                resetGame();
+            }, tempoEspera+3000);
         }
         counterRodadas = 0;
         vitoriasJogador = 0;
@@ -210,7 +217,7 @@ function verificaVitoria() {
         setTimeout(() => {
             timerStart();
             criaElementosPedraPapelTesoura();
-        }, tempoEspera);
+        }, tempoEspera+3000);
     }
 }
 
@@ -229,58 +236,76 @@ function proximaPartida(Player, PC) {
     counterRodadas++;
     criaImagensNaTabela(ganhador, counterRodadas, Player.src, PC.src);
     animacaoDasEscolhas(Player, PC);
-    
+
     verificaVitoria();
 }
 
 function verificaJogada(escolhaPlayer, escolhaPC) {
     if (escolhaPlayer === 'pedra') {
         if (escolhaPlayer === 'pedra' && escolhaPC === 'tesoura') {
-            alert(`Você ganhou! Computador selecionou ${escolhaPC.toUpperCase()}.`);
             vitoriasJogador++;
             ganhador = 'jogador';
+            setTimeout(() => {
+                criarPopUpVitoriaDerrota(`Você ganhou! Computador selecionou ${escolhaPC.toUpperCase()}.`);
+            }, tempoEspera);
         } else if (escolhaPlayer === 'pedra' && escolhaPC === 'papel') {
-            alert(`Você perdeu! Computador selecionou ${escolhaPC.toUpperCase()}.`);
             vitoriasComputador++;
             ganhador = 'computador';
+            setTimeout(() => {
+                criarPopUpVitoriaDerrota(`Você perdeu! Computador selecionou ${escolhaPC.toUpperCase()}.`);
+            }, tempoEspera);
         } else {
-            alert(`Empate! Computador selecionou ${escolhaPC.toUpperCase()}.`);
             ganhador = 'empate';
+            setTimeout(() => {
+                criarPopUpVitoriaDerrota(`Empate! Computador selecionou ${escolhaPC.toUpperCase()}.`);
+            }, tempoEspera);
         }
     } else if (escolhaPlayer === 'papel') {
+        timerStop();
         if (escolhaPlayer === 'papel' && escolhaPC === 'pedra') {
-            alert(`Você ganhou! Computador selecionou ${escolhaPC.toUpperCase()}.`);
             vitoriasJogador++;
             ganhador = 'jogador';
+            setTimeout(() => {
+                criarPopUpVitoriaDerrota(`Você ganhou! Computador selecionou ${escolhaPC.toUpperCase()}.`);
+            }, tempoEspera);
         } else if (escolhaPlayer === 'papel' && escolhaPC === 'tesoura') {
-            alert(`Você perdeu! Computador selecionou ${escolhaPC.toUpperCase()}.`);
             vitoriasComputador++;
             ganhador = 'computador';
+            setTimeout(() => {
+                criarPopUpVitoriaDerrota(`Você perdeu! Computador selecionou ${escolhaPC.toUpperCase()}.`);
+            }, tempoEspera);
         } else {
-            criarPopUpVitoriaDerrota(`Empate! Computador selecionou ${escolhaPC.toUpperCase()}.`);
             ganhador = 'empate';
+            setTimeout(() => {
+                criarPopUpVitoriaDerrota(`Empate! Computador selecionou ${escolhaPC.toUpperCase()}.`);
+            }, tempoEspera);
         }
     } else {
         if (escolhaPlayer === 'tesoura' && escolhaPC === 'papel') {
-            alert(`Você ganhou! Computador selecionou ${escolhaPC.toUpperCase()}.`);
             vitoriasJogador++;
             ganhador = 'jogador';
+            setTimeout(() => {
+                criarPopUpVitoriaDerrota(`Você ganhou! Computador selecionou ${escolhaPC.toUpperCase()}.`);
+            }, tempoEspera);
         } else if (escolhaPlayer === 'tesoura' && escolhaPC === 'pedra') {
-            alert(`Você perdeu! Computador selecionou ${escolhaPC.toUpperCase()}.`);
             vitoriasComputador++;
             ganhador = 'computador';
+            setTimeout(() => {
+                criarPopUpVitoriaDerrota(`Você perdeu! Computador selecionou ${escolhaPC.toUpperCase()}.`);
+            }, tempoEspera);
         } else {
-            criarPopUpVitoriaDerrota(`Empate! Computador selecionou ${escolhaPC.toUpperCase()}.`);
             ganhador = 'empate';
+            setTimeout(() => {
+                criarPopUpVitoriaDerrota(`Empate! Computador selecionou ${escolhaPC.toUpperCase()}.`);
+            }, tempoEspera);
         }
     }
-    timerStop();
 }
 
 function criarTimer() {
     const timerSection = document.createElement("section"),
-          message = document.createElement("h2"),
-          container = document.getElementById("container");
+        message = document.createElement("h2"),
+        container = document.getElementById("container");
 
     timerSection.id = "container__timer";
 
@@ -312,7 +337,7 @@ function timerStart() {
             escolhaPlayer = sorteiaEscolhaComputador();
             escolhaPC = sorteiaEscolhaComputador();
             verificaJogada(escolhaPlayer.id, escolhaPC.id);
-            proximaPartida(escolhaPlayer, escolhaPC);        
+            proximaPartida(escolhaPlayer, escolhaPC);
         }
     }, 1000);
 }
@@ -325,6 +350,7 @@ const botaoInstrucoes = document.getElementById("gameRules");
 botaoInstrucoes.addEventListener("click", criaInstrucoes)
 
 const instrucoes = "Escolha entre pedra, papel ou tesoura. \nO computador fará uma escolha aleatória.\nVocê receberá uma mensagem de quem foi o vencedor e poderá revisá-la no placar.\nRegra principal:\nPapel vence pedra.\nTesoura vence papel.\nPedra vence tesoura."
+
 function criaInstrucoes() {
     const blocker = document.createElement("div");
     blocker.classList.add("blocker");
@@ -357,8 +383,8 @@ function fecharPopUp() {
     //const clickedButton = event.target;
     const section = document.querySelector('#container--alert');
     console.log(section)
-   // if(clickedButton.tagName === "BUTTON") {
-        section.remove();
+    // if(clickedButton.tagName === "BUTTON") {
+    section.remove();
     //}
 }
 
@@ -380,4 +406,4 @@ function criarPopUpVitoriaDerrota(textToShow) {
     section.appendChild(divAlert);
     body.appendChild(section);
     //closeButton.addEventListener('click', fecharPopUp);
-} 
+}
