@@ -23,16 +23,17 @@ body {
     background-color: rgba(0, 0, 0, 0.7);
 }
 
-.container-voltar {
-    padding: 10px;
-}
-
 .container {
     min-height: 100vh;
     height: 100%;
     padding: 0 10px;
     width: 300px;
     margin: auto;
+}
+
+header{
+    display: flex;
+    flex-direction: column;
 }
 
 #nome {
@@ -61,14 +62,10 @@ h1 {
     text-align: center;
     font-size: 32px;
     font-family: "Pokemon_Solid";
-    padding: 20px 0;
+    padding: 0 0 20px 0;
     color: var(--amarelo);
     text-shadow: -2px 2px 0 var(--azul), 2px 2px 0 var(--azul),
         2px -2px 0 var(--azul), -2px -2px 0 var(--azul);
-}
-
-#placar {
-    display: flex;
 }
 
 #vitorias {
@@ -80,6 +77,14 @@ h1 {
     margin-right: 5px;
 }
 
+.jogo{
+    width: 300px;
+    max-width: 300px;
+}
+
+.palavras-para-achar{
+    margin: 10px 0;
+}
 .palavras-para-achar__titulo {
     text-align: center;
     font-family: "Pokemon_Solid";
@@ -127,12 +132,25 @@ h1 {
     box-sizing: border-box;
     min-width: 300px;
     max-width: 300px;
-    width: 300px;
+    width: 100%;
     min-height: 300px;
-    margin: 10px 0;
     background-color: var(--amarelo);
     border: 2px solid var(--azul);
-    border-radius: 10px;
+}
+
+#placar{
+    display: flex;
+    justify-content: center;
+
+    background-color: var(--azul);
+    border-radius: 0 0 10px 10px;
+    color: var(--amarelo);
+    font-family: 'Pokemon_Solid';
+
+    padding: 10px 0;
+    max-width: 300px;
+    min-width: 300px;
+    margin: 0 0 10px 0;
 }
 
 .inserir-nome {
@@ -150,22 +168,6 @@ h1 {
     font-family: Arial;
 }
 
-.tabela tr:nth-child(1) td:nth-child(1) {
-    border-radius: 7px 0 0 0;
-}
-
-.tabela tr:nth-child(1) td:nth-child(10) {
-    border-radius: 0 7px 0 0;
-}
-
-.tabela tr:nth-child(10) td:nth-child(1) {
-    border-radius: 0 0 0 7px;
-}
-
-.tabela tr:nth-child(10) td:nth-child(10) {
-    border-radius: 0 0 7px 0;
-}
-
 td {
     padding: 7px;
     transition: background-color 0.25s;
@@ -179,7 +181,7 @@ td:hover {
 }
 
 .hidden {
-    display: none;
+    display: none !important; 
 }
 
 footer {}
@@ -189,6 +191,9 @@ footer {}
     filter: invert(1);
 }
 
+.container-reset-button{
+    padding: 0 0 10px 0;
+}
 #reset-button {
     display: block;
     padding: 10px;
@@ -215,6 +220,13 @@ footer {}
 
 .tempo-limite {
     display: flex;
+    justify-content: space-evenly;
+    width: 100%;
+    padding: 10px 0;
+    background-color: var(--azul);
+    border-radius: 10px 10px 0 0;
+    color: var(--amarelo);
+    font-family: 'Pokemon_Solid';
 }
 
 .blocker {
@@ -231,11 +243,12 @@ footer {}
 
 .alerta--vitoria-derrota {
     color: #FFF;
-    width: 400px;
+    width: 300px;
     height: 100px;
     background-color: #3b4ccaff;
     text-align: center;
-    box-shadow: 1px 1px 5px #FD0;
+    border: 2px solid var(--amarelo);
+    box-shadow: 1px 1px 5px #000;
     border-radius: 10px;
     font-weight: bold;
     display: flex;
@@ -249,6 +262,7 @@ footer {}
     height: 25px;
     color: #3b4ccaff;
     margin: 3px;
+    border: none;
     border-radius: 35%;
     font-weight: bold;
     font-size: 16px;
@@ -275,4 +289,18 @@ footer {}
     margin-left: 3px;
 }
 
-/* ====================== */
+/* Breakpoints */
+
+@media (min-width: 600px){
+    .container{
+        width: 580px;
+    }
+}
+
+@media (min-width: 900px){
+    
+}
+
+@media (min-width: 1200px){
+    
+}

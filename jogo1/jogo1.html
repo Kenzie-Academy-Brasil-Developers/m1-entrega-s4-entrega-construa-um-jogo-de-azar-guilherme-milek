@@ -19,41 +19,39 @@
 <body>
     <div class="fundo-preto">
         <div class="container">
-            <div class="container-voltar">
-                <a href="../index.html" class="link-voltar"><img src="assets/img/back.png"
-                        alt="Voltar para a página inicial" srcset="" /></a>
-            </div>
-
             <header>
+                <a href="../index.html" class="link-voltar"><img src="assets/img/back.png"
+                    alt="Voltar para a página inicial" srcset="" /></a>
                 <h1>Caça Palavras</h1>
             </header>
             <main>
-                <section class="tempo-limite hidden">
-                    <h3>Tempo limite:</h3>
-                    <span id="tempo-limite__timer"></span>
-                    <p id="jogadorNome">Jogador:</p>
-                </section>
-                <div class="container-tabela">
-                    <table class="tabela">
-                        <div class="inserir-nome">
-                            <input type="text" placeholder="Coloque seu nome" id="nome" />
-                            <input type="button" value="Confirmar" id="btn-nome" />
-                        </div>
-                    </table>
-                </div>
-                <div id="placar">
-                    <p id="vitorias">Vitórias:</p>
-                    <p id="vitoriaPlacar">0</p>
-                    <p id="derrotas">Derrotas:</p>
-                    <p id="derrotasPlacar">0</p>
+                <div class="jogo">
+                    <section class="tempo-limite hidden">
+                        <p id="jogadorNome"></p>
+                       <h3 id="tempo-limite__timer"></h3>     
+                    </section>
+                    <div class="container-tabela">
+                        <table class="tabela">
+                            <div class="inserir-nome">
+                                <input type="text" placeholder="Coloque seu nome" id="nome" />
+                                <input type="button" value="Confirmar" id="btn-nome" />
+                            </div>
+                        </table>
+                    </div>
+                    <div id="placar" class="hidden">
+                        <p id="vitorias">Vitórias:</p>
+                        <p id="vitoriaPlacar">0</p>
+                        <p id="derrotas">Derrotas:</p>
+                        <p id="derrotasPlacar">0</p>
+                    </div>
                 </div>
 
                 <section class="palavras-para-achar hidden">
-                    <h2 class="palavras-para-achar__titulo">Palavras para achar</h2>
-                    <ul id="lista-palavras"></ul>
                     <div class="container-reset-button">
                         <button id="reset-button">Reiniciar partida</button>
                     </div>
+                    <h2 class="palavras-para-achar__titulo">Palavras para achar</h2>
+                    <ul id="lista-palavras"></ul>                   
                 </section>
 
                 <section class="regras">
@@ -78,9 +76,9 @@
     <footer></footer>
 
     <script src="assets/js/script.js"></script>
-    <!-- <audio autoplay loop id="myaudio">
+    <audio autoplay loop id="myaudio">
         <source src="assets/audio/y2mate.com - Pokémon Red  Blue Music Opening Theme.mp3">
-    </audio> -->
+    </audio>
 </body>
 
 </html>

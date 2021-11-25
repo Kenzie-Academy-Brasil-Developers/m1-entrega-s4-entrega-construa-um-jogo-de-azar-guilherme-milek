@@ -26,10 +26,13 @@ function colocarNome(event) {
     const divNome = document.querySelector('.inserir-nome')
     const nome = document.getElementById('nome').value
     const cronometro = document.querySelector('.tempo-limite')
+    const placar = document.querySelector('#placar')
     const palavrasParaAchar = document.querySelector('.palavras-para-achar')
+
 
     divNome.classList.add('hidden')
     cronometro.classList.remove('hidden')
+    placar.classList.remove('hidden')
     palavrasParaAchar.classList.remove('hidden')
 
     iniciarJogo()
@@ -53,11 +56,11 @@ function sortearPalavra() {
 function criarMatriz() {
     let res = []
     for (let i = 0; i < 10; i++) {
-        console.log('passou1')
+
         res.push([])
 
         for (let j = 0; j < 10; j++) {
-            console.log('passou2')
+
             res[i].push(0)
         }
 
@@ -72,7 +75,7 @@ function ColocarPalavrasNaMatriz() {
     matriz = criarMatriz()
     palavrasSorteadas = []
     for (let i = 0; i < 3; i++) {
-        console.log('passou3')
+
         if (Math.floor(Math.random() * 2) === 0) {
             ColocarPalavraNaMatrizHorizontal()
         } else {
@@ -86,203 +89,203 @@ let palavrasSorteadas = []
 
 //Sorteia uma palavra na horizontal e coloca na matriz
 function ColocarPalavraNaMatrizHorizontal() {
-    let palavraSorteada = ''
-    let jaFoiSorteada = false
-
-    //Fica no while se a palavra foi sorteada
-    do {
-        palavraSorteada = sortearPalavra()
-        //Fala se ja foi sorteada
-        for (let i = 0; i < palavrasSorteadas.length; i++) {
-            console.log('passou4')
-            if (palavrasSorteadas[i].includes(palavraSorteada)) {
-                jaFoiSorteada = true
-                break
-            } else {
-                jaFoiSorteada = false
-            }
-        }
-
-        //Confirma se ja foi sorteada
-        if (jaFoiSorteada) {
-
-        } else {
-            //Atualiza a lista das palavras para achar
-            const listItem = document.createElement("li");
-            listItem.innerText = palavraSorteada;
-            listItem.setAttribute("id", palavraSorteada);
-            listaPalavras.appendChild(listItem);
-
-            palavrasSorteadas.push(palavraSorteada)
-        }
-    }
-    while (jaFoiSorteada)
-
     let possible = false
-
     while (possible === false) {
-        //sorteia uma linha de 0 a 9
-        let linha = Math.floor(Math.random() * 10)
-        //sorteia uma coluna de 0 a 9
-        let coluna = Math.floor(Math.random() * 10)
+        let palavraSorteada = ''
+        let jaFoiSorteada = false
 
-        //Registra espaços vazios e letras na linha selecionada
-        let letraNoMeio = []
-        let espacosVazios = 0
-        for (let i = 0; i < 10; i++) {
-            console.log('passou5')
-            if (typeof (matriz[linha][i]) === 'string') {
-                letraNoMeio.push(matriz[linha][i])
-            } else {
-                espacosVazios++
+        //Fica no while se a palavra foi sorteada
+        do {
+            palavraSorteada = sortearPalavra()
+            //Fala se ja foi sorteada
+            for (let i = 0; i < palavrasSorteadas.length; i++) {
+
+                if (palavrasSorteadas[i].includes(palavraSorteada)) {
+                    jaFoiSorteada = true
+                    break
+                } else {
+                    jaFoiSorteada = false
+                }
             }
         }
+        while (jaFoiSorteada)
 
-        //Verifica quantos espaços vazios tem para colocar a palavra da coluna sorteada até o fim
-        let espacosParaColocarPalavra = 0
-        let j = 0
-        for (let i = coluna; i < 10; i++) {
-            console.log('passou6')
-            //Se o espaço for vazio ou for a mesma letra na palavra
-            if (matriz[linha][i] === 0 || matriz[linha][i].toUpperCase() === palavraSorteada.substr(j, 1).toUpperCase()) {
-                espacosParaColocarPalavra++
-                possible = true
+        let tentativas = 0
+
+        while (possible === false && tentativas < 10) {
+            tentativas++
+            //sorteia uma linha de 0 a 9
+            let linha = Math.floor(Math.random() * 10)
+            //sorteia uma coluna de 0 a 9
+            let coluna = Math.floor(Math.random() * 10)
+
+            //Registra espaços vazios e letras na linha selecionada
+            let letraNoMeio = []
+            let espacosVazios = 0
+            for (let i = 0; i < 10; i++) {
+
+                if (typeof (matriz[linha][i]) === 'string') {
+                    letraNoMeio.push(matriz[linha][i])
+                } else {
+                    espacosVazios++
+                }
+            }
+
+            //Verifica quantos espaços vazios tem para colocar a palavra da coluna sorteada até o fim
+            let espacosParaColocarPalavra = 0
+            let j = 0
+            for (let i = coluna; i < 10; i++) {
+
+                //Se o espaço for vazio ou for a mesma letra na palavra
+                if (matriz[linha][i] === 0 || matriz[linha][i].toUpperCase() === palavraSorteada.substr(j, 1).toUpperCase()) {
+                    espacosParaColocarPalavra++
+                    possible = true
+                } else {
+                    possible = false
+                    break
+                }
+
+                j++
+            }
+
+            //Verifica se tem espaço suficiente e se é possivel colocar ali
+            if (espacosParaColocarPalavra >= palavraSorteada.length && possible === true) {
+                let palavra = palavraSorteada.split('')
+                let count = 0
+                let registroColunas = []
+
+                //Coloca a palavra na matriz
+                for (let j = 0; j < palavra.length; j++) {
+
+                    matriz[linha][coluna + j] = palavra[j].toUpperCase()
+
+                    //Armazena o local da palavra na variael
+                    registroColunas.push(coluna + j)
+                    count++
+                }
+
+                //Registra todas as informações de onde a palavra esta
+                localPalavrasMatrizHorizontal.push({
+                    palavra: palavraSorteada,
+                    linha: linha,
+                    colunas: registroColunas,
+                    posicao: 'horizontal',
+                    achada: false
+                })
+
+                //Atualiza a lista das palavras para achar
+                const listItem = document.createElement("li");
+                listItem.innerText = palavraSorteada;
+                listItem.setAttribute("id", palavraSorteada);
+                listaPalavras.appendChild(listItem);
+
+                palavrasSorteadas.push(palavraSorteada)
+
             } else {
                 possible = false
-                break
             }
-
-            j++
-        }
-
-        //Verifica se tem espaço suficiente e se é possivel colocar ali
-        if (espacosParaColocarPalavra >= palavraSorteada.length && possible === true) {
-            let palavra = palavraSorteada.split('')
-            let count = 0
-            let registroColunas = []
-
-            //Coloca a palavra na matriz
-            for (let j = 0; j < palavra.length; j++) {
-                console.log('passou7')
-                matriz[linha][coluna + j] = palavra[j].toUpperCase()
-
-                //Armazena o local da palavra na variael
-                registroColunas.push(coluna + j)
-                count++
-            }
-
-            //Registra todas as informações de onde a palavra esta
-            localPalavrasMatrizHorizontal.push({
-                palavra: palavraSorteada,
-                linha: linha,
-                colunas: registroColunas,
-                posicao: 'horizontal',
-                achada: false
-            })
-        } else {
-            possible = false
         }
     }
 }
 
 //Sorteia uma palavra na vertical e coloca na matriz
 function ColocarPalavraNaMatrizVertical() {
-    let palavraSorteada = ''
-    let jaFoiSorteada = false
-
-    //Fica no while se a palavra foi sorteada
-    do {
-        palavraSorteada = sortearPalavra()
-        //Fala se ja foi sorteada
-        for (let i = 0; i < palavrasSorteadas.length; i++) {
-            console.log('passou8')
-            if (palavrasSorteadas[i].includes(palavraSorteada)) {
-                jaFoiSorteada = true
-                break
-            } else {
-                jaFoiSorteada = false
-            }
-        }
-
-        //Confirma se ja foi sorteada
-        if (jaFoiSorteada) {
-
-        } else {
-            //Atualiza a lista das palavras para achar
-            const listItem = document.createElement("li");
-            listItem.innerText = palavraSorteada;
-            listItem.setAttribute("id", palavraSorteada);
-            listaPalavras.appendChild(listItem);
-
-            palavrasSorteadas.push(palavraSorteada)
-        }
-
-    }
-    //Sai quando sorteia uma palavra que não foi sorteada
-    while (jaFoiSorteada)
-
     let possible = false
-
     while (possible === false) {
-        //sorteia uma linha de 0 a 9
-        let linha = Math.floor(Math.random() * 10)
-        //sorteia uma coluna de 0 a 9
-        let coluna = Math.floor(Math.random() * 10)
+        let palavraSorteada = ''
+        let jaFoiSorteada = false
 
-        //Registra espaços vazios e letras na linha vertical selecionada
-        let letraNoMeio = []
-        let espacosVazios = 0
-        for (let i = 0; i < 10; i++) {
-            console.log('passou9')
-            if (typeof (matriz[i][coluna]) === 'string') {
-                letraNoMeio.push(matriz[i][coluna])
-            } else {
-                espacosVazios++
+        //Fica no while até sortear uma palavra que ainda não foi sorteada
+        do {
+            palavraSorteada = sortearPalavra()
+            //Fala se ja foi sorteada
+            for (let i = 0; i < palavrasSorteadas.length; i++) {
+
+                if (palavrasSorteadas[i].includes(palavraSorteada)) {
+                    jaFoiSorteada = true
+                    break
+                } else {
+                    jaFoiSorteada = false
+                }
             }
-        }
 
-        //Verifica quantos espaços vazios tem para colocar a palavra da coluna sorteada até o fim na
-        let espacosParaColocarPalavra = 0
-        let j = 0
-        for (let i = linha; i < 10; i++) {
-            console.log('passou10')
-            //Se o espaço for vazio ou for a mesma letra na palavra
-            if (matriz[i][coluna] === 0 || matriz[i][coluna].toUpperCase() === palavraSorteada.substr(j, 1).toUpperCase()) {
-                espacosParaColocarPalavra++
-                possible = true
+        }
+        //Sai quando sorteia uma palavra que não foi sorteada
+        while (jaFoiSorteada)
+
+        let tentativas = 0
+
+        while (possible === false && tentativas < 10) {
+            tentativas++
+            //sorteia uma linha de 0 a 9
+            let linha = Math.floor(Math.random() * 10)
+            //sorteia uma coluna de 0 a 9
+            let coluna = Math.floor(Math.random() * 10)
+
+            //Registra espaços vazios e letras na linha vertical selecionada
+            let letraNoMeio = []
+            let espacosVazios = 0
+            for (let i = 0; i < 10; i++) {
+
+                if (typeof (matriz[i][coluna]) === 'string') {
+                    letraNoMeio.push(matriz[i][coluna])
+                } else {
+                    espacosVazios++
+                }
+            }
+
+            //Verifica quantos espaços vazios tem para colocar a palavra da coluna sorteada até o fim na
+            let espacosParaColocarPalavra = 0
+            let j = 0
+            for (let i = linha; i < 10; i++) {
+
+                //Se o espaço for vazio ou for a mesma letra na palavra
+                if (matriz[i][coluna] === 0 || matriz[i][coluna].toUpperCase() === palavraSorteada.substr(j, 1).toUpperCase()) {
+                    espacosParaColocarPalavra++
+                    possible = true
+                } else {
+                    possible = false
+                    break
+                }
+
+                j++
+            }
+
+            //Verifica se tem espaço suficiente e se é possivel colocar ali
+            if (espacosParaColocarPalavra >= palavraSorteada.length && possible === true) {
+                let palavra = palavraSorteada.split('')
+                let count = 0
+                let registroLinha = []
+                //Coloca a palavra na matriz
+                for (let j = 0; j < palavra.length; j++) {
+
+                    matriz[linha + j][coluna] = palavra[j].toUpperCase()
+
+                    //Armazena o local da palavra na variael
+                    registroLinha.push(linha + j)
+                    count++
+                }
+
+                //Registra todas as informações de onde a palavra esta
+                localPalavrasMatrizVertical.push({
+                    palavra: palavraSorteada,
+                    linhas: registroLinha,
+                    coluna: coluna,
+                    posicao: 'vertical',
+                    achada: false
+                })
+
+                //Atualiza a lista das palavras para achar
+                const listItem = document.createElement("li");
+                listItem.innerText = palavraSorteada;
+                listItem.setAttribute("id", palavraSorteada);
+                listaPalavras.appendChild(listItem);
+
+                palavrasSorteadas.push(palavraSorteada)
+
             } else {
                 possible = false
-                break
             }
-
-            j++
-        }
-
-        //Verifica se tem espaço suficiente e se é possivel colocar ali
-        if (espacosParaColocarPalavra >= palavraSorteada.length && possible === true) {
-            let palavra = palavraSorteada.split('')
-            let count = 0
-            let registroLinha = []
-            //Coloca a palavra na matriz
-            for (let j = 0; j < palavra.length; j++) {
-                console.log('passou11')
-                matriz[linha + j][coluna] = palavra[j].toUpperCase()
-
-                //Armazena o local da palavra na variael
-                registroLinha.push(linha + j)
-                count++
-            }
-
-            //Registra todas as informações de onde a palavra esta
-            localPalavrasMatrizVertical.push({
-                palavra: palavraSorteada,
-                linhas: registroLinha,
-                coluna: coluna,
-                posicao: 'vertical',
-                achada: false
-            })
-        } else {
-            possible = false
         }
     }
 }
@@ -292,13 +295,13 @@ function preencherTabela() {
     let table = document.querySelector('.tabela')
 
     for (let i = 0; i < 10; i++) {
-        console.log('passou12')
+
         let tr = document.createElement('tr')
         tr.setAttribute('linha', i)
         tr.setAttribute('id', i)
 
         for (let j = 0; j < 10; j++) {
-            console.log('passou13')
+
             let td = document.createElement('td')
 
             if (matriz[i][j] === 0) {
@@ -328,13 +331,13 @@ function verificarPalavraHorizontal(linha, coluna1, coluna2) {
     //Preenche o array com todas as colunas do ponto 1 ao 2
     let colunas = []
     for (let i = min; i <= max; i++) {
-        console.log('passou14')
+
         colunas.push(i)
     }
 
     //Percorrer array do local das palavras e verificar se achou alguma delas
     for (let i = 0; i < localPalavrasMatrizHorizontal.length; i++) {
-        console.log('passou15')
+
 
         //Verifica se o numero de colunas escolhidas tem o mesmo tamanho da palavra(se elas não tem o mesmo tamanho, não é a palavra)
         if (colunas.length === localPalavrasMatrizHorizontal[i].colunas.length) {
@@ -345,7 +348,7 @@ function verificarPalavraHorizontal(linha, coluna1, coluna2) {
                 //Verificar se as posições das colunas são as mesmas da palavra i
                 let iguais = false
                 for (let j = 0; j < colunas.length; j++) {
-                    console.log('passou16')
+
                     //Verificar se são as mesmas colunas
                     if (localPalavrasMatrizHorizontal[i].colunas.includes(colunas[j])) {
                         iguais = true
@@ -396,13 +399,13 @@ function verificarPalavraVertical(coluna, linha1, linha2) {
     //Preenche o array com todas as colunas do ponto 1 ao 2
     let linhas = []
     for (let i = min; i <= max; i++) {
-        console.log('passou17')
+
         linhas.push(i)
     }
 
     //Percorrer array do local das letras e verificar se achou alguma delas  
     for (let i = 0; i < localPalavrasMatrizVertical.length; i++) {
-        console.log('passou18')
+
         //Verifica se o numero de colunas escolhidas tem o mesmo tamanho da palavra(se elas não tem o mesmo tamanho, não é a palavra)
         if (linhas.length === localPalavrasMatrizVertical[i].linhas.length) {
 
@@ -412,7 +415,7 @@ function verificarPalavraVertical(coluna, linha1, linha2) {
                 //Verificar se as posições das linhas são as mesmas da palavra i
                 let iguais = false
                 for (let j = 0; j < linhas.length; j++) {
-                    console.log('passou19')
+
                     //Verificar se são as mesmas colunas
                     if (localPalavrasMatrizVertical[i].linhas.includes(linhas[j])) {
                         iguais = true
@@ -514,7 +517,7 @@ function selecionaCampos(linhaInicio, colunaInicio, linhaFim, colunaFim) {
         let max = Math.max(colunaInicio, colunaFim)
         let min = Math.min(colunaInicio, colunaFim)
         for (let inicio = min; inicio <= max; inicio++) {
-            console.log('passou20')
+
             let currentBoxID = `${linhaInicio}-${inicio}`
 
             selection.push(currentBoxID)
@@ -524,7 +527,7 @@ function selecionaCampos(linhaInicio, colunaInicio, linhaFim, colunaFim) {
         let max = Math.max(linhaInicio, linhaFim)
         let min = Math.min(linhaInicio, linhaFim)
         for (let inicio = min; inicio <= max; inicio++) {
-            console.log('passou21')
+
             let currentBoxID = `${inicio}-${colunaInicio}`
 
             selection.push(currentBoxID)
@@ -536,7 +539,7 @@ function selecionaCampos(linhaInicio, colunaInicio, linhaFim, colunaFim) {
 // Função que marca e mantém marcada as palavras corretas já encontradas
 function selecaoCorreta() {
     for (let index in selection) {
-        console.log('passou22')
+
         let currentBoxID = document.getElementById(selection[index])
         currentBoxID.classList.add("palavra--encontrada")
         currentBoxID.classList.remove("letras--selecionadas")
@@ -550,7 +553,7 @@ function selecaoCorreta() {
 function limpaSelecao() {
     let blocosSelecionados = document.querySelectorAll('.letras--selecionadas')
     for (let i = 0; i < blocosSelecionados.length; i++) {
-        console.log('passou23')
+
         blocosSelecionados[i].classList.remove("letras--selecionadas")
     }
     selection = []
@@ -572,7 +575,7 @@ function perdeJogo() {
     clickDown.removeEventListener('click', camposEscolhidos)
 
     for (let index = 0; index < palavrasNaoAchadas.length; index++) {
-        console.log('passou24')
+
         palavrasNaoAchadas[index].classList.remove("local-palavra");
         palavrasNaoAchadas[index].classList.add("palavra--nao-encontrada");
     }
@@ -661,7 +664,7 @@ function timerStop() {
 function deletarPopUp(event) {
     const clickedButton = event.target;
     const sectionOfAlert = document.querySelector('.blocker');
-    if(clickedButton.tagName === 'BUTTON') {
+    if (clickedButton.tagName === 'BUTTON') {
         sectionOfAlert.remove();
     }
 }
@@ -678,10 +681,10 @@ function popUp(textToShow) {
     sectionOfAlert.classList.add('blocker');
     const divAlert = document.createElement('div');
     divAlert.classList.add('alerta--vitoria-derrota');
-    
+
 
     span.innerHTML = textToShow;
-    console.log(divAlert.innerText)
+
     divButton.appendChild(closeButton);
     sectionOfAlert.appendChild(divAlert);
     divAlert.appendChild(span);
@@ -708,5 +711,10 @@ function addDerrota() {
 function playerName() {
     const nome = document.getElementById('nome').value
     const playerName = document.getElementById('jogadorNome')
-    playerName.innerText = "Jogador: " + nome
+    if (nome === "") {
+        playerName.innerText = 'Jogador'
+    }
+    else {
+        playerName.innerText = nome
+    }
 }
