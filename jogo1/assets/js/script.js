@@ -1,24 +1,35 @@
+//https://youtu.be/CIF-r7F2clc
+//--------------
+//
+// "sai"
+// "pukémon"
+// "pukémon p**a"
+// "eu vou mata"
+// "eu vou mata pq essa p**a não é de deus não"
+// "pukémon é um negocio do d**bo"
+// "PIKOMON"
+// "eu vou lhe pegar pikomon..."
+// "vou lhe acha"
+// "eu vou lhe acha"
+// "eu vou lhe acha pikomon"
+// "pq eu não sou qualquer um não"
+// "eu sou nal"
+// "eu sou nal do canal"
+// "EU SOU NAL DO CANAL"
+// "EU VOU LHE PEGA PIKOMON"
+//
+//--------------
+
 //Palavras para achar
 let palavras = ['Bulbasaur', 'Caterpie', 'Squirtle', 'Nidoran', 'Nidorino', 'Zubat', 'Oddish', 'Mankey', 'Alakazam', 'Machop', 'Slowpoke', 'Gengar', 'Exeggutor', 'Ditto', 'Snorlax', 'Dragonite', 'Mewtwo', 'Pikachu', 'Rattata', 'Psyduck']
 //Letras para preencher o resto
 let letras = 'abcdefghijklmnopqrstuvwxyz'
 //Arr bidimensional das letras e palavras
 let matriz = criarMatriz()
-let matrizVerticalTeste = [
-    [0, 'B', 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 'U', 0, 0, 0, 0, 'N', 0, 0, 0],
-    [0, 'L', 0, 0, 0, 0, 'I', 0, 0, 0],
-    [0, 'B', 0, 0, 0, 0, 'D', 0, 0, 0],
-    [0, 'A', 0, 0, 0, 0, 'O', 0, 0, 0],
-    [0, 'S', 0, 0, 0, 0, 'R', 0, 0, 0],
-    [0, 'A', 0, 0, 0, 0, 'I', 0, 0, 0],
-    [0, 'U', 0, 0, 0, 0, 'N', 0, 0, 0],
-    [0, 'R', 0, 0, 0, 0, 'O', 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-]
 let localPalavrasMatriz = []
 let localPalavrasMatrizHorizontal = []
 let localPalavrasMatrizVertical = []
+let localPalavrasMatrizDiagonal = []
 let palavrasAchadas = [];
 let caixaLetraSelecionada = [];
 
@@ -76,10 +87,21 @@ function ColocarPalavrasNaMatriz() {
     palavrasSorteadas = []
     for (let i = 0; i < 3; i++) {
 
-        if (Math.floor(Math.random() * 2) === 0) {
-            ColocarPalavraNaMatrizHorizontal()
-        } else {
-            ColocarPalavraNaMatrizVertical()
+        let sorteio = Math.floor(Math.random() * 3)
+        if (sorteio === 0) {
+            if (ColocarPalavraNaMatrizHorizontal() === false) {
+                i--
+            }
+
+        } else if (sorteio === 1) {
+            if (ColocarPalavraNaMatrizVertical() === false) {
+                i--
+            }
+        }
+        else {
+            if (ColocarPalavraNaMatrizDiagonal() === false) {
+                i--
+            }
         }
     }
 
@@ -90,7 +112,8 @@ let palavrasSorteadas = []
 //Sorteia uma palavra na horizontal e coloca na matriz
 function ColocarPalavraNaMatrizHorizontal() {
     let possible = false
-    while (possible === false) {
+    let tentativasPalavras = 0
+    while (possible === false && tentativasPalavras < 10) {
         let palavraSorteada = ''
         let jaFoiSorteada = false
 
@@ -110,26 +133,14 @@ function ColocarPalavraNaMatrizHorizontal() {
         }
         while (jaFoiSorteada)
 
-        let tentativas = 0
+        let tentativasEncaixar = 0
 
-        while (possible === false && tentativas < 10) {
-            tentativas++
+        while (possible === false && tentativasEncaixar < 10) {
+            tentativasEncaixar++
             //sorteia uma linha de 0 a 9
             let linha = Math.floor(Math.random() * 10)
             //sorteia uma coluna de 0 a 9
             let coluna = Math.floor(Math.random() * 10)
-
-            //Registra espaços vazios e letras na linha selecionada
-            let letraNoMeio = []
-            let espacosVazios = 0
-            for (let i = 0; i < 10; i++) {
-
-                if (typeof (matriz[linha][i]) === 'string') {
-                    letraNoMeio.push(matriz[linha][i])
-                } else {
-                    espacosVazios++
-                }
-            }
 
             //Verifica quantos espaços vazios tem para colocar a palavra da coluna sorteada até o fim
             let espacosParaColocarPalavra = 0
@@ -181,17 +192,21 @@ function ColocarPalavraNaMatrizHorizontal() {
 
                 palavrasSorteadas.push(palavraSorteada)
 
+                return true
+
             } else {
                 possible = false
             }
         }
     }
+    return false
 }
 
 //Sorteia uma palavra na vertical e coloca na matriz
 function ColocarPalavraNaMatrizVertical() {
     let possible = false
-    while (possible === false) {
+    let tentativasPalavras = 0
+    while (possible === false && tentativasPalavras < 10) {
         let palavraSorteada = ''
         let jaFoiSorteada = false
 
@@ -213,26 +228,14 @@ function ColocarPalavraNaMatrizVertical() {
         //Sai quando sorteia uma palavra que não foi sorteada
         while (jaFoiSorteada)
 
-        let tentativas = 0
+        let tentativasEncaixar = 0
 
-        while (possible === false && tentativas < 10) {
-            tentativas++
+        while (possible === false && tentativasEncaixar < 10) {
+            tentativasEncaixar++
             //sorteia uma linha de 0 a 9
             let linha = Math.floor(Math.random() * 10)
             //sorteia uma coluna de 0 a 9
             let coluna = Math.floor(Math.random() * 10)
-
-            //Registra espaços vazios e letras na linha vertical selecionada
-            let letraNoMeio = []
-            let espacosVazios = 0
-            for (let i = 0; i < 10; i++) {
-
-                if (typeof (matriz[i][coluna]) === 'string') {
-                    letraNoMeio.push(matriz[i][coluna])
-                } else {
-                    espacosVazios++
-                }
-            }
 
             //Verifica quantos espaços vazios tem para colocar a palavra da coluna sorteada até o fim na
             let espacosParaColocarPalavra = 0
@@ -283,11 +286,124 @@ function ColocarPalavraNaMatrizVertical() {
 
                 palavrasSorteadas.push(palavraSorteada)
 
+                return true
+
             } else {
                 possible = false
             }
         }
     }
+    return false
+}
+
+//Sorteia uma palavra na diagonal e coloca na matriz
+function ColocarPalavraNaMatrizDiagonal() {
+    let possible = false
+    let tentativasPalavras = 0
+    while (possible === false && tentativasPalavras < 10) {
+        let palavraSorteada = ''
+        let jaFoiSorteada = false
+
+        //Fica no while até sortear uma palavra que ainda não foi sorteada
+        do {
+            palavraSorteada = sortearPalavra()
+            //Fala se ja foi sorteada
+            for (let i = 0; i < palavrasSorteadas.length; i++) {
+
+                if (palavrasSorteadas[i].includes(palavraSorteada)) {
+                    jaFoiSorteada = true
+                    break
+                } else {
+                    jaFoiSorteada = false
+                }
+            }
+
+        }
+        //Sai quando sorteia uma palavra que não foi sorteada
+        while (jaFoiSorteada)
+
+        let tentativasEncaixar = 0
+
+        //Tenta colocar na matriz 10x, se não consegui em nenhuma, volta e sorteia outra palavra
+        while (possible === false && tentativasEncaixar < 10) {
+
+            tentativasEncaixar++
+            //sorteia uma linha de 0 a 9
+            let linha = Math.floor(Math.random() * 10)
+            //sorteia uma coluna de 0 a 9
+            let coluna = Math.floor(Math.random() * 10)
+
+            //Verifica quantos espaços vazios tem para colocar a palavra da coluna sorteada até o fim na diagonal
+            let espacosParaColocarPalavra = 0
+            let j = 0
+            for (let i = linha; i < 10; i++) {
+
+                if (linha + j < 10) {
+                    if (coluna + j < 10) {
+                        //Se o espaço for vazio ou for a mesma letra na palavra
+                        if (matriz[linha + j][coluna + j] === 0 || matriz[linha + j][coluna + j].toUpperCase() === palavraSorteada.substr(j, 1).toUpperCase()) {
+                            espacosParaColocarPalavra++
+                            possible = true
+                        } else {
+                            possible = false
+                            break
+                        }
+
+                        j++
+                    }
+                    else {
+                        break
+                    }
+                }
+                else {
+                    break
+                }
+
+            }
+
+            //Verifica se tem espaço suficiente e se é possivel colocar ali
+            if (espacosParaColocarPalavra >= palavraSorteada.length && possible === true) {
+                let palavra = palavraSorteada.split('')
+                let count = 0
+                let registroLinha = []
+                let registroColuna = []
+                //Coloca a palavra na matriz
+                for (let j = 0; j < palavra.length; j++) {
+
+                    matriz[linha + j][coluna + j] = palavra[j].toUpperCase()
+
+                    //Armazena o local da palavra na variael
+                    registroLinha.push(linha + j)
+                    registroColuna.push(coluna + j)
+                    count++
+                }
+
+                //Registra todas as informações de onde a palavra esta
+                localPalavrasMatrizDiagonal.push({
+                    palavra: palavraSorteada,
+                    linhas: registroLinha,
+                    colunas: registroColuna,
+                    posicao: 'diagonal',
+                    achada: false
+                })
+
+                //Atualiza a lista das palavras para achar
+                const listItem = document.createElement("li");
+                listItem.innerText = palavraSorteada;
+                listItem.setAttribute("id", palavraSorteada);
+                listaPalavras.appendChild(listItem);
+
+                palavrasSorteadas.push(palavraSorteada)
+
+                return true
+
+            } else {
+                possible = false
+            }
+        }
+    }
+
+    return false
 }
 
 //Pega a matriz e coloca as informações na tabela
@@ -390,7 +506,7 @@ function verificarPalavraHorizontal(linha, coluna1, coluna2) {
     return false
 }
 
-//Verifica se a seleção é uma das palavra na horizontal
+//Verifica se a seleção é uma das palavra na vertical
 function verificarPalavraVertical(coluna, linha1, linha2) {
     coluna = parseInt(document.getElementsByTagName('td')[parseInt(coluna)].getAttribute('coluna'))
     let min = Math.min(parseInt(linha1), parseInt(linha2))
@@ -457,6 +573,97 @@ function verificarPalavraVertical(coluna, linha1, linha2) {
     return false
 }
 
+//Verifica se a seleção é uma das palavra na diagonal
+function verificarPalavraDiagonal(escolha1, escolha2) {
+
+    //Valores vem como string, e converte para
+    escolha1.linha = parseInt(escolha1.linha)
+    escolha2.linha = parseInt(escolha2.linha)
+    escolha1.coluna = parseInt(escolha1.coluna)
+    escolha2.coluna = parseInt(escolha2.coluna)
+
+    //Preenche o array com todas as colunas e linhas do ponto 1 ao 2
+    let j = 0
+    let colunas = []
+    let linhas = []
+
+    for (let i = escolha1.linha; i < 10; i++) {
+
+        linhas.push(i)
+        colunas.push(escolha1.coluna + j)
+
+        //Da um break quando chega no segundo ponto
+        if (escolha1.linha + j === escolha2.linha && escolha1.coluna + j === escolha2.coluna) {
+            break
+        }
+        j++
+    }
+
+    //Percorrer array do local das letras e verificar se achou alguma delas  
+    for (let i = 0; i < localPalavrasMatrizDiagonal.length; i++) {
+
+        //Verifica se o numero de colunas escolhidas tem o mesmo tamanho da palavra(se elas não tem o mesmo tamanho, não é a palavra)
+        if (linhas.length === localPalavrasMatrizDiagonal[i].linhas.length) {
+
+            //Verificar se as posições das linhas e colunas são as mesmas da palavra i
+            let iguais = false
+
+            //Verificar se são as mesmas colunas
+            for (let p = 0; p < localPalavrasMatrizDiagonal[i].colunas.length; p++) {
+                if (localPalavrasMatrizDiagonal[i].colunas.includes(colunas[p])) {
+                    iguais = true
+                } else {
+                    iguais = false
+                    break
+                }
+
+            }
+
+            //Verificar se são as mesmas linhas
+            for (let p = 0; p < localPalavrasMatrizDiagonal[i].linhas.length; p++) {
+                if (localPalavrasMatrizDiagonal[i].linhas.includes(linhas[p])) {
+                    iguais = true
+                } else {
+                    iguais = false
+                    break
+                }
+
+            }
+
+            //Se todas as posições forem iguais
+            if (iguais === true) {
+
+                localPalavrasMatrizDiagonal[i].achada = true
+
+                // Valida se a palavra foi achada, marcando-a na lista como riscada
+                // Além de incrementar no "contador" de vitória
+                if (!palavrasAchadas.includes(localPalavrasMatrizDiagonal[i].palavra)) {
+                    //Atualiza a lista de palavras achadas
+                    palavrasAchadas.push(localPalavrasMatrizDiagonal[i].palavra);
+                    let currentWord = localPalavrasMatrizDiagonal[i].palavra;
+                    const wordInList = document.getElementById(currentWord);
+                    wordInList.style.textDecoration = "line-through";
+                }
+
+                if (selecaoCorreta()) {
+                    setTimeout(() => {
+                        verificaVitoria()
+                    }, 250);
+
+                }
+
+
+                // Chama a função de verificar se ganhou o jogo
+
+                return true
+            }
+
+        }
+    }
+    return false
+}
+
+
 //Armazena os campos selecionados
 let escolha1 = {}
 let escolha2 = {}
@@ -480,8 +687,9 @@ function camposEscolhidos(event) {
 
         // Verifica se o jogador selecionou campos válidos, validando a palavra e vitória em seguida
         if (escolha1.linha !== undefined && escolha2.linha !== undefined) {
-            selecionaCampos(escolha1.linha, escolha1.coluna, escolha2.linha, escolha2.coluna);
+            selecionaCampos(escolha1.linha, escolha1.coluna, escolha2.linha, escolha2.coluna, validarDiagonal(escolha1, escolha2));
 
+            //Verifica se ta na horizontal
             if (escolha1.linha === escolha2.linha) {
                 if (!verificarPalavraHorizontal(linha, escolha1.coluna, escolha2.coluna)) {
                     clickDown.removeEventListener('click', camposEscolhidos)
@@ -490,8 +698,18 @@ function camposEscolhidos(event) {
                         clickDown.addEventListener('click', camposEscolhidos)
                     }, 250);
                 }
-            } else {
+                //Verifica se ta na vertical
+            } else if (escolha1.coluna === escolha2.coluna) {
                 if (!verificarPalavraVertical(coluna, escolha1.linha, escolha2.linha)) {
+                    clickDown.removeEventListener('click', camposEscolhidos)
+                    setTimeout(() => {
+                        limpaSelecao()
+                        clickDown.addEventListener('click', camposEscolhidos)
+                    }, 250);
+                }
+            }
+            else if (validarDiagonal(escolha1, escolha2)) {
+                if (!verificarPalavraDiagonal(escolha1, escolha2)) {
                     clickDown.removeEventListener('click', camposEscolhidos)
                     setTimeout(() => {
                         limpaSelecao()
@@ -508,11 +726,42 @@ function camposEscolhidos(event) {
     caixaLetraSelecionada = document.querySelectorAll(".letras--selecionadas");
 }
 
+//Verificar se as duas escolhas estão na diagonal
+function validarDiagonal(escolha1, escolha2) {
+
+    //Valores vem como string, e converte para
+    escolha1.linha = parseInt(escolha1.linha)
+    escolha2.linha = parseInt(escolha2.linha)
+    escolha1.coluna = parseInt(escolha1.coluna)
+    escolha2.coluna = parseInt(escolha2.coluna)
+
+    let j = 0
+    for (let i = escolha1.linha; i < 10; i++) {
+        if (escolha1.linha + j < 10) {
+            if (escolha1.coluna + j < 10) {
+
+                //Verifica se a seleção é uma diagonal
+                if (escolha1.linha + j === escolha2.linha && escolha1.coluna + j === escolha2.coluna) {
+                    return true
+                }
+
+                j++
+            }
+            else {
+                return false
+            }
+        }
+        else {
+            return false
+        }
+    }
+}
+
 // Salva a última seleção feita pelo jogador
 let selection = [];
 
 // FUnção que aplica uma classe para as caixas selecionadas pelo jogador
-function selecionaCampos(linhaInicio, colunaInicio, linhaFim, colunaFim) {
+function selecionaCampos(linhaInicio, colunaInicio, linhaFim, colunaFim, diagonal) {
     if (linhaInicio === linhaFim) {
         let max = Math.max(colunaInicio, colunaFim)
         let min = Math.min(colunaInicio, colunaFim)
@@ -532,6 +781,18 @@ function selecionaCampos(linhaInicio, colunaInicio, linhaFim, colunaFim) {
 
             selection.push(currentBoxID)
             document.getElementById(currentBoxID).classList.add("letras--selecionadas")
+        }
+    }
+    else if(diagonal){
+        let j = 0
+        for(let i = linhaInicio; i < linhaFim; i++){
+
+            let currentBoxID = `${parseInt(linhaInicio) + j}-${parseInt(colunaInicio) + j}`
+
+            selection.push(currentBoxID)
+    
+            document.getElementById(currentBoxID).classList.add("letras--selecionadas")
+            j++
         }
     }
 }
@@ -611,10 +872,12 @@ function resetaJogo() {
     localPalavrasMatriz = []
     localPalavrasMatrizHorizontal = []
     localPalavrasMatrizVertical = []
+    localPalavrasMatrizDiagonal = []
     palavrasAchadas = []
     selection = []
 
-
+    escolha1 = {}
+    escolha2 = {}
 
     iniciarJogo()
 
