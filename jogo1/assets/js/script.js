@@ -33,6 +33,7 @@ function colocarNome(event) {
     palavrasParaAchar.classList.remove('hidden')
 
     iniciarJogo()
+    playerName()
 }
 
 const btn = document.getElementById('btn-nome')
@@ -74,8 +75,7 @@ function ColocarPalavrasNaMatriz() {
         console.log('passou3')
         if (Math.floor(Math.random() * 2) === 0) {
             ColocarPalavraNaMatrizHorizontal()
-        }
-        else {
+        } else {
             ColocarPalavraNaMatrizVertical()
         }
     }
@@ -98,8 +98,7 @@ function ColocarPalavraNaMatrizHorizontal() {
             if (palavrasSorteadas[i].includes(palavraSorteada)) {
                 jaFoiSorteada = true
                 break
-            }
-            else {
+            } else {
                 jaFoiSorteada = false
             }
         }
@@ -107,8 +106,7 @@ function ColocarPalavraNaMatrizHorizontal() {
         //Confirma se ja foi sorteada
         if (jaFoiSorteada) {
 
-        }
-        else {
+        } else {
             //Atualiza a lista das palavras para achar
             const listItem = document.createElement("li");
             listItem.innerText = palavraSorteada;
@@ -135,8 +133,7 @@ function ColocarPalavraNaMatrizHorizontal() {
             console.log('passou5')
             if (typeof (matriz[linha][i]) === 'string') {
                 letraNoMeio.push(matriz[linha][i])
-            }
-            else {
+            } else {
                 espacosVazios++
             }
         }
@@ -150,8 +147,7 @@ function ColocarPalavraNaMatrizHorizontal() {
             if (matriz[linha][i] === 0 || matriz[linha][i].toUpperCase() === palavraSorteada.substr(j, 1).toUpperCase()) {
                 espacosParaColocarPalavra++
                 possible = true
-            }
-            else {
+            } else {
                 possible = false
                 break
             }
@@ -183,8 +179,7 @@ function ColocarPalavraNaMatrizHorizontal() {
                 posicao: 'horizontal',
                 achada: false
             })
-        }
-        else {
+        } else {
             possible = false
         }
     }
@@ -204,8 +199,7 @@ function ColocarPalavraNaMatrizVertical() {
             if (palavrasSorteadas[i].includes(palavraSorteada)) {
                 jaFoiSorteada = true
                 break
-            }
-            else {
+            } else {
                 jaFoiSorteada = false
             }
         }
@@ -213,8 +207,7 @@ function ColocarPalavraNaMatrizVertical() {
         //Confirma se ja foi sorteada
         if (jaFoiSorteada) {
 
-        }
-        else {
+        } else {
             //Atualiza a lista das palavras para achar
             const listItem = document.createElement("li");
             listItem.innerText = palavraSorteada;
@@ -243,8 +236,7 @@ function ColocarPalavraNaMatrizVertical() {
             console.log('passou9')
             if (typeof (matriz[i][coluna]) === 'string') {
                 letraNoMeio.push(matriz[i][coluna])
-            }
-            else {
+            } else {
                 espacosVazios++
             }
         }
@@ -258,8 +250,7 @@ function ColocarPalavraNaMatrizVertical() {
             if (matriz[i][coluna] === 0 || matriz[i][coluna].toUpperCase() === palavraSorteada.substr(j, 1).toUpperCase()) {
                 espacosParaColocarPalavra++
                 possible = true
-            }
-            else {
+            } else {
                 possible = false
                 break
             }
@@ -290,8 +281,7 @@ function ColocarPalavraNaMatrizVertical() {
                 posicao: 'vertical',
                 achada: false
             })
-        }
-        else {
+        } else {
             possible = false
         }
     }
@@ -313,8 +303,7 @@ function preencherTabela() {
 
             if (matriz[i][j] === 0) {
                 td.innerText = sortearLetra().toUpperCase()
-            }
-            else {
+            } else {
                 td.innerText = matriz[i][j]
                 td.classList.add("local-palavra")
             }
@@ -360,8 +349,7 @@ function verificarPalavraHorizontal(linha, coluna1, coluna2) {
                     //Verificar se são as mesmas colunas
                     if (localPalavrasMatrizHorizontal[i].colunas.includes(colunas[j])) {
                         iguais = true
-                    }
-                    else {
+                    } else {
                         iguais = false
                         break
                     }
@@ -428,8 +416,7 @@ function verificarPalavraVertical(coluna, linha1, linha2) {
                     //Verificar se são as mesmas colunas
                     if (localPalavrasMatrizVertical[i].linhas.includes(linhas[j])) {
                         iguais = true
-                    }
-                    else {
+                    } else {
                         iguais = false
                         break
                     }
@@ -470,6 +457,7 @@ function verificarPalavraVertical(coluna, linha1, linha2) {
 //Armazena os campos selecionados
 let escolha1 = {}
 let escolha2 = {}
+
 function camposEscolhidos(event) {
     if (event.target.tagName === 'TD') {
         let linha = event.target.parentNode.getAttribute('linha')
@@ -499,8 +487,7 @@ function camposEscolhidos(event) {
                         clickDown.addEventListener('click', camposEscolhidos)
                     }, 250);
                 }
-            }
-            else {
+            } else {
                 if (!verificarPalavraVertical(coluna, escolha1.linha, escolha2.linha)) {
                     clickDown.removeEventListener('click', camposEscolhidos)
                     setTimeout(() => {
@@ -533,8 +520,7 @@ function selecionaCampos(linhaInicio, colunaInicio, linhaFim, colunaFim) {
             selection.push(currentBoxID)
             document.getElementById(currentBoxID).classList.add("letras--selecionadas")
         }
-    }
-    else if (colunaInicio === colunaFim) {
+    } else if (colunaInicio === colunaFim) {
         let max = Math.max(linhaInicio, linhaFim)
         let min = Math.min(linhaInicio, linhaFim)
         for (let inicio = min; inicio <= max; inicio++) {
@@ -573,9 +559,10 @@ function limpaSelecao() {
 // Função que verifica se o jogador achou todas as 3 palavras
 function verificaVitoria() {
     if (palavrasAchadas.length === 3) {
-        alert("PARABÉNS! Você achou todas as palavras!");
+        popUp("PARABÉNS! Você achou todas as palavras!");
         clickDown.removeEventListener('click', camposEscolhidos)
         timerStop()
+        addVitoria()
     }
 }
 
@@ -591,9 +578,9 @@ function perdeJogo() {
     }
 
     setTimeout(() => {
-        alert("AH NÃO! Você não achou todas as palavras a tempo :(")
+        popUp("OPA! Você não achou todas as palavras a tempo!")
     }, 250)
-
+    addDerrota()
 }
 
 
@@ -668,4 +655,58 @@ function timerStart() {
 
 function timerStop() {
     clearInterval(cronometro)
+}
+
+
+function deletarPopUp(event) {
+    const clickedButton = event.target;
+    const sectionOfAlert = document.querySelector('.blocker');
+    if(clickedButton.tagName === 'BUTTON') {
+        sectionOfAlert.remove();
+    }
+}
+
+function popUp(textToShow) {
+    const closeButton = document.createElement('button');
+    const sectionOfAlert = document.createElement('section');
+    closeButton.innerHTML = 'x';
+    closeButton.id = 'deleta-popup'
+    const divButton = document.createElement('div');
+    divButton.classList.add('divButton');
+    const span = document.createElement('span');
+    span.className = "span--alert";
+    sectionOfAlert.classList.add('blocker');
+    const divAlert = document.createElement('div');
+    divAlert.classList.add('alerta--vitoria-derrota');
+    
+
+    span.innerHTML = textToShow;
+    console.log(divAlert.innerText)
+    divButton.appendChild(closeButton);
+    sectionOfAlert.appendChild(divAlert);
+    divAlert.appendChild(span);
+    divAlert.appendChild(divButton);
+    document.body.appendChild(sectionOfAlert);
+    closeButton.addEventListener('click', deletarPopUp)
+}
+let placarV = 0
+
+function addVitoria() {
+    const vitoriasPlacar = document.getElementById('vitoriaPlacar');
+    placarV++
+    vitoriasPlacar.innerText = placarV
+}
+
+let placarD = 0
+
+function addDerrota() {
+    const derrotasPlacar = document.getElementById('derrotasPlacar');
+    placarD++
+    derrotasPlacar.innerText = placarD
+}
+
+function playerName() {
+    const nome = document.getElementById('nome').value
+    const playerName = document.getElementById('jogadorNome')
+    playerName.innerText = "Jogador: " + nome
 }
