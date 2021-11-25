@@ -1,6 +1,6 @@
 const sectionGameDisplay = document.querySelector('.game-display');
 let sectionDasImagens;
-      
+
 function criarElementosParaPegarNomeJogador() {
     const form = document.createElement('form');
     const inputText = document.createElement('input');
@@ -21,7 +21,7 @@ function pegarNomeJogador() {
     const campoPegaNome = document.querySelector('#campo-nome');
     const valorCampoNome = campoPegaNome.value;
     const nomeJogadoNaTabela = document.querySelector('#player-name');
-    if(valorCampoNome === "") {
+    if (valorCampoNome === "") {
         nomeJogadoNaTabela.innerHTML = 'Jogador';
     } else {
         nomeJogadoNaTabela.innerHTML = valorCampoNome;
@@ -32,6 +32,7 @@ function pegarNomeJogador() {
     timerStart();
     criaElementosPedraPapelTesoura();
 }
+
 const botaoConfirmaNome = document.querySelector('#confirma-nome');
 botaoConfirmaNome.addEventListener('click', pegarNomeJogador);
 
@@ -70,7 +71,7 @@ function sorteiaEscolhaComputador() {
     const imgPedra = document.querySelector('#pedra');
     const imgPapel = document.querySelector('#papel');
     const imgTesoura = document.querySelector('#tesoura');
-    const arrayEscolhaComputador = [imgPedra,imgPapel,imgTesoura];
+    const arrayEscolhaComputador = [imgPedra, imgPapel, imgTesoura];
     const sorteiaEscolhaComputador = Math.floor(Math.random() * 3);
     let escolhaComputador = arrayEscolhaComputador[sorteiaEscolhaComputador];
     return escolhaComputador;
@@ -81,30 +82,39 @@ function criaImagensNaTabela(ganhador, rodada, imgSrcPlayer, imgSrcComputer) {
     let campoComputerTabela = document.querySelector(`#computer-rodada${rodada}`);
     const imgTabelaPlayer = document.createElement('img');
     const imgTabelaComputer = document.createElement('img');
+
     campoJogadorTabela.appendChild(imgTabelaPlayer);
     campoComputerTabela.appendChild(imgTabelaComputer);
     imgTabelaPlayer.src = imgSrcPlayer;
     imgTabelaComputer.src = imgSrcComputer;
-    if(ganhador === 'jogador') {
+
+    if (ganhador === 'jogador') {
         campoJogadorTabela.classList.add('winner');
-    } else if(ganhador === 'computador') {
+    } else if (ganhador === 'computador') {
         campoComputerTabela.classList.add('winner');
-    } 
+    }
 }
 
 function resetGame() {
+    timerStop();
+
+    sectionDasImagens.remove();
+
     vitoriasJogador = 0;
     vitoriasComputador = 0;
     counterRodadas = 0;
+
+    document.getElementById("container__timer").remove();
+
     const form = document.querySelector('form');
     form.classList.remove('hidden');
 
     const tdsTable = document.querySelectorAll('td');
 
     for (let i = 0; i < tdsTable.length; i++) {
-        if(i === 0) {
+        if (i === 0) {
             tdsTable[i].innerText = 'Jogador';
-        } else if(i !== 6) {
+        } else if (i !== 6) {
             tdsTable[i].innerHTML = "";
             tdsTable[i].classList.remove('winner');
         }
@@ -122,23 +132,20 @@ let imgPedra = document.querySelector('#pedra'),
 let allPossibilities = [];
 
 function animacaoDasEscolhas(imagemClicada, escolhaComputador) {
-
-    imgPedra = document.querySelector('#pedra'), 
-    imgPapel = document.querySelector('#papel'),
-    imgTesoura = document.querySelector('#tesoura'),
-    allPossibilities = [imgPedra, imgPapel, imgTesoura];
+    imgPedra = document.querySelector('#pedra'),
+        imgPapel = document.querySelector('#papel'),
+        imgTesoura = document.querySelector('#tesoura'),
+        allPossibilities = [imgPedra, imgPapel, imgTesoura];
 
     const imgPedraCopy = imgPedra,
-          imgPapelCopy = imgPapel,
-          imgTesouraCopy = imgTesoura,
-          allPossibilitiesCopies = [imgPedraCopy, imgPapelCopy, imgTesouraCopy];
+        imgPapelCopy = imgPapel,
+        imgTesouraCopy = imgTesoura,
+        allPossibilitiesCopies = [imgPedraCopy, imgPapelCopy, imgTesouraCopy];
 
     for (let item in allPossibilities) {
         if (allPossibilities[item].id === imagemClicada.id) {
             allPossibilities[item].classList.add("escolhida");
-        }
-        
-        else if (allPossibilities[item].id === escolhaComputador.id) {
+        } else if (allPossibilities[item].id === escolhaComputador.id) {
             allPossibilities[item].remove();
 
             for (let item in allPossibilitiesCopies) {
@@ -148,9 +155,7 @@ function animacaoDasEscolhas(imagemClicada, escolhaComputador) {
             }
 
             allPossibilities[item].classList.add("escolhida");
-        }
-        
-        else {
+        } else {
             allPossibilities[item].classList.add("hidden");
         }
     }
@@ -160,27 +165,25 @@ function animacaoDasEscolhas(imagemClicada, escolhaComputador) {
     if (match === `${imgPedra.id}-${imgPedra.id}` ||
         match === `${imgPapel.id}-${imgPapel.id}` ||
         match === `${imgTesoura.id}-${imgTesoura.id}`) {
-            imgDuplicada.id = "tempImg";
-            imgDuplicada.id = imagemClicada.id;
-            imgDuplicada.src = imagemClicada.src;
-            imgDuplicada.classList.add('animacaoComputador');
+        imgDuplicada.id = "tempImg";
+        imgDuplicada.id = imagemClicada.id;
+        imgDuplicada.src = imagemClicada.src;
+        imgDuplicada.classList.add('animacaoComputador');
 
-            imagemClicada.classList.add('animacaoJogador');
+        imagemClicada.classList.add('animacaoJogador');
 
-            sectionDasImagens.appendChild(imgDuplicada);
-            
-            setTimeout(() => {
-                imgDuplicada.remove();
-                sectionDasImagens.remove();
-                criaElementosPedraPapelTesoura();
-            }, tempoEspera);
+        sectionDasImagens.appendChild(imgDuplicada);
+
+        setTimeout(() => {
+            imgDuplicada.remove();
+            sectionDasImagens.remove();
+        }, tempoEspera);
     } else {
         escolhaComputador.classList.add('animacaoComputador');
         imagemClicada.classList.add('animacaoJogador');
         setTimeout(() => {
             imgDuplicada.remove();
             sectionDasImagens.remove();
-            criaElementosPedraPapelTesoura();
         }, tempoEspera);
     }
 }
@@ -188,97 +191,88 @@ function animacaoDasEscolhas(imagemClicada, escolhaComputador) {
 let vitoriasJogador = 0,
     vitoriasComputador = 0,
     counterRodadas = 0;
-
 function verificaVitoria() {
     if(counterRodadas === 5) {
-        return true;
-    }
-    return false;
-}
-
-function encerraJogo() {
-    if(vitoriasJogador > vitoriasComputador) {
-        setTimeout(() => {
-            criarPopUpVitoriaDerrota(`PLACAR GERAL: JOGADOR VENCEU!\nJogador: ${vitoriasJogador}\nComputador: ${vitoriasComputador}`);
-        resetGame();
-        }, tempoEspera);
-        
-    } else if(vitoriasComputador > vitoriasJogador) {
-        setTimeout(() => {
-            criarPopUpVitoriaDerrota(`PLACAR GERAL: COMPUTADOR VENCEU!\nJogador: ${vitoriasJogador}\nComputador: ${vitoriasComputador}`);
+        if(vitoriasJogador > vitoriasComputador) {
+            alert(`PLACAR GERAL: JOGADOR VENCEU!\nJogador: ${vitoriasJogador}\nComputador: ${vitoriasComputador}`);
             resetGame();
-        }, tempoEspera);
+        } else if(vitoriasComputador > vitoriasJogador) {
+            alert(`PLACAR GERAL: COMPUTADOR VENCEU!\nJogador: ${vitoriasJogador}\nComputador: ${vitoriasComputador}`);
+            resetGame();
+        } else {
+            alert(`PLACAR GERAL: EMPATE!\nJogador: ${vitoriasJogador}\nComputador: ${vitoriasComputador}`);
+            resetGame();
+        }
+        counterRodadas = 0;
+        vitoriasJogador = 0;
+        vitoriasComputador = 0;
     } else {
         setTimeout(() => {
-            criarPopUpVitoriaDerrota(`PLACAR GERAL: EMPATE!\nJogador: ${vitoriasJogador}\nComputador: ${vitoriasComputador}`);
-            resetGame();
+            timerStart();
+            criaElementosPedraPapelTesoura();
         }, tempoEspera);
     }
 }
 
 let escolhaJogador;
+
 function jogadas(event) {
     const imagemClicada = event.target;
+    let ganhador = "";
     let escolhaComputador = sorteiaEscolhaComputador();
-
-    if (!verificaVitoria()) {
-        verificaJogada(imagemClicada.id, escolhaComputador.id);
-        proximaPartida(imagemClicada, escolhaComputador);
-    } else {
-        encerraJogo();
-    }
+    verificaJogada(imagemClicada.id, escolhaComputador.id);
+    proximaPartida(imagemClicada, escolhaComputador);
 }
 
 function proximaPartida(Player, PC) {
+    timerStop();
     counterRodadas++;
     criaImagensNaTabela(ganhador, counterRodadas, Player.src, PC.src);
     animacaoDasEscolhas(Player, PC);
-    setTimeout(() => {
-        timerStart()
-    }, tempoEspera);
+    
+    verificaVitoria();
 }
 
 function verificaJogada(escolhaPlayer, escolhaPC) {
-    timerStop();////////
-    if(escolhaPlayer === 'pedra') {
-        if(escolhaPlayer === 'pedra' && escolhaPC === 'tesoura') {
-            criarPopUpVitoriaDerrota(`Você ganhou! Computador selecionou ${escolhaPC.toUpperCase()}.`);
+    if (escolhaPlayer === 'pedra') {
+        if (escolhaPlayer === 'pedra' && escolhaPC === 'tesoura') {
+            alert(`Você ganhou! Computador selecionou ${escolhaPC.toUpperCase()}.`);
             vitoriasJogador++;
             ganhador = 'jogador';
-       } else if(escolhaPlayer === 'pedra' && escolhaPC === 'papel') {
-            criarPopUpVitoriaDerrota(`Você perdeu! Computador selecionou ${escolhaPC.toUpperCase()}.`);
+        } else if (escolhaPlayer === 'pedra' && escolhaPC === 'papel') {
+            alert(`Você perdeu! Computador selecionou ${escolhaPC.toUpperCase()}.`);
             vitoriasComputador++;
             ganhador = 'computador';
-       } else {
-            criarPopUpVitoriaDerrota(`Empate! Computador selecionou ${escolhaPC.toUpperCase()}.`);
+        } else {
+            alert(`Empate! Computador selecionou ${escolhaPC.toUpperCase()}.`);
             ganhador = 'empate';
-       } 
-    } else if(escolhaPlayer === 'papel') {
-        if(escolhaPlayer === 'papel' && escolhaPC === 'pedra') {
-            criarPopUpVitoriaDerrota(`Você ganhou! Computador selecionou ${escolhaPC.toUpperCase()}.`);
+        }
+    } else if (escolhaPlayer === 'papel') {
+        if (escolhaPlayer === 'papel' && escolhaPC === 'pedra') {
+            alert(`Você ganhou! Computador selecionou ${escolhaPC.toUpperCase()}.`);
             vitoriasJogador++;
             ganhador = 'jogador';
-        } else if(escolhaPlayer === 'papel' && escolhaPC === 'tesoura') {
-            criarPopUpVitoriaDerrota(`Você perdeu! Computador selecionou ${escolhaPC.toUpperCase()}.`);
+        } else if (escolhaPlayer === 'papel' && escolhaPC === 'tesoura') {
+            alert(`Você perdeu! Computador selecionou ${escolhaPC.toUpperCase()}.`);
             vitoriasComputador++;
             ganhador = 'computador';
         } else {
             criarPopUpVitoriaDerrota(`Empate! Computador selecionou ${escolhaPC.toUpperCase()}.`);
             ganhador = 'empate';
-        } 
+        }
     } else {
-        if(escolhaPlayer === 'tesoura' && escolhaPC === 'papel') {
-            criarPopUpVitoriaDerrota(`Você ganhou! Computador selecionou ${escolhaPC.toUpperCase()}.`);
+        if (escolhaPlayer === 'tesoura' && escolhaPC === 'papel') {
+            alert(`Você ganhou! Computador selecionou ${escolhaPC.toUpperCase()}.`);
             vitoriasJogador++;
             ganhador = 'jogador';
-        } else if(escolhaPlayer === 'tesoura' && escolhaPC === 'pedra') {
-            criarPopUpVitoriaDerrota(`Você perdeu! Computador selecionou ${escolhaPC.toUpperCase()}.`);
+        } else if (escolhaPlayer === 'tesoura' && escolhaPC === 'pedra') {
+            alert(`Você perdeu! Computador selecionou ${escolhaPC.toUpperCase()}.`);
             vitoriasComputador++;
             ganhador = 'computador';
         } else {
             criarPopUpVitoriaDerrota(`Empate! Computador selecionou ${escolhaPC.toUpperCase()}.`);
             ganhador = 'empate';
-        } 
+        }
     }
     timerStop();
 }
@@ -287,8 +281,8 @@ function criarTimer() {
     const timerSection = document.createElement("section"),
           message = document.createElement("h2"),
           container = document.getElementById("container");
-        
-    timerSection.classList.add = "container__timer";
+
+    timerSection.id = "container__timer";
 
     timer = document.createElement("span");
     timer.innerText = "5";
@@ -317,9 +311,8 @@ function timerStart() {
             timerStop()
             escolhaPlayer = sorteiaEscolhaComputador();
             escolhaPC = sorteiaEscolhaComputador();
-
             verificaJogada(escolhaPlayer.id, escolhaPC.id);
-            proximaPartida(escolhaPlayer, escolhaPC);
+            proximaPartida(escolhaPlayer, escolhaPC);        
         }
     }, 1000);
 }
@@ -331,7 +324,7 @@ function timerStop() {
 const botaoInstrucoes = document.getElementById("gameRules");
 botaoInstrucoes.addEventListener("click", criaInstrucoes)
 
-const instrucoes = "Escolha entre pedra, papel ou tesoura. O computador fará uma escolha aleatória. Você receberá uma mensagem de quem foi o vencedor e poderá revisá-la no placar. Regra principal Papel vence pedra. Tesoura vence papel."
+const instrucoes = "Escolha entre pedra, papel ou tesoura. \nO computador fará uma escolha aleatória.\nVocê receberá uma mensagem de quem foi o vencedor e poderá revisá-la no placar.\nRegra principal:\nPapel vence pedra.\nTesoura vence papel.\nPedra vence tesoura."
 function criaInstrucoes() {
     const blocker = document.createElement("div");
     blocker.classList.add("blocker");
@@ -350,7 +343,7 @@ function criaInstrucoes() {
 
     section.appendChild(button);
 
-    
+
     button.innerText = "Fechar";
     button.addEventListener("click", () => {
         blocker.remove();
