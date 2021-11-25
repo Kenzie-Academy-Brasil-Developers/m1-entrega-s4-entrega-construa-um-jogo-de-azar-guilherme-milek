@@ -280,7 +280,7 @@ function criarTimer() {
           message = document.createElement("h2"),
           container = document.getElementById("container");
         
-    timerSection.classList.add = "container__timer";
+    timerSection.id = "container__timer";
 
     timer = document.createElement("span");
     timer.innerText = "5";
@@ -323,7 +323,7 @@ function timerStop() {
 const botaoInstrucoes = document.getElementById("gameRules");
 botaoInstrucoes.addEventListener("click", criaInstrucoes)
 
-const instrucoes = "Escolha entre pedra, papel ou tesoura. O computador fará uma escolha aleatória. Você receberá uma mensagem de quem foi o vencedor e poderá revisá-la no placar. Regra principal Papel vence pedra. Tesoura vence papel."
+const instrucoes = "Escolha entre pedra, papel ou tesoura. \nO computador fará uma escolha aleatória.\nVocê receberá uma mensagem de quem foi o vencedor e poderá revisá-la no placar.\nRegra principal:\nPapel vence pedra.\nTesoura vence papel.\nPedra vence tesoura."
 function criaInstrucoes() {
     const blocker = document.createElement("div");
     blocker.classList.add("blocker");
