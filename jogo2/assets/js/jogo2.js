@@ -1,14 +1,26 @@
 const sectionGameDisplay = document.querySelector('.game-display');
 let sectionDasImagens;
 
+function escureceTela() {
+    const telaPreta = document.createElement("div");
+    document.body.appendChild(telaPreta);
+    telaPreta.classList.add("tela-preta");
+    setTimeout(() => {
+        telaPreta.remove();
+    }, 4000);
+}
+escureceTela()
+
 function criarElementosParaPegarNomeJogador() {
     const form = document.createElement('form');
     const inputText = document.createElement('input');
     inputText.id = 'campo-nome';
     inputText.autocomplete = 'off';
     inputText.placeholder = 'Digite o seu primeiro nome:';
+    inputText.maxLength = '12';
+    inputText.autocomplete = 'off';
     const button = document.createElement('button');
-    button.innerHTML = 'Comfirmar';
+    button.innerHTML = 'Confirmar';
     button.id = 'confirma-nome';
     button.type = 'button';
     sectionGameDisplay.appendChild(form);
@@ -28,6 +40,7 @@ function pegarNomeJogador() {
     }
     const form = document.querySelector('form');
     form.classList.add('hidden');
+    tocaSom("./assets/sfx/ak--close.wav");
     criarTimer();
     timerStart();
     criaElementosPedraPapelTesoura();
@@ -36,10 +49,23 @@ function pegarNomeJogador() {
 const botaoConfirmaNome = document.querySelector('#confirma-nome');
 botaoConfirmaNome.addEventListener('click', pegarNomeJogador);
 
+const imagemPedraZ = document.createElement('img');
+imagemPedraZ.id = 'pedraZ';
+imagemPedraZ.src = "./assets/images/pedraZ.png";
+
+const imagemPapelZ = document.createElement('img');
+imagemPapelZ.id = 'papelZ';
+imagemPapelZ.src = "./assets/images/papelZ.png";
+
+const imagemTesouraZ = document.createElement('img');
+imagemTesouraZ.id = 'tesouraZ';
+imagemTesouraZ.src = "./assets/images/tesouraZ.png";
+
 function criaElementosPedraPapelTesoura() {
     sectionDasImagens = document.createElement('section');
     sectionDasImagens.id = 'secao-imagens';
     sectionDasImagens.classList.remove('hidden');
+
     const imagemPedra = document.createElement('img');
     imagemPedra.id = 'pedra';
     imagemPedra.src = "./assets/images/pedra.png";
@@ -68,30 +94,43 @@ function criaElementosPedraPapelTesoura() {
 }
 
 function sorteiaEscolhaComputador() {
-    const imgPedra = document.querySelector('#pedra');
-    const imgPapel = document.querySelector('#papel');
-    const imgTesoura = document.querySelector('#tesoura');
-    const arrayEscolhaComputador = [imgPedra, imgPapel, imgTesoura];
+    const arrayEscolhaComputador = [imagemPedraZ, imagemPapelZ, imagemTesouraZ];
     const sorteiaEscolhaComputador = Math.floor(Math.random() * 3);
     let escolhaComputador = arrayEscolhaComputador[sorteiaEscolhaComputador];
     return escolhaComputador;
 }
 
+function sorteiaEscolhaJogador() {
+    const imgPedra = document.querySelector("#pedra"),
+          imgPapel = document.querySelector("#papel"),
+          imgTesoura = document.querySelector("#tesoura"),
+          arrayEscolhaJogador = [imgPedra, imgPapel, imgTesoura],
+          sorteiaEscolhaJogador = Math.floor(Math.random() * 3);
+
+    return arrayEscolhaJogador[sorteiaEscolhaJogador];
+}
+
 function criaImagensNaTabela(ganhador, rodada, imgSrcPlayer, imgSrcComputer) {
     let campoJogadorTabela = document.querySelector(`#player-rodada${rodada}`);
     let campoComputerTabela = document.querySelector(`#computer-rodada${rodada}`);
+
     const imgTabelaPlayer = document.createElement('img');
     const imgTabelaComputer = document.createElement('img');
 
     campoJogadorTabela.appendChild(imgTabelaPlayer);
     campoComputerTabela.appendChild(imgTabelaComputer);
+
     imgTabelaPlayer.src = imgSrcPlayer;
     imgTabelaComputer.src = imgSrcComputer;
 
     if (ganhador === 'jogador') {
         campoJogadorTabela.classList.add('winner');
+        tocaSom("./assets/sfx/human-yeah.wav");
     } else if (ganhador === 'computador') {
         campoComputerTabela.classList.add('winner');
+        tocaSom("./assets/sfx/zombie.wav");
+    } else {
+        tocaSom("./assets/sfx/ricochet.wav");
     }
 }
 
@@ -123,8 +162,6 @@ function resetGame() {
 
 const tempoEspera = 3000;
 
-const imgDuplicada = document.createElement('img');
-
 let imgPedra = document.querySelector('#pedra'),
     imgPapel = document.querySelector('#papel'),
     imgTesoura = document.querySelector('#tesoura');
@@ -132,60 +169,41 @@ let imgPedra = document.querySelector('#pedra'),
 let allPossibilities = [];
 
 function animacaoDasEscolhas(imagemClicada, escolhaComputador) {
-    imgPedra = document.querySelector('#pedra'),
-        imgPapel = document.querySelector('#papel'),
-        imgTesoura = document.querySelector('#tesoura'),
-        allPossibilities = [imgPedra, imgPapel, imgTesoura];
+    imgPedra = document.querySelector('#pedra');
+    imgPapel = document.querySelector('#papel');
+    imgTesoura = document.querySelector('#tesoura');
+    allPossibilities = [imgPedra, imgPapel, imgTesoura];
 
-    const imgPedraCopy = imgPedra,
-        imgPapelCopy = imgPapel,
-        imgTesouraCopy = imgTesoura,
-        allPossibilitiesCopies = [imgPedraCopy, imgPapelCopy, imgTesouraCopy];
+    const allPossibilitiesZombies = [imagemPedraZ, imagemPapelZ, imagemTesouraZ];
 
     for (let item in allPossibilities) {
         if (allPossibilities[item].id === imagemClicada.id) {
             allPossibilities[item].classList.add("escolhida");
-        } else if (allPossibilities[item].id === escolhaComputador.id) {
-            allPossibilities[item].remove();
-
-            for (let item in allPossibilitiesCopies) {
-                if (allPossibilitiesCopies[item].id === escolhaComputador.id) {
-                    sectionDasImagens.appendChild(allPossibilitiesCopies[item]);
-                }
-            }
-
-            allPossibilities[item].classList.add("escolhida");
         } else {
             allPossibilities[item].classList.add("hidden");
         }
+
+        for (let item in allPossibilitiesZombies) {
+            if (allPossibilitiesZombies[item].id === escolhaComputador.id) {
+                sectionDasImagens.appendChild(allPossibilitiesZombies[item]);
+                escolhaComputador = allPossibilitiesZombies[item];
+                allPossibilitiesZombies[item].classList.add("escolhida");
+            }
+        }
     }
 
-    const match = `${imagemClicada.id}-${escolhaComputador.id}`;
+    imgPedra.removeEventListener("click", jogadas);
+    imgPapel.removeEventListener("click", jogadas);
+    imgTesoura.removeEventListener("click", jogadas);
 
-    if (match === `${imgPedra.id}-${imgPedra.id}` ||
-        match === `${imgPapel.id}-${imgPapel.id}` ||
-        match === `${imgTesoura.id}-${imgTesoura.id}`) {
-        imgDuplicada.id = "tempImg";
-        imgDuplicada.id = imagemClicada.id;
-        imgDuplicada.src = imagemClicada.src;
-        imgDuplicada.classList.add('animacaoComputador');
-
-        imagemClicada.classList.add('animacaoJogador');
-
-        sectionDasImagens.appendChild(imgDuplicada);
-
-        setTimeout(() => {
-            imgDuplicada.remove();
-            sectionDasImagens.remove();
-        }, tempoEspera);
-    } else {
-        escolhaComputador.classList.add('animacaoComputador');
-        imagemClicada.classList.add('animacaoJogador');
-        setTimeout(() => {
-            imgDuplicada.remove();
-            sectionDasImagens.remove();
-        }, tempoEspera);
-    }
+    escolhaComputador.classList.add('animacaoComputador');
+    imagemClicada.classList.add('animacaoJogador');
+    setTimeout(() => {
+        tocaSom("./assets/sfx/punch.wav");
+    }, 1325);
+    setTimeout(() => {
+        sectionDasImagens.remove();
+    }, tempoEspera);
 }
 
 let vitoriasJogador = 0,
@@ -197,29 +215,32 @@ function verificaVitoria() {
         if (vitoriasJogador > vitoriasComputador) {
             setTimeout(() => {
                 criarPopUpVitoriaDerrota(`PLACAR GERAL: JOGADOR VENCEU!\nJogador: ${vitoriasJogador}\nComputador: ${vitoriasComputador}`);
+                tocaSom("./assets/sfx/player-win.wav");
                 resetGame();
-            }, tempoEspera+3000);
+            }, tempoEspera + 3000);
         } else if (vitoriasComputador > vitoriasJogador) {
             setTimeout(() => {
                 criarPopUpVitoriaDerrota(`PLACAR GERAL: COMPUTADOR VENCEU!\nJogador: ${vitoriasJogador}\nComputador: ${vitoriasComputador}`);
+                tocaSom("./assets/sfx/player-lost.wav");
                 resetGame();
-            }, tempoEspera+3000);
+            }, tempoEspera + 3000);
         } else {
             setTimeout(() => {
                 criarPopUpVitoriaDerrota(`PLACAR GERAL: EMPATE!\nJogador: ${vitoriasJogador}\nComputador: ${vitoriasComputador}`);
+                tocaSom("./assets/sfx/player-tie.wav");
                 resetGame();
-            }, tempoEspera+3000);
+            }, tempoEspera + 3000);
         }
         setTimeout(() => {
             counterRodadas = 0;
             vitoriasJogador = 0;
             vitoriasComputador = 0;
-        }, tempoEspera+3000);
+        }, tempoEspera + 3000);
     } else {
         setTimeout(() => {
             timerStart();
             criaElementosPedraPapelTesoura();
-        }, tempoEspera+3000);
+        }, tempoEspera + 3000);
     }
 }
 
@@ -227,6 +248,7 @@ let escolhaJogador;
 
 function jogadas(event) {
     const imagemClicada = event.target;
+    tocaSom("./assets/sfx/gunshot.wav")
     let ganhador = "";
     let escolhaComputador = sorteiaEscolhaComputador();
     verificaJogada(imagemClicada.id, escolhaComputador.id);
@@ -243,62 +265,64 @@ function proximaPartida(Player, PC) {
 }
 
 function verificaJogada(escolhaPlayer, escolhaPC) {
+    const escolhaDoComputador = `${escolhaPC.split("").slice(0, -1).join("").toUpperCase()}`;
+    
     if (escolhaPlayer === 'pedra') {
-        if (escolhaPlayer === 'pedra' && escolhaPC === 'tesoura') {
+        if (escolhaPlayer === 'pedra' && escolhaPC === 'tesouraZ') {
             vitoriasJogador++;
             ganhador = 'jogador';
             setTimeout(() => {
-                criarPopUpVitoriaDerrota(`Você ganhou! Computador selecionou ${escolhaPC.toUpperCase()}.`);
+                criarPopUpVitoriaDerrota(`Você ganhou! Computador selecionou ${escolhaDoComputador}.`);
             }, tempoEspera);
-        } else if (escolhaPlayer === 'pedra' && escolhaPC === 'papel') {
+        } else if (escolhaPlayer === 'pedra' && escolhaPC === 'papelZ') {
             vitoriasComputador++;
             ganhador = 'computador';
             setTimeout(() => {
-                criarPopUpVitoriaDerrota(`Você perdeu! Computador selecionou ${escolhaPC.toUpperCase()}.`);
+                criarPopUpVitoriaDerrota(`Você perdeu! Computador selecionou ${escolhaDoComputador}.`);
             }, tempoEspera);
         } else {
             ganhador = 'empate';
             setTimeout(() => {
-                criarPopUpVitoriaDerrota(`Empate! Computador selecionou ${escolhaPC.toUpperCase()}.`);
+                criarPopUpVitoriaDerrota(`Empate! Computador selecionou ${escolhaDoComputador}.`);
             }, tempoEspera);
         }
     } else if (escolhaPlayer === 'papel') {
         timerStop();
-        if (escolhaPlayer === 'papel' && escolhaPC === 'pedra') {
+        if (escolhaPlayer === 'papel' && escolhaPC === 'pedraZ') {
             vitoriasJogador++;
             ganhador = 'jogador';
             setTimeout(() => {
-                criarPopUpVitoriaDerrota(`Você ganhou! Computador selecionou ${escolhaPC.toUpperCase()}.`);
+                criarPopUpVitoriaDerrota(`Você ganhou! Computador selecionou ${escolhaDoComputador}.`);
             }, tempoEspera);
-        } else if (escolhaPlayer === 'papel' && escolhaPC === 'tesoura') {
+        } else if (escolhaPlayer === 'papel' && escolhaPC === 'tesouraZ') {
             vitoriasComputador++;
             ganhador = 'computador';
             setTimeout(() => {
-                criarPopUpVitoriaDerrota(`Você perdeu! Computador selecionou ${escolhaPC.toUpperCase()}.`);
+                criarPopUpVitoriaDerrota(`Você perdeu! Computador selecionou ${escolhaDoComputador}.`);
             }, tempoEspera);
         } else {
             ganhador = 'empate';
             setTimeout(() => {
-                criarPopUpVitoriaDerrota(`Empate! Computador selecionou ${escolhaPC.toUpperCase()}.`);
+                criarPopUpVitoriaDerrota(`Empate! Computador selecionou ${escolhaDoComputador}.`);
             }, tempoEspera);
         }
     } else {
-        if (escolhaPlayer === 'tesoura' && escolhaPC === 'papel') {
+        if (escolhaPlayer === 'tesoura' && escolhaPC === 'papelZ') {
             vitoriasJogador++;
             ganhador = 'jogador';
             setTimeout(() => {
-                criarPopUpVitoriaDerrota(`Você ganhou! Computador selecionou ${escolhaPC.toUpperCase()}.`);
+                criarPopUpVitoriaDerrota(`Você ganhou! Computador selecionou ${escolhaDoComputador}.`);
             }, tempoEspera);
-        } else if (escolhaPlayer === 'tesoura' && escolhaPC === 'pedra') {
+        } else if (escolhaPlayer === 'tesoura' && escolhaPC === 'pedraZ') {
             vitoriasComputador++;
             ganhador = 'computador';
             setTimeout(() => {
-                criarPopUpVitoriaDerrota(`Você perdeu! Computador selecionou ${escolhaPC.toUpperCase()}.`);
+                criarPopUpVitoriaDerrota(`Você perdeu! Computador selecionou ${escolhaDoComputador}.`);
             }, tempoEspera);
         } else {
             ganhador = 'empate';
             setTimeout(() => {
-                criarPopUpVitoriaDerrota(`Empate! Computador selecionou ${escolhaPC.toUpperCase()}.`);
+                criarPopUpVitoriaDerrota(`Empate! Computador selecionou ${escolhaDoComputador}.`);
             }, tempoEspera);
         }
     }
@@ -336,7 +360,7 @@ function timerStart() {
 
         if (sec === 0) {
             timerStop()
-            escolhaPlayer = sorteiaEscolhaComputador();
+            escolhaPlayer = sorteiaEscolhaJogador();
             escolhaPC = sorteiaEscolhaComputador();
             verificaJogada(escolhaPlayer.id, escolhaPC.id);
             proximaPartida(escolhaPlayer, escolhaPC);
@@ -354,6 +378,8 @@ botaoInstrucoes.addEventListener("click", criaInstrucoes)
 const instrucoes = "Escolha entre pedra, papel ou tesoura. \nO computador fará uma escolha aleatória.\nVocê receberá uma mensagem de quem foi o vencedor e poderá revisá-la no placar.\nRegra principal:\nPapel vence pedra.\nTesoura vence papel.\nPedra vence tesoura."
 
 function criaInstrucoes() {
+    tocaSom("./assets/sfx/ak.wav");
+
     const blocker = document.createElement("div");
     blocker.classList.add("blocker");
 
@@ -371,9 +397,9 @@ function criaInstrucoes() {
 
     section.appendChild(button);
 
-
     button.innerText = "Fechar";
     button.addEventListener("click", () => {
+        tocaSom("./assets/sfx/ak--close.wav");
         blocker.remove();
     })
 
@@ -383,7 +409,6 @@ function criaInstrucoes() {
 
 function fecharPopUp() {
     const section = document.querySelector('.blocker');
-    console.log(section)
     section.remove();
 }
 
@@ -398,9 +423,21 @@ function criarPopUpVitoriaDerrota(textToShow) {
     const divAlert = document.createElement('div');
     divAlert.classList.add('popUp');
     const span = document.createElement('span');
-    span.innerText = textToShow;
+    span.innerHTML = textToShow;
     span.id = 'alert-text';
     body.prepend(section);
     divAlert.appendChild(span);
     section.appendChild(divAlert);
+}
+
+function tocaSom(relativePath) {
+    const audio = new Audio(relativePath);
+    audio.play();
+}
+
+document.getElementById("homeButton").addEventListener("click", voltaHome)
+
+function voltaHome() {
+    tocaSom("./assets/sfx/ak.wav");
+    document.location.href = "..";
 }
