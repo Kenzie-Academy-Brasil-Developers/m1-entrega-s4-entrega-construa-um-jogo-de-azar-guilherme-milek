@@ -3,8 +3,7 @@
 /*---------------  Animações  ----------------*/
 .animacaoJogador {
     position: relative;
-    animation-name: animacaoJogador;
-    animation-duration: 5s;
+    animation: animacaoJogador 5s;
     transform: rotate(15deg);
 }
 
@@ -16,20 +15,107 @@
 }
 
 @keyframes animacaoJogador {
-    0% {left: -100px; top: 0px;}
-    25% {left: 0px; top: 0px;}
-    30% {left: -20px; top: 0px;}
-    32% {left: 0px; top: 0px;}
+    0% {
+        left: -100px;
+        top: 0px;
+        transform: rotate(0deg);
+    }
+
+    25% {
+        left: 0px;
+        top: 0px;
+        transform: rotate(30deg);
+    }
+
+    30% {
+        left: -20px;
+        top: 0px;
+        transform: rotate(0deg);
+    }
+
+    32% {
+        left: 0px;
+        top: 0px;
+        transform: rotate(30deg);
+    }
+
+    100% {
+        transform: rotate(30deg);
+    }
 }
 
 @keyframes animacaoComputador {
-    0% {right: -100px; top: 0px;}
-    25% {right: 0px; top: 0px;}
-    30% {right: -20px; top: 0px;}
-    32% {right: 0px; top: 0px;}
+    0% {
+        right: -100px;
+        top: 0px;
+        transform: rotate(0deg);
+    }
+
+    25% {
+        right: 0px;
+        top: 0px;
+        transform: rotate(-30deg);
+    }
+
+    30% {
+        right: -20px;
+        top: 0px;
+        transform: rotate(0deg);
+    }
+
+    32% {
+        right: 0px;
+        top: 0px;
+        transform: rotate(-30deg);
+    }
+
+    100% {
+        transform: rotate(-30deg);
+    }
+}
+
+.tela-preta {
+    height: 100vw;
+    width: 100vw;
+    background-color: black;
+    position: fixed;
+    z-index: 3;
+    animation: fadeOut 5s;
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 100%;
+    }
+    to {
+        opacity: 0%;
+    }
+}
+
+.winner img {
+    animation: animaTabela 0.5s;
+}
+
+@keyframes animaTabela {
+    0% {
+        transform: scale(1);
+        transform: rotate(0deg);
+    }
+
+    50% {
+        scale: 1.5;
+        transform: rotate(20deg);
+    }
+
+    100% {
+        transform: scale(1);
+        transform: rotate(0deg);
+    }
 }
 
 /*---------------  Animações  ----------------*/
+
+
 
 body {
     background-image: url("../images/Background-Zumbi.jpg");
@@ -86,7 +172,8 @@ body {
     height: 100vh;
 }
 
-.instrucoes, .popUp {
+.instrucoes,
+.popUp {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -102,14 +189,14 @@ body {
     height: 250px;
 }
 
-.popUp{
+.popUp {
     height: 100px;
     padding: 15px;
     text-align: center;
 }
 
 #alert-text {
-    line-height:25px;
+    line-height: 25px;
 }
 
 .instrucoes p {
@@ -130,15 +217,12 @@ form {
     align-items: center;
 }
 
-#papel {
-    width: 50px;
-}
-
-#pedra {
-    width: 50px;
-}
-
-#tesoura {
+#papel,
+#pedra,
+#tesoura,
+#papelZ,
+#pedraZ,
+#tesouraZ {
     width: 50px;
 }
 
@@ -221,6 +305,7 @@ td img {
     text-decoration: underline;
     font-weight: 700;
     color: #663399;
+    cursor: cell;
 }
 
 #player-name {
@@ -248,9 +333,11 @@ td img {
 #homeButton,
 #closeRules,
 #gameRules {
+    font-family: "Inter", sans-serif;
     transition: all 0.4s;
     background-color: #50fa7b;
     padding: 7px 7px 7px 7px;
+    margin: 0 10px;
     border-radius: 5px;
     margin-top: 10px;
     text-decoration: none;
@@ -264,6 +351,7 @@ td img {
 #gameRules:hover {
     box-shadow: -4px -3px #03a161;
     text-decoration: underline;
+    cursor: cell;
 }
 
 #buttons a {
@@ -325,19 +413,14 @@ td img {
         border: 5px rgb(102, 51, 153, 0.6) solid;
     }
 
-    #papel {
+    #papel,
+    #pedra,
+    #tesoura,
+    #papelZ,
+    #pedraZ,
+    #tesouraZ {
+        cursor: crosshair;
         width: 120px;
-        height: auto;
-    }
-
-    #pedra {
-        width: 120px;
-        height: auto;
-    }
-
-    #tesoura {
-        width: 120px;
-        height: auto;
     }
 
     #campo-nome {
