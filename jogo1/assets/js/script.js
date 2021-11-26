@@ -617,18 +617,24 @@ function verificarPalavraDiagonal(escolha1, escolha2) {
     escolha1.coluna = parseInt(escolha1.coluna)
     escolha2.coluna = parseInt(escolha2.coluna)
 
+    //Pega o começo independente da ordem da escolha
+    let maxLinha = Math.max(escolha1.linha, escolha2.linha)
+    let minLinha = Math.min(escolha1.linha, escolha2.linha)
+    let maxColuna = Math.max(escolha1.coluna, escolha2.coluna)
+    let minColuna = Math.min(escolha1.coluna, escolha2.coluna)
+
     //Preenche o array com todas as colunas e linhas do ponto 1 ao 2
     let j = 0
     let colunas = []
     let linhas = []
 
-    for (let i = escolha1.linha; i < 10; i++) {
+    for (let i = minLinha; i < 10; i++) {
 
         linhas.push(i)
-        colunas.push(escolha1.coluna + j)
+        colunas.push(minColuna + j)
 
         //Da um break quando chega no segundo ponto
-        if (escolha1.linha + j === escolha2.linha && escolha1.coluna + j === escolha2.coluna) {
+        if (minLinha + j === maxLinha && minColuna + j === maxColuna) {
             break
         }
         j++
@@ -655,20 +661,25 @@ function verificarPalavraDiagonal(escolha1, escolha2) {
             }
 
             //Verificar se são as mesmas linhas
-            for (let p = 0; p < localPalavrasMatrizDiagonal[i].linhas.length; p++) {
-                if (localPalavrasMatrizDiagonal[i].linhas.includes(linhas[p])) {
-                    iguais = true
-                } else {
-                    iguais = false
-                    break
-                }
+            if (iguais === false) {
+                for (let p = 0; p < localPalavrasMatrizDiagonal[i].linhas.length; p++) {
+                    if (localPalavrasMatrizDiagonal[i].linhas.includes(linhas[p])) {
+                        iguais = true
+                    } else {
+                        iguais = false
+                        break
+                    }
 
+                }
             }
 
             //Se todas as posições forem iguais
             if (iguais === true) {
 
                 localPalavrasMatrizDiagonal[i].achada = true
+                console.log(`linhas: ${linhas}`)
+                console.log(`colunas: ${colunas}`)
+                console.log(localPalavrasMatrizDiagonal[i])
 
                 // Valida se a palavra foi achada, marcando-a na lista como riscada
                 // Além de incrementar no "contador" de vitória
@@ -780,13 +791,19 @@ function validarDiagonal(escolha1, escolha2) {
     escolha1.coluna = parseInt(escolha1.coluna)
     escolha2.coluna = parseInt(escolha2.coluna)
 
+    //Pega o começo independente da ordem da escolha
+    let maxLinha = Math.max(escolha1.linha, escolha2.linha)
+    let minLinha = Math.min(escolha1.linha, escolha2.linha)
+    let maxColuna = Math.max(escolha1.coluna, escolha2.coluna)
+    let minColuna = Math.min(escolha1.coluna, escolha2.coluna)
+
     let j = 0
-    for (let i = escolha1.linha; i < 10; i++) {
-        if (escolha1.linha + j < 10) {
-            if (escolha1.coluna + j < 10) {
+    for (let i = minLinha; i < 10; i++) {
+        if (minLinha + j < 10) {
+            if (minColuna + j < 10) {
 
                 //Verifica se a seleção é uma diagonal
-                if (escolha1.linha + j === escolha2.linha && escolha1.coluna + j === escolha2.coluna) {
+                if (minLinha + j === maxLinha && minColuna + j === maxColuna) {
                     return true
                 }
 
@@ -828,14 +845,22 @@ function selecionaCampos(linhaInicio, colunaInicio, linhaFim, colunaFim, diagona
             document.getElementById(currentBoxID).classList.add("letras--selecionadas")
         }
     }
-    else if(diagonal){
-        let j = 0
-        for(let i = linhaInicio; i < linhaFim; i++){
+    else if (diagonal) {
 
-            let currentBoxID = `${parseInt(linhaInicio) + j}-${parseInt(colunaInicio) + j}`
+        //Pega os valores na ordem certa
+        let maxLinha = Math.max(linhaInicio, linhaFim)
+        let minLinha = Math.min(linhaInicio, linhaFim)
+        let maxColuna = Math.max(colunaInicio, colunaFim)
+        let minColuna = Math.min(colunaInicio, colunaFim)
+
+        let j = 0
+
+        for (let i = minLinha; i <= maxLinha; i++) {
+
+            let currentBoxID = `${parseInt(minLinha) + j}-${parseInt(minColuna) + j}`
 
             selection.push(currentBoxID)
-    
+
             document.getElementById(currentBoxID).classList.add("letras--selecionadas")
             j++
         }
