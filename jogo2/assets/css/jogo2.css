@@ -20,21 +20,25 @@
         top: 0px;
         transform: rotate(0deg);
     }
+
     25% {
         left: 0px;
         top: 0px;
         transform: rotate(30deg);
     }
+
     30% {
         left: -20px;
         top: 0px;
         transform: rotate(0deg);
     }
+
     32% {
         left: 0px;
         top: 0px;
         transform: rotate(30deg);
     }
+
     100% {
         transform: rotate(30deg);
     }
@@ -46,23 +50,45 @@
         top: 0px;
         transform: rotate(0deg);
     }
+
     25% {
         right: 0px;
         top: 0px;
         transform: rotate(-30deg);
     }
+
     30% {
         right: -20px;
         top: 0px;
         transform: rotate(0deg);
     }
+
     32% {
         right: 0px;
         top: 0px;
         transform: rotate(-30deg);
     }
+
     100% {
         transform: rotate(-30deg);
+    }
+}
+
+.tela-preta {
+    height: 100vw;
+    width: 100vw;
+    background-color: black;
+    position: fixed;
+    z-index: 3;
+    animation: fadeOut 5s;
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 100%;
+    }
+    to {
+        opacity: 0%;
     }
 }
 
@@ -146,7 +172,8 @@ body {
     height: 100vh;
 }
 
-.instrucoes, .popUp {
+.instrucoes,
+.popUp {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -162,14 +189,14 @@ body {
     height: 250px;
 }
 
-.popUp{
+.popUp {
     height: 100px;
     padding: 15px;
     text-align: center;
 }
 
 #alert-text {
-    line-height:25px;
+    line-height: 25px;
 }
 
 .instrucoes p {
@@ -190,9 +217,13 @@ form {
     align-items: center;
 }
 
-#papel, #pedra, #tesoura {
+#papel,
+#pedra,
+#tesoura,
+#papelZ,
+#pedraZ,
+#tesouraZ {
     width: 50px;
-    cursor: crosshair;	
 }
 
 #scoreTable {
@@ -382,19 +413,14 @@ td img {
         border: 5px rgb(102, 51, 153, 0.6) solid;
     }
 
-    #papel {
+    #papel,
+    #pedra,
+    #tesoura,
+    #papelZ,
+    #pedraZ,
+    #tesouraZ {
+        cursor: crosshair;
         width: 120px;
-        height: auto;
-    }
-
-    #pedra {
-        width: 120px;
-        height: auto;
-    }
-
-    #tesoura {
-        width: 120px;
-        height: auto;
     }
 
     #campo-nome {
