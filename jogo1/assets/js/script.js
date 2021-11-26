@@ -39,12 +39,16 @@ function colocarNome(event) {
     const cronometro = document.querySelector('.tempo-limite')
     const placar = document.querySelector('#placar')
     const palavrasParaAchar = document.querySelector('.palavras-para-achar')
+    const divReset = document.querySelector('.container-reset-button')
+    const tabela = document.querySelector('.tabela')
 
 
     divNome.classList.add('hidden')
     cronometro.classList.remove('hidden')
     placar.classList.remove('hidden')
     palavrasParaAchar.classList.remove('hidden')
+    divReset.classList.remove('hidden')
+    tabela.classList.remove('hidden')
 
     iniciarJogo()
     playerName()

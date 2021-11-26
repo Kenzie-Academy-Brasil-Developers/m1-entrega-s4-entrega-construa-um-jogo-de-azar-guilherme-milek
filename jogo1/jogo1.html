@@ -25,13 +25,18 @@
                 <h1 class="animacao">Caça Palavras</h1>
             </header>
             <main>
+                <section class="palavras-para-achar hidden">
+                    <h2 class="palavras-para-achar__titulo">Palavras para achar</h2>
+                    <ul id="lista-palavras"></ul>                   
+                </section>
+
                 <div class="jogo">
                     <section class="tempo-limite hidden">
                        <p id="jogadorNome"></p>
                        <h3 id="tempo-limite__timer"></h3>     
                     </section>
                     <div class="container-tabela">
-                        <table class="tabela">
+                        <table class="tabela hidden">
                             <div class="inserir-nome">
                                 <input type="text" maxlength="15" placeholder="Coloque seu nome" id="nome" />
                                 <input type="button" value="Confirmar" id="btn-nome" />
@@ -46,13 +51,9 @@
                     </div>
                 </div>
 
-                <section class="palavras-para-achar hidden">
-                    <div class="container-reset-button">
-                        <button id="reset-button">Reiniciar partida</button>
-                    </div>
-                    <h2 class="palavras-para-achar__titulo">Palavras para achar</h2>
-                    <ul id="lista-palavras"></ul>                   
-                </section>
+                <div class="container-reset-button hidden">
+                    <button id="reset-button">Reiniciar partida</button>
+                </div>
 
                 <section class="regras">
                     <h2 class="regras__titulo">Regras do jogo</h2>
