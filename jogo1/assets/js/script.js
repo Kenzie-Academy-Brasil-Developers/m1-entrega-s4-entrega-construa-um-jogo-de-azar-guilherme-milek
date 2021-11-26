@@ -21,7 +21,7 @@
 //--------------
 
 //Palavras para achar
-let palavras = ['Bulbasaur', 'Caterpie', 'Squirtle', 'Nidoran', 'Nidorino', 'Zubat', 'Oddish', 'Mankey', 'Alakazam', 'Machop', 'Slowpoke', 'Gengar', 'Exeggutor', 'Ditto', 'Snorlax', 'Dragonite', 'Mewtwo', 'Pikachu', 'Rattata', 'Psyduck']
+let palavras = ['Pikomon', 'Bulbasaur', 'Caterpie', 'Squirtle', 'Nidoran', 'Nidorino', 'Zubat', 'Oddish', 'Mankey', 'Alakazam', 'Machop', 'Slowpoke', 'Gengar', 'Exeggutor', 'Ditto', 'Snorlax', 'Dragonite', 'Mewtwo', 'Pikachu', 'Rattata', 'Psyduck']
 //Letras para preencher o resto
 let letras = 'abcdefghijklmnopqrstuvwxyz'
 //Arr bidimensional das letras e palavras
@@ -186,7 +186,13 @@ function ColocarPalavraNaMatrizHorizontal() {
 
                 //Atualiza a lista das palavras para achar
                 const listItem = document.createElement("li");
-                listItem.innerText = palavraSorteada;
+
+                if (palavraSorteada === "Pikomon") {
+                    listItem.innerText = "???";
+                } else {
+                    listItem.innerText = palavraSorteada;
+                }
+
                 listItem.setAttribute("id", palavraSorteada);
                 listaPalavras.appendChild(listItem);
 
@@ -280,7 +286,11 @@ function ColocarPalavraNaMatrizVertical() {
 
                 //Atualiza a lista das palavras para achar
                 const listItem = document.createElement("li");
-                listItem.innerText = palavraSorteada;
+                if (palavraSorteada === "Pikomon") {
+                    listItem.innerText = "???";
+                } else {
+                    listItem.innerText = palavraSorteada;
+                }
                 listItem.setAttribute("id", palavraSorteada);
                 listaPalavras.appendChild(listItem);
 
@@ -389,7 +399,12 @@ function ColocarPalavraNaMatrizDiagonal() {
 
                 //Atualiza a lista das palavras para achar
                 const listItem = document.createElement("li");
-                listItem.innerText = palavraSorteada;
+
+                if (palavraSorteada === "Pikomon") {
+                    listItem.innerText = "???";
+                } else {
+                    listItem.innerText = palavraSorteada;
+                }
                 listItem.setAttribute("id", palavraSorteada);
                 listaPalavras.appendChild(listItem);
 
@@ -486,6 +501,16 @@ function verificarPalavraHorizontal(linha, coluna1, coluna2) {
                         let currentWord = localPalavrasMatrizHorizontal[i].palavra;
                         const wordInList = document.getElementById(currentWord);
                         wordInList.style.textDecoration = "line-through";
+
+                        if (currentWord === "Pikomon") {
+                            audioplayer("./assets/audio/strgg.wav");
+                            setTimeout(() => {
+                                document.getElementById("Pikomon").innerText = "Piko??";
+                            }, 2800);
+                            setTimeout(() => {
+                                document.getElementById("Pikomon").innerText = "Pikomon";
+                            }, 4600);
+                        }
                     }
 
                     if (selecaoCorreta()) {
@@ -553,6 +578,16 @@ function verificarPalavraVertical(coluna, linha1, linha2) {
                         let currentWord = localPalavrasMatrizVertical[i].palavra;
                         const wordInList = document.getElementById(currentWord);
                         wordInList.style.textDecoration = "line-through";
+
+                        if (currentWord === "Pikomon") {
+                            audioplayer("./assets/audio/strgg.wav");
+                            setTimeout(() => {
+                                document.getElementById("Pikomon").innerText = "Piko??";
+                            }, 2800);
+                            setTimeout(() => {
+                                document.getElementById("Pikomon").innerText = "Pikomon";
+                            }, 4600);
+                        }
                     }
 
                     if (selecaoCorreta()) {
@@ -643,6 +678,16 @@ function verificarPalavraDiagonal(escolha1, escolha2) {
                     let currentWord = localPalavrasMatrizDiagonal[i].palavra;
                     const wordInList = document.getElementById(currentWord);
                     wordInList.style.textDecoration = "line-through";
+
+                    if (currentWord === "Pikomon") {
+                        audioplayer("./assets/audio/strgg.wav");
+                        setTimeout(() => {
+                            document.getElementById("Pikomon").innerText = "Piko??";
+                        }, 2800);
+                        setTimeout(() => {
+                            document.getElementById("Pikomon").innerText = "Pikomon";
+                        }, 4600);
+                    }
                 }
 
                 if (selecaoCorreta()) {
@@ -980,4 +1025,9 @@ function playerName() {
     else {
         playerName.innerText = nome
     }
+}
+
+function audioplayer(relativePath) {
+    let audioplayer = new Audio(relativePath);
+    audioplayer.play();
 }
