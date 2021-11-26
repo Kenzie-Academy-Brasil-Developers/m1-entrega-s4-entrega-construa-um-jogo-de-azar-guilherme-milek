@@ -626,7 +626,7 @@ function verificarPalavraDiagonal(escolha1, escolha2) {
             }
 
             //Verificar se são as mesmas linhas
-            if (iguais === false) {
+            if (iguais === true) {
                 for (let p = 0; p < localPalavrasMatrizDiagonal[i].linhas.length; p++) {
                     if (localPalavrasMatrizDiagonal[i].linhas.includes(linhas[p])) {
                         iguais = true
